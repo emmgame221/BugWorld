@@ -8,5 +8,5 @@ Game* Game::getGame() {
 }
 
 void Game::draw(sf::Sprite sprite) {
-	window.draw(sprite);
+	window->draw(sprite);
 }

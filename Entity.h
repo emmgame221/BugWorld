@@ -7,7 +7,7 @@ private:
 	sf::Sprite sprite;
 
 public:
-	virtual void update();
+	virtual void update() = 0;
 	void draw();
 };
 
