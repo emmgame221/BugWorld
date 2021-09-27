@@ -22,7 +22,7 @@ public:
 	void drawAll();
 	void draw(sf::Sprite sprite);
 	void update(sf::Event event);
-	void setFood(int f);
+	void addFood(int f);
 	void setGridSize(int width, int height);
 	void reduceVegLevel(int x, int y);
 };

@@ -23,8 +23,8 @@ void Game::draw(sf::Sprite sprite) {
 	window->draw(sprite);
 }
 
-void Game::setFood(int f) {
-	food = f;
+void Game::addFood(int f) {
+	food += f;
 }
 
 void Game::setGridSize(int width, int height) {
