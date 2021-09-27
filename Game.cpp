@@ -37,3 +37,10 @@ void Game::setGridSize(int width, int height) {
 	float tileHeight = gameWorldHeight / gridHeight;
 	tileSize = (tileWidth > tileHeight) ? tileHeight : tileWidth;
 }
+
+sf::Texture Game::getVegTexture(int lushness) {
+	if (lushness < 0 || lushness > 3) {
+		return vegTextures[0];
+	}
+	return vegTextures[lushness];
+}
