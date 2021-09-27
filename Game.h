@@ -7,8 +7,10 @@ class Game
 {
 private:
 	static Game* game;
-	sf::RenderWindow window;
+	sf::RenderWindow* window;
 	std::vector<int> vegLevels;
+	int gridWidth;
+	int gridHeight;
 	int food;
 	int currentLevel;
 	std::vector<Entity> entities;
