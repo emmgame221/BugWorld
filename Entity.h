@@ -3,10 +3,8 @@
 
 class Entity
 {
-private:
+public:	
 	sf::Sprite sprite;
-
-public:
 	void update();
 	void draw();
 };

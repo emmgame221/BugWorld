@@ -1,7 +1,7 @@
 #pragma once
 #include "Entity.h"
 class Tile :
-    public Entity
+    private Entity
 {
 public:
     int lushness;
