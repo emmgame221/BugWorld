@@ -4,3 +4,5 @@
 void Entity::draw() {
 	Game::getGame()->draw(sprite);
 }
+
+void Entity::update() {}

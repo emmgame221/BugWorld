@@ -7,6 +7,12 @@ Game* Game::getGame() {
 	return game;
 }
 
+void Game::drawAll() {
+	for (Entity e : entities) {
+		e.draw();
+	}
+}
+
 void Game::draw(sf::Sprite sprite) {
 	window->draw(sprite);
 }

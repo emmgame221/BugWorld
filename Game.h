@@ -16,6 +16,11 @@ private:
 	std::vector<Entity> entities;
 public:
 	static Game* getGame();
+	void drawAll();
 	void draw(sf::Sprite sprite);
+	void update(sf::Event event);
+	void setFood(int f);
+	void setGridSize(int width, int height);
+	void reduceVegLevel(int x, int y);
 };
 
