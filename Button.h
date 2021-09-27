@@ -3,6 +3,8 @@
 #include <SFML/Graphics.hpp>
 
 class Button {
-    sf::FloatRect buttonRect;
+    sf::FloatRect buttonRect = sprite.getGlobalBounds();
+public:
+    void onClick();
     
 };
