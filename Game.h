@@ -6,13 +6,14 @@
 class Game
 {
 private:
+	static Game* game;
 	sf::RenderWindow window;
 	std::vector<int> vegLevels;
 	int food;
 	int currentLevel;
 	std::vector<Entity> entities;
 public:
-	static Game getGame();
+	static Game* getGame();
 	void draw(sf::Sprite sprite);
 };
 
