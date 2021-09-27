@@ -1,5 +1,4 @@
 #include "Tile.h"
-#include "Game.h"
 
 Tile::Tile(int lushness, float x, float y) {
 	this->lushness = lushness;
