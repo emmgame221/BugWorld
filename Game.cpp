@@ -23,6 +23,12 @@ Game::Game(sf::RenderWindow* window) {
 	vegTextures[1] = texture1;
 	vegTextures[2] = texture2;
 	vegTextures[3] = texture3;
+	for (int i = 0; i < gridWidth; i++) {
+		for (int j = 0; j < gridHeight; j++) {
+			Tile tile(0, i * tileSize, j * tileSize);
+			tiles.push_back(tile);
+		}
+	}
 }
 
 Game* Game::getGame() {
