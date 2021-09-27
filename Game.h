@@ -28,6 +28,5 @@ public:
 	void update(sf::Event event);
 	void addFood(int f);
 	void setGridSize(int width, int height);
-	void reduceVegLevel(int x, int y);
 };
 
