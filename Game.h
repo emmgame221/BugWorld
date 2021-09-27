@@ -11,6 +11,7 @@ private:
 	std::vector<int> vegLevels;
 	int gridWidth;
 	int gridHeight;
+	float tileSize;
 	int food;
 	int currentLevel;
 	std::vector<Entity> entities;

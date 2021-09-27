@@ -16,3 +16,18 @@ void Game::drawAll() {
 void Game::draw(sf::Sprite sprite) {
 	window->draw(sprite);
 }
+
+void Game::setFood(int f) {
+	food = f;
+}
+
+void Game::setGridSize(int width, int height) {
+	gridWidth = width;
+	gridHeight = height;
+	sf::Vector2u windowSize = window->getSize();
+	float gameWorldWidth = windowSize.x * 0.9f;
+	float gameWorldHeight = windowSize.y * 0.9f;
+	float tileWidth = gameWorldWidth / gridWidth;
+	float tileHeight = gameWorldHeight / gridHeight;
+	tileSize = (tileWidth > tileHeight) ? tileHeight : tileWidth;
+}
