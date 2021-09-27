@@ -3,8 +3,15 @@
 
 void save() {
 	char letter = "a";
-	ofstream out("C:\\Users\\Adr\\source\\repos\\BugWorld\\Save Files", ofstream::app);
 
-	out << letter << endl;
-	out.close();
+	ofstream save_file;;
+	save_file.open("SaveFile.txt");
+	save_file << letter;
+	save_file.close();
+	return 0;
+
+	//ofstream out("C:\\Users\\Adr\\source\\repos\\BugWorld\\Save Files", ofstream::app);
+
+	//out << letter << endl;
+	//out.close();
 }
