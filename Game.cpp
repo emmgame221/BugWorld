@@ -1,15 +1,41 @@
 #include "Game.h"
 
+Game::Game(sf::RenderWindow* window) {
+	this->window = window;
+	this->setGridSize(10, 10);
+	std::vector<Entity> tiles;
+	this->tiles = tiles;
+	std::vector<Entity> entities;
+	this->entities = entities;
+	std::vector<Entity> buttons;
+	this->buttons = buttons;
+	food = 0;
+	currentLevel = 1;
+	sf::Texture texture0;
+	texture0.loadFromFile("./resources/dirt.png");
+	sf::Texture texture1;
+	texture1.loadFromFile("./resources/veg1.png");
+	sf::Texture texture2;
+	texture2.loadFromFile("./resources/veg2.png");
+	sf::Texture texture3;
+	texture3.loadFromFile("./resources/veg3.png");
+	vegTextures[0] = texture0;
+	vegTextures[1] = texture1;
+	vegTextures[2] = texture2;
+	vegTextures[3] = texture3;
+}
+
 Game* Game::getGame() {
-	if (game == nullptr) {
-		game = new Game();
-	}
 	return game;
 }
 
+void Game::setGame(Game* game) {
+	Game::game = game;
+}
+
 void Game::drawAll() {
-	for (Entity e : tiles) {
-		e.draw();
+	for (Entity t : tiles) {
+		t.draw();
 	}
 	for (Entity e : buttons) {
 		e.draw();
@@ -21,6 +47,12 @@ void Game::drawAll() {
 
 void Game::draw(sf::Sprite sprite) {
 	window->draw(sprite);
+}
+
+void Game::update(sf::Event event) {
+	for (Entity e : entities) {
+		e.update();
+	}
 }
 
 void Game::addFood(int f) {

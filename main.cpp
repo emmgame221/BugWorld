@@ -4,7 +4,8 @@
 int main()
 {
     sf::RenderWindow window(sf::VideoMode(1440, 1080), "Bug World");
-    Game* game = Game::getGame();
+    Game game = Game(&window);
+    Game::setGame(&game);
 
     while (window.isOpen())
     {
@@ -14,10 +15,10 @@ int main()
             if (event.type == sf::Event::Closed) {
                 window.close();
             }
-            game->update(event);
+            game.update(event);
         }
         window.clear();
-        game->drawAll();
+        game.drawAll();
         window.display();
     }
 

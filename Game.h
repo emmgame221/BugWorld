@@ -16,10 +16,12 @@ private:
 	int food;
 	int currentLevel;
 	std::vector<Entity> entities;
-	std::vector<Tile> tiles;
+	std::vector<Entity> tiles;
 	std::vector<Entity> buttons;
 public:
 	static Game* getGame();
+	static void setGame(Game* game);
+	Game(sf::RenderWindow* window);
 	void drawAll();
 	void draw(sf::Sprite sprite);
 	void update(sf::Event event);
