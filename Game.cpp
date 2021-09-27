@@ -8,6 +8,12 @@ Game* Game::getGame() {
 }
 
 void Game::drawAll() {
+	for (Entity e : tiles) {
+		e.draw();
+	}
+	for (Entity e : buttons) {
+		e.draw();
+	}
 	for (Entity e : entities) {
 		e.draw();
 	}
