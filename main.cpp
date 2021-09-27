@@ -23,8 +23,3 @@ int main()
 
     return 0;
 }
-
-class Button{
-    sf::Sprite button;
-    sf::FloatRect buttonRect;
-};
