@@ -2,7 +2,7 @@
 #include "Game.h"
 
 void Entity::draw() {
-	Game::getGame()->draw(sprite);
+	Game::getGame()->draw(*sprite);
 }
 
 void Entity::update() {}

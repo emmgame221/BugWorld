@@ -4,7 +4,7 @@
 class Entity
 {
 public:	
-	sf::Sprite sprite;
+	sf::Sprite* sprite;
 	void update();
 	void draw();
 };
