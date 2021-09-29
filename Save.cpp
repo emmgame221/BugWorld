@@ -1,5 +1,9 @@
 #include <iostream>
 #include <fstream>
+#include "Game.h"
+#include "Tile.h"
+#include "Entity.h"
+
 
 void save() {
 	char letter = "a";
