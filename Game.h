@@ -10,7 +10,7 @@ private:
 	Game();
 	static Game* game;
 	sf::RenderWindow* window;
-	sf::Texture* vegTextures[4];
+	sf::Texture vegTextures[4];
 	int gridWidth;
 	int gridHeight;
 	float tileSize;
@@ -27,5 +27,6 @@ public:
 	void update(sf::Event event);
 	void addFood(int f);
 	void setGridSize(int width, int height);
-	sf::Texture* getVegTexture(int lushness);
+	void createTiles();
+	sf::Texture getVegTexture(int lushness);
 };

@@ -6,6 +6,7 @@ int main()
     sf::RenderWindow window(sf::VideoMode(1440, 1080), "Bug World");
     Game* game = Game::getGame();
     game->setWindow(&window);
+    game->createTiles();
 
     while (window.isOpen())
     {
@@ -17,7 +18,7 @@ int main()
             }
             game->update(event);
         }
-        window.clear();
+        window.clear(sf::Color::White);
         game->drawAll();
         window.display();
     }

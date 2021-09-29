@@ -5,7 +5,7 @@ Tile::Tile(int lushness, float x, float y) {
 	this->lushness = lushness;
 	sprite = new sf::Sprite();
 	sprite->setPosition(sf::Vector2f(x, y));
-	sprite->setTexture(*Game::getGame()->getVegTexture(lushness));
+	sprite->setTexture(Game::getGame()->getVegTexture(lushness));
 }
 
 void Tile::incLushness() {
@@ -14,7 +14,7 @@ void Tile::incLushness() {
 	}
 	lushness++;
 	Game* game = Game::getGame();
-	sprite->setTexture(*game->getVegTexture(lushness));
+	sprite->setTexture(game->getVegTexture(lushness));
 }
 
 void Tile::decLushness() {
@@ -23,5 +23,5 @@ void Tile::decLushness() {
 	}
 	lushness--;
 	Game* game = Game::getGame();
-	sprite->setTexture(*game->getVegTexture(lushness));
+	sprite->setTexture(game->getVegTexture(lushness));
 }

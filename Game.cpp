@@ -10,19 +10,15 @@ Game::Game() {
 	this->buttons = buttons;
 	food = 0;
 	currentLevel = 1;
-	vegTextures[0] = new sf::Texture();
-	vegTextures[1] = new sf::Texture();
-	vegTextures[2] = new sf::Texture();
-	vegTextures[3] = new sf::Texture();
-	vegTextures[0]->loadFromFile("./resources/dirt.png");
-	vegTextures[1]->loadFromFile("./resources/veg1.png");
-	vegTextures[2]->loadFromFile("./resources/veg2.png");
-	vegTextures[3]->loadFromFile("./resources/veg3.png");
-	for (int i = 0; i < gridWidth; i++) {
-		for (int j = 0; j < gridHeight; j++) {
-			tiles.push_back(new Tile(0, i * tileSize, j * tileSize));
-		}
-	}
+	vegTextures[0] = sf::Texture();
+	vegTextures[1] = sf::Texture();
+	vegTextures[2] = sf::Texture();
+	vegTextures[3] = sf::Texture();
+	vegTextures[0].loadFromFile("./resources/dirt.png");
+	vegTextures[1].loadFromFile("./resources/veg1.png");
+	vegTextures[2].loadFromFile("./resources/veg2.png");
+	vegTextures[3].loadFromFile("./resources/veg3.png");
+	
 }
 
 Game* Game::getGame() {
@@ -33,13 +29,13 @@ Game* Game::getGame() {
 }
 
 void Game::drawAll() {
-	for (int i = 0; i < tiles.size(); i++) {
+	for (unsigned int i = 0; i < tiles.size(); i++) {
 		tiles[i]->draw();
 	}
-	for (int i = 0; i < entities.size(); i++) {
+	for (unsigned int i = 0; i < entities.size(); i++) {
 		entities[i]->draw();
 	}
-	for (int i = 0; i < buttons.size(); i++) {
+	for (unsigned int i = 0; i < buttons.size(); i++) {
 		buttons[i]->draw();
 	}
 }
@@ -73,7 +69,15 @@ void Game::setWindow(sf::RenderWindow* win) {
 	window = win;
 }
 
-sf::Texture* Game::getVegTexture(int lushness) {
+void Game::createTiles() {
+	for (int i = 0; i < gridWidth; i++) {
+		for (int j = 0; j < gridHeight; j++) {
+			tiles.push_back(new Tile(0, i * tileSize, j * tileSize));
+		}
+	}
+}
+
+sf::Texture Game::getVegTexture(int lushness) {
 	if (lushness < 0 || lushness > 3) {
 		return vegTextures[0];
 	}
