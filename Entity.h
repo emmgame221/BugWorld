@@ -3,11 +3,9 @@
 
 class Entity
 {
-private:
+public:	
 	sf::Sprite sprite;
-
-public:
-	virtual void update();
+	void update();
 	void draw();
 };
 
