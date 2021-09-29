@@ -17,7 +17,7 @@ private:
 	int food;
 	int currentLevel;
 	std::vector<Entity*> entities;
-	std::vector<Tile*> tiles;
+	std::vector<Entity*> tiles;
 	std::vector<Entity*> buttons;
 public:
 	static Game* getGame();

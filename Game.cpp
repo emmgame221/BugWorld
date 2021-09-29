@@ -2,7 +2,7 @@
 
 Game::Game() {
 	this->setGridSize(10, 10);
-	std::vector<Tile*> tiles;
+	std::vector<Entity*> tiles;
 	this->tiles = tiles;
 	std::vector<Entity*> entities;
 	this->entities = entities;
@@ -45,7 +45,7 @@ void Game::draw(sf::Sprite sprite) {
 }
 
 void Game::update(sf::Event event) {
-	for (int i = 0; i < entities.size(); i++) {
+	for (unsigned int i = 0; i < entities.size(); i++) {
 		entities[i]->update();
 	}
 }
