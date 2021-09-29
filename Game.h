@@ -10,16 +10,16 @@ private:
 	Game();
 	static Game* game;
 	sf::RenderWindow* window;
-	sf::Texture vegTextures[4];
 	int gridWidth;
 	int gridHeight;
 	float tileSize;
 	int food;
 	int currentLevel;
 	std::vector<Entity*> entities;
-	std::vector<Tile*> tiles;
+	std::vector<Entity*> tiles;
 	std::vector<Entity*> buttons;
 public:
+	sf::Texture vegTextures[4];
 	static Game* getGame();
 	void setWindow(sf::RenderWindow* win);
 	void drawAll();
@@ -28,5 +28,4 @@ public:
 	void addFood(int f);
 	void setGridSize(int width, int height);
 	void createTiles();
-	sf::Texture getVegTexture(int lushness);
 };
