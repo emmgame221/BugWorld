@@ -5,7 +5,7 @@ class Tile :
     public Entity
 {
 public:
-    Tile(int lushness, float x, float y);
+    Tile(int lushness, float x, float y, float tileSize);
     int lushness;
     void incLushness();
     void decLushness();

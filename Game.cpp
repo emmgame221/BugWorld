@@ -1,7 +1,7 @@
 #include "Game.h"
 
 Game::Game() {
-	this->setGridSize(10, 10);
+	this->setGridSize(15, 10);
 	std::vector<Entity*> tiles;
 	this->tiles = tiles;
 	std::vector<Entity*> entities;
@@ -72,16 +72,9 @@ void Game::setWindow(sf::RenderWindow* win) {
 void Game::createTiles() {
 	for (int i = 0; i < gridWidth; i++) {
 		for (int j = 0; j < gridHeight; j++) {
-			tiles.push_back(new Tile(0, i * tileSize, j * tileSize));
+			tiles.push_back(new Tile(0, i * tileSize, j * tileSize, tileSize));
 		}
 	}
-}
-
-sf::Texture Game::getVegTexture(int lushness) {
-	if (lushness < 0 || lushness > 3) {
-		return vegTextures[0];
-	}
-	return vegTextures[lushness];
 }
 
 Game* Game::game = NULL;
