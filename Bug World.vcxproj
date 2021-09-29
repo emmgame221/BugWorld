@@ -144,6 +144,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AddBug.cpp" />
     <ClCompile Include="Bug.cpp" />
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="Entity.cpp" />
@@ -152,6 +153,7 @@
     <ClCompile Include="Tile.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AddBug.h" />
     <ClInclude Include="Bug.h" />
     <ClInclude Include="Button.h" />
     <ClInclude Include="Entity.h" />
