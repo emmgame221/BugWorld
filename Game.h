@@ -1,6 +1,7 @@
 #pragma once
 #include "Entity.h"
 #include "Tile.h"
+#include "Bug.h"
 #include <SFML/Graphics.hpp>
 #include <vector>
 
@@ -15,6 +16,7 @@ private:
 	float tileSize;
 	int food;
 	int currentLevel;
+	std::vector<Pheromone> trails;
 	std::vector<Entity> entities;
 	std::vector<Entity> tiles;
 	std::vector<Entity> buttons;
