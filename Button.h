@@ -10,6 +10,6 @@ public:
     sf::Event event;
     sf::FloatRect buttonRect = sprite.getGlobalBounds();
     sf::RenderWindow window;
-    void onClick();
+    int onClick();
     
 };

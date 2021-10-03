@@ -1,5 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include "Game.h"
+#include "Button.h"
+#include "AddBug.h"
 
 int main()
 {
@@ -7,6 +9,12 @@ int main()
     Game* game = Game::getGame();
     game->setWindow(&window);
     game->createTiles();
+    Button* addAnt;
+    Button* subtractAnt;
+    Button* addLadybug;
+    Button* subtractLadybug;
+    AddBug* antButton;
+    AddBug* ladybugButton;
 
     while (window.isOpen())
     {
