@@ -3,6 +3,7 @@
 #include "Tile.h"
 #include "Bug.h"
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include <vector>
 
 class Game
@@ -11,6 +12,11 @@ private:
 	Game();
 	static Game* game;
 	sf::RenderWindow* window;
+	sf::Music backgroundMusic;
+	sf::SoundBuffer bugspawnSoundBuf;
+	sf::Sound bugspawanSound;
+	sf::SoundBuffer prestigeSoundBuf;
+	sf::Sound prestigeSound;
 	int gridWidth;
 	int gridHeight;
 	float tileSize;
