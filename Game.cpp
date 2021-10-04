@@ -1,4 +1,5 @@
 #include "Game.h"
+#include "Bug.h"
 
 Game::Game() {
 	this->setGridSize(15, 10);
@@ -18,7 +19,10 @@ Game::Game() {
 	vegTextures[1].loadFromFile("./resources/veg1.png");
 	vegTextures[2].loadFromFile("./resources/veg2.png");
 	vegTextures[3].loadFromFile("./resources/veg3.png");
-	
+	antTexture = sf::Texture();
+	ladybugTexture = sf::Texture();
+	antTexture.loadFromFile("./resources/ant.png");
+	ladybugTexture.loadFromFile("./resources/ladybug1spritesheet.png", sf::IntRect(2, 2, 27, 29));
 }
 
 Game* Game::getGame() {
@@ -37,6 +41,9 @@ void Game::drawAll() {
 	}
 	for (unsigned int i = 0; i < buttons.size(); i++) {
 		buttons[i]->draw();
+	}
+	for (unsigned int i = 0; i < bugs.size(); i++) {
+		bugs[i]->draw();
 	}
 }
 
@@ -74,6 +81,24 @@ void Game::createTiles() {
 		for (int j = 0; j < gridHeight; j++) {
 			tiles.push_back(new Tile(0, i * tileSize, j * tileSize, tileSize));
 		}
+	}
+}
+
+float Game::getTileSize() {
+	return tileSize;
+}
+
+void Game::spawnAnt() {
+	bugs.push_back(new Ant());
+}
+
+void Game::spawnLadybug() {
+	bugs.push_back(new Ladybug());
+}
+
+void Game::moveBugs() {
+	for (unsigned int i = 0; i < bugs.size(); i++) {
+		bugs[i]->move();
 	}
 }
 

@@ -1,6 +1,7 @@
 #pragma once
 #include "Entity.h"
 #include "Tile.h"
+#include "Bug.h"
 #include <SFML/Graphics.hpp>
 #include <vector>
 
@@ -18,8 +19,11 @@ private:
 	std::vector<Entity*> entities;
 	std::vector<Entity*> tiles;
 	std::vector<Entity*> buttons;
+	std::vector<Bug*> bugs;
 public:
 	sf::Texture vegTextures[4];
+	sf::Texture antTexture;
+	sf::Texture ladybugTexture;
 	static Game* getGame();
 	void setWindow(sf::RenderWindow* win);
 	void drawAll();
@@ -28,4 +32,8 @@ public:
 	void addFood(int f);
 	void setGridSize(int width, int height);
 	void createTiles();
+	float getTileSize();
+	void spawnAnt();
+	void spawnLadybug();
+	void moveBugs();
 };
