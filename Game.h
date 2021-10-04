@@ -13,8 +13,8 @@ private:
 	static Game* game;
 	sf::RenderWindow* window;
 	sf::Music backgroundMusic;
-	sf::SoundBuffer bugspawnSoundBuf;
-	sf::Sound bugspawanSound;
+	sf::SoundBuffer spawnSoundBuf;
+	sf::Sound spawnSound;
 	sf::SoundBuffer prestigeSoundBuf;
 	sf::Sound prestigeSound;
 	float sfxVolume = 0.5f;
@@ -58,4 +58,6 @@ public:
 	void decreaseSFXVolume();
 	void increaseBGMVolume();
 	void decreaseBGMVolume();
+	void playSpawnSound();
+	void playPrestigeSound();
 };
