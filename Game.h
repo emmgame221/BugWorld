@@ -60,4 +60,11 @@ public:
 	void moveBugs();
 	void killAnt();
 	void killLadybug();
+	void increaseSFXVolume();
+	void decreaseSFXVolume();
+	void increaseBGMVolume();
+	void decreaseBGMVolume();
+	void playSpawnSound();
+	void playPrestigeSound();
+	void spawnButtons();
 };
