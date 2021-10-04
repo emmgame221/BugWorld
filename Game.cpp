@@ -1,5 +1,6 @@
 #include "Game.h"
 #include "Bug.h"
+#include "ButtonSprite.h"
 
 Game::Game() {
 	this->setGridSize(15, 10);
@@ -21,8 +22,12 @@ Game::Game() {
 	vegTextures[3].loadFromFile("./resources/veg3.png");
 	antTexture = sf::Texture();
 	ladybugTexture = sf::Texture();
+	plusTexture = sf::Texture();
+	minusTexture = sf::Texture();
 	antTexture.loadFromFile("./resources/ant.png");
 	ladybugTexture.loadFromFile("./resources/ladybug1spritesheet.png", sf::IntRect(2, 2, 27, 29));
+	plusTexture.loadFromFile("./resources/plus.png");
+	minusTexture.loadFromFile("./resources/minus.png");
 }
 
 Game* Game::getGame() {
@@ -129,6 +134,16 @@ void Game::killLadybug() {
 			}
 		}
 	}
+}
+
+void Game::spawnButtons() {
+	AllButtonSprite allButtons;
+	buttons.push_back(allButtons.antPic());
+	allButtons.plusAnt();
+	allButtons.minusAnt();
+	allButtons.ladybugPic();
+	allButtons.plusLadybug();
+	allButtons.minusLadybug();
 }
 
 Game* Game::game = NULL;

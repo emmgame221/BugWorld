@@ -7,7 +7,7 @@
 
 class Game
 {
-private:
+protected:
 	Game();
 	static Game* game;
 	sf::RenderWindow* window;
@@ -20,11 +20,14 @@ private:
 	std::vector<Entity*> entities;
 	std::vector<Entity*> tiles;
 	std::vector<Entity*> buttons;
+	std::vector<sf::Sprite> button;
 	std::vector<Bug*> bugs;
 public:
 	sf::Texture vegTextures[4];
 	sf::Texture antTexture;
 	sf::Texture ladybugTexture;
+	sf::Texture plusTexture;
+	sf::Texture minusTexture;
 	int antCost = 5;
 	int ladyCost = 8;
 	int antSell = 3;
@@ -43,4 +46,5 @@ public:
 	void moveBugs();
 	void killAnt();
 	void killLadybug();
+	void spawnButtons();
 };
