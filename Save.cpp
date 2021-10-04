@@ -1,5 +1,6 @@
 #include <iostream>
 #include <fstream>
+#include <string>
 #include "Game.h"
 #include "Tile.h"
 #include "Entity.h"
@@ -8,43 +9,31 @@
 
 using namespace std;
 
-int main() {
-    // initialized data to be saved to the file
-    char letter = 'a';
-    int num = 1;
-    double dec = 2.0;
-    int arr[10];
+int main() 
+{
+    string get_name = getenv("USERNAME");
+    // Change directory 
+    string directory = "C:\\Users\\" + get_name + "\\Documents\\CS 370\\SaveFile\\save.txt";
 
-    // for loop to fill the array
+    int arr[10];
     for (int i = 0; i < 10; i++) {
         arr[i] = 1 + 2;
     }
 
-    // display the contents of the array
-    for (int j = 0; j < 10; j++) {
-        cout << "arr pos" << j << " Value: " << arr[j] << endl;
+    for (int i = 0; i < 10; i++) {
+        cout << "arr pos " << i << " value: " << arr[i] << endl;
     }
-    // declare file name
+
     ofstream Save_File;
+    Save_File.open(directory);
 
-    // opening the file and stating where it will be saved and what type of file it is
-    Save_File.open("C:\\Users\\Adr\\Documents\\CS 370\\SaveFile\\Save.txt");
+    Save_File << "Writing to file...." << endl;
 
-    // information saved to the file
-    Save_File << "Writing this to a file.\n";
-    Save_File << letter << endl;
-    Save_File << num << endl;
-    Save_File << dec << endl;
-
-    // for loop to display the contents of the array in the file
-    for (int j = 0; j < 10; j++) {
-        Save_File << "arra pos " << j << " Value: " << arr[j] << endl;
-
+    for (int i = 0; i < 10; i++) {
+        Save_File << "arr pos " << i << " value: " << arr[i] << endl;
     }
 
-    // close the file
-    Save_File.close();
+
+
     return 0;
-
-
 }}
