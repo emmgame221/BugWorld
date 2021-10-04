@@ -17,6 +17,8 @@ private:
 	sf::Sound bugspawanSound;
 	sf::SoundBuffer prestigeSoundBuf;
 	sf::Sound prestigeSound;
+	float sfxVolume = 0.5f;
+	float bgmVolume = 0.5f;
 	sf::Time elapsedTime;
 	sf::Clock clock;
 	int gridWidth;
@@ -52,4 +54,8 @@ public:
 	void moveBugs();
 	void killAnt();
 	void killLadybug();
+	void increaseSFXVolume();
+	void decreaseSFXVolume();
+	void increaseBGMVolume();
+	void decreaseBGMVolume();
 };

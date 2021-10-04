@@ -137,4 +137,33 @@ void Game::killLadybug() {
 	}
 }
 
+void Game::increaseSFXVolume() {
+	sfxVolume += 0.1f;
+	if (sfxVolume > 1.f) {
+		sfxVolume = 1.f;
+	}
+}
+
+void Game::decreaseSFXVolume() {
+	sfxVolume -= 0.1f;
+	if (sfxVolume < 0.f) {
+		sfxVolume = 0.f;
+	}
+}
+
+void Game::increaseBGMVolume() {
+	bgmVolume += 0.1f;
+	if (bgmVolume > 1.f) {
+		bgmVolume = 1.f;
+	}
+}
+
+void Game::decreaseBGMVolume() {
+	bgmVolume -= 0.1f;
+	if (bgmVolume < 0.f) {
+		bgmVolume = 0.f;
+	}
+}
+
+
 Game* Game::game = NULL;
