@@ -25,11 +25,16 @@ int main()
             switch (event.type) {
             case sf::Event::Closed:
                 window.close();
-
+                break;
             case sf::Event::KeyPressed:
                 if (event.key.code == sf::Keyboard::Add) {
                     game->spawnAnt();
                 }
+                if (event.key.code == sf::Keyboard::Escape) {
+                    window.close();
+                    break;
+                }
+                break;
             }
             game->update(event);
         }

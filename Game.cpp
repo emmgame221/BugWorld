@@ -23,6 +23,7 @@ Game::Game() {
 	ladybugTexture = sf::Texture();
 	antTexture.loadFromFile("./resources/ant.png");
 	ladybugTexture.loadFromFile("./resources/ladybug1spritesheet.png", sf::IntRect(2, 2, 27, 29));
+	clock = sf::Clock();
 }
 
 Game* Game::getGame() {
@@ -30,6 +31,10 @@ Game* Game::getGame() {
 		game = new Game();
 	}
 	return game;
+}
+
+sf::Time Game::getElapsedTime() {
+	return elapsedTime;
 }
 
 void Game::drawAll() {
@@ -52,6 +57,7 @@ void Game::draw(sf::Sprite sprite) {
 }
 
 void Game::update(sf::Event event) {
+	elapsedTime = clock.restart();
 	for (unsigned int i = 0; i < entities.size(); i++) {
 		entities[i]->update();
 	}

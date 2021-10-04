@@ -17,6 +17,8 @@ private:
 	sf::Sound bugspawanSound;
 	sf::SoundBuffer prestigeSoundBuf;
 	sf::Sound prestigeSound;
+	sf::Time elapsedTime;
+	sf::Clock clock;
 	int gridWidth;
 	int gridHeight;
 	float tileSize;
@@ -36,6 +38,7 @@ public:
 	int antSell = 3;
 	int ladySell = 4;
 	static Game* getGame();
+	sf::Time getElapsedTime();
 	void setWindow(sf::RenderWindow* win);
 	void drawAll();
 	void draw(sf::Sprite sprite);
