@@ -149,21 +149,6 @@ void Game::killLadybug() {
 	}
 }
 
-<<<<<<< HEAD
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 void Game::spawnButtons() {
 	AllButtonSprite allButtons;
 	buttons.push_back(allButtons.antPic());
@@ -174,7 +159,6 @@ void Game::spawnButtons() {
 	allButtons.minusLadybug();
 }
 
-=======
 void Game::increaseSFXVolume() {
 	sfxVolume += 0.1f;
 	if (sfxVolume > 1.f) {
@@ -215,6 +199,4 @@ void Game::playPrestigeSound() {
 	prestigeSound.play();
 }
 
-
->>>>>>> a02a484d96cc3697a32c2bdceb4cd4c9391bc479
 Game* Game::game = NULL;

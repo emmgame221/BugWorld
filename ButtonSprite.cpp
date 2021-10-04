@@ -2,12 +2,12 @@
 #include <SFML/Graphics.hpp>
 
 
-Button AllButtonSprite::antPic() {
+Button* AllButtonSprite::antPic() {
 	Game* game = Game::getGame();
 	sprite = sf::Sprite(game->antTexture);
 	sprite.setPosition(sf::Vector2f(0.0f, 0.0f));
-	Button b;
-	b.sprite = sprite;
+	Button* b = new Button();
+	b->sprite = sprite;
 	return b;
 	//button.push_back(sprite);
 }

@@ -8,7 +8,7 @@
 class AllButtonSprite : public Entity, protected Game {
 	
 public:
-    Button antPic();
+    Button* antPic();
 	void plusAnt();
 	void minusAnt();
 	void ladybugPic();
