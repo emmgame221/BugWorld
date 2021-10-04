@@ -18,18 +18,30 @@ int main()
 
     while (window.isOpen())
     {
-        //game->moveBugs();                                                         //currently makes bugs move off screen
+        game->moveBugs();                                                         //currently makes bugs move off screen
         sf::Event event;
         while (window.pollEvent(event))
         {
             switch (event.type) {
             case sf::Event::Closed:
                 window.close();
-
+                break;
             case sf::Event::KeyPressed:
-                if (event.key.code == sf::Keyboard::Add) {
+                if (event.key.code == sf::Keyboard::A) {
                     game->spawnAnt();
                 }
+                if (event.key.code == sf::Keyboard::Escape) {
+                    window.close();
+                }
+                if (event.key.code == sf::Keyboard::Up) {
+                    game->increaseBGMVolume();
+                    game->increaseSFXVolume();
+                }
+                if (event.key.code == sf::Keyboard::Down) {
+                    game->decreaseBGMVolume();
+                    game->decreaseSFXVolume();
+                }
+                break;
             }
             game->update(event);
         }

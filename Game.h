@@ -3,7 +3,9 @@
 #include "Tile.h"
 #include "Bug.h"
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include <vector>
+#include <random>
 
 class Game
 {
@@ -11,12 +13,22 @@ protected:
 	Game();
 	static Game* game;
 	sf::RenderWindow* window;
+	sf::Music backgroundMusic;
+	sf::SoundBuffer spawnSoundBuf;
+	sf::Sound spawnSound;
+	sf::SoundBuffer prestigeSoundBuf;
+	sf::Sound prestigeSound;
+	float sfxVolume = 0.5f;
+	float bgmVolume = 0.5f;
+	sf::Time elapsedTime;
+	sf::Clock clock;
 	int gridWidth;
 	int gridHeight;
 	float tileSize;
 	int food;
 	int currentLevel;
 	int totalBugs;
+
 	std::vector<Entity*> entities;
 	std::vector<Entity*> tiles;
 	std::vector<Entity*> buttons;
@@ -32,7 +44,9 @@ public:
 	int ladyCost = 8;
 	int antSell = 3;
 	int ladySell = 4;
+
 	static Game* getGame();
+	sf::Time getElapsedTime();
 	void setWindow(sf::RenderWindow* win);
 	void drawAll();
 	void draw(sf::Sprite sprite);
@@ -46,26 +60,4 @@ public:
 	void moveBugs();
 	void killAnt();
 	void killLadybug();
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	void spawnButtons();
 };

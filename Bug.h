@@ -32,3 +32,11 @@ public:
     Ladybug();
     void move();
 };
+
+class Pheremone
+{
+public:
+    sf::Vector2f point;
+    int type; 
+    Pheremone(sf::Vector2f,int);
+};
