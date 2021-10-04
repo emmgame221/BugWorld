@@ -29,6 +29,8 @@ Game::Game() {
 	prestigeSoundBuf.loadFromFile("./resources/prestigesound.wav");
 	prestigeSound = sf::Sound(prestigeSoundBuf);
 	backgroundMusic.openFromFile("./resources/bgm.wav");
+	backgroundMusic.setLoop(true);
+	backgroundMusic.play();
 }
 
 Game* Game::getGame() {

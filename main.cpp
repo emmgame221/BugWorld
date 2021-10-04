@@ -32,7 +32,14 @@ int main()
                 }
                 if (event.key.code == sf::Keyboard::Escape) {
                     window.close();
-                    break;
+                }
+                if (event.key.code == sf::Keyboard::Up) {
+                    game->increaseBGMVolume();
+                    game->increaseSFXVolume();
+                }
+                if (event.key.code == sf::Keyboard::Down) {
+                    game->decreaseBGMVolume();
+                    game->decreaseSFXVolume();
                 }
                 break;
             }
