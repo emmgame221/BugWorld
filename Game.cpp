@@ -136,6 +136,20 @@ void Game::killLadybug() {
 	}
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 void Game::spawnButtons() {
 	AllButtonSprite allButtons;
 	buttons.push_back(allButtons.antPic());

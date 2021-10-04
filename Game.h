@@ -46,5 +46,15 @@ public:
 	void moveBugs();
 	void killAnt();
 	void killLadybug();
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	void spawnButtons();
 };
