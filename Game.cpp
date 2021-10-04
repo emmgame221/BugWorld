@@ -88,17 +88,46 @@ float Game::getTileSize() {
 	return tileSize;
 }
 
+
 void Game::spawnAnt() {
-	bugs.push_back(new Ant());
+	if (food >= antCost) {
+		bugs.push_back(new Ant());
+		food -= antCost;
+	}
 }
 
 void Game::spawnLadybug() {
-	bugs.push_back(new Ladybug());
+	if (food >= ladyCost) {
+		bugs.push_back(new Ladybug());
+		food -= ladyCost;
+	}
 }
 
 void Game::moveBugs() {
 	for (unsigned int i = 0; i < bugs.size(); i++) {
 		bugs[i]->move();
+	}
+}
+
+void Game::killAnt() {
+	if (bugs.size() > 0) {
+		for (int i = bugs.size(); i >= 0; i--) {
+			if (bugs[i]->type == 0) {
+				bugs.erase(bugs.begin() + i);
+				food += antSell;
+			}
+		}
+	}
+}
+
+void Game::killLadybug() {
+	if (bugs.size() > 0) {
+		for (int i = bugs.size(); i >= 0; i--) {
+			if (bugs[i]->type == 1) {
+				bugs.erase(bugs.begin() + i);
+				food += ladySell;
+			}
+		}
 	}
 }
 

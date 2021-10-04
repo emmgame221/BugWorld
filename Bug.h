@@ -7,11 +7,12 @@ class Bug :
     public Entity
 {
 protected:
-    float speed = 0.0f;
-    float eatSpeed = 0.0f;
+    float speed;
+    float eatSpeed;
     int state = 0; //0-searching 1-go to target 2-return
 
 public:
+    int type;
     void move();
     void eat();
 };

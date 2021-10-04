@@ -16,6 +16,7 @@ private:
 	float tileSize;
 	int food;
 	int currentLevel;
+	int totalBugs;
 	std::vector<Entity*> entities;
 	std::vector<Entity*> tiles;
 	std::vector<Entity*> buttons;
@@ -24,6 +25,10 @@ public:
 	sf::Texture vegTextures[4];
 	sf::Texture antTexture;
 	sf::Texture ladybugTexture;
+	int antCost = 5;
+	int ladyCost = 8;
+	int antSell = 3;
+	int ladySell = 4;
 	static Game* getGame();
 	void setWindow(sf::RenderWindow* win);
 	void drawAll();
@@ -36,4 +41,6 @@ public:
 	void spawnAnt();
 	void spawnLadybug();
 	void moveBugs();
+	void killAnt();
+	void killLadybug();
 };
