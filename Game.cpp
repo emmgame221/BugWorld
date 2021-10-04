@@ -110,6 +110,7 @@ float Game::getTileSize() {
 void Game::spawnAnt() {
 	if (food >= antCost) {
 		bugs.push_back(new Ant());
+		playSpawnSound();
 		food -= antCost;
 	}
 }
@@ -117,6 +118,7 @@ void Game::spawnAnt() {
 void Game::spawnLadybug() {
 	if (food >= ladyCost) {
 		bugs.push_back(new Ladybug());
+		playSpawnSound();
 		food -= ladyCost;
 	}
 }
