@@ -26,6 +26,27 @@ Game::Game() {
 	minusTexture = sf::Texture();
 	antTexture.loadFromFile("./resources/ant.png");
 	ladybugTexture.loadFromFile("./resources/ladybug1spritesheet.png", sf::IntRect(2, 2, 27, 29));
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	plusTexture.loadFromFile("./resources/plus.png");
 	minusTexture.loadFromFile("./resources/minus.png");
 }
