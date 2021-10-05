@@ -1,9 +1,13 @@
 #include "Bug.h"
 #include "Game.h"
+#include "Utilities.h"
 #include <SFML/Graphics.hpp>
+#include <random>
+
 
 void Bug::move() {
-	sprite.move(sf::Vector2f(1.0f,1.0f));
+	sf::Vector2f move;
+	sprite.move(move);
 }
 
 void Bug::eat() {
@@ -18,7 +22,9 @@ Ant::Ant() {
 	sprite.setPosition(sf::Vector2f(0.0f,0.0f));
 	float scale = game->getTileSize() / sprite.getLocalBounds().width;
 	sprite.setScale(sf::Vector2f(scale,scale));
+	sprite.setOrigin(sf::Vector2f(game->getTileSize()/2,0));
 }
+
 
 Ladybug::Ladybug() {
 	Game* game = Game::getGame();
@@ -29,4 +35,9 @@ Ladybug::Ladybug() {
 	sprite.setPosition(sf::Vector2f(0.0f, 0.0f));
 	float scale = game->getTileSize() / sprite.getLocalBounds().width;
 	sprite.setScale(sf::Vector2f(scale, scale));
+}
+
+Pheremone::Pheremone(sf::Vector2f inPt, int inType) {
+	this->point = inPt;
+	this->type = inType;
 }

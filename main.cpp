@@ -18,7 +18,7 @@ int main()
 
     while (window.isOpen())
     {
-        //game->moveBugs();                                                         //currently makes bugs move off screen
+        game->moveBugs();                                                         //currently makes bugs move off screen
         sf::Event event;
         while (window.pollEvent(event))
         {
@@ -27,7 +27,7 @@ int main()
                 window.close();
 
             case sf::Event::KeyPressed:
-                if (event.key.code == sf::Keyboard::Add) {
+                if (event.key.code == sf::Keyboard::A) {
                     game->spawnAnt();
                 }
             }

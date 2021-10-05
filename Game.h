@@ -4,6 +4,7 @@
 #include "Bug.h"
 #include <SFML/Graphics.hpp>
 #include <vector>
+#include <random>
 
 class Game
 {
@@ -17,6 +18,7 @@ private:
 	int food;
 	int currentLevel;
 	int totalBugs;
+
 	std::vector<Entity*> entities;
 	std::vector<Entity*> tiles;
 	std::vector<Entity*> buttons;
@@ -29,7 +31,9 @@ public:
 	int ladyCost = 8;
 	int antSell = 3;
 	int ladySell = 4;
+
 	static Game* getGame();
+
 	void setWindow(sf::RenderWindow* win);
 	void drawAll();
 	void draw(sf::Sprite sprite);
