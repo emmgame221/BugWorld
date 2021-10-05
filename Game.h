@@ -3,6 +3,7 @@
 #include "Tile.h"
 #include "Bug.h"
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include <vector>
 #include <random>
 
@@ -12,6 +13,15 @@ private:
 	Game();
 	static Game* game;
 	sf::RenderWindow* window;
+	sf::Music backgroundMusic;
+	sf::SoundBuffer spawnSoundBuf;
+	sf::Sound spawnSound;
+	sf::SoundBuffer prestigeSoundBuf;
+	sf::Sound prestigeSound;
+	float sfxVolume = 0.5f;
+	float bgmVolume = 0.5f;
+	sf::Time elapsedTime;
+	sf::Clock clock;
 	int gridWidth;
 	int gridHeight;
 	float tileSize;
@@ -33,7 +43,7 @@ public:
 	int ladySell = 4;
 
 	static Game* getGame();
-
+	sf::Time getElapsedTime();
 	void setWindow(sf::RenderWindow* win);
 	void drawAll();
 	void draw(sf::Sprite sprite);
@@ -47,4 +57,10 @@ public:
 	void moveBugs();
 	void killAnt();
 	void killLadybug();
+	void increaseSFXVolume();
+	void decreaseSFXVolume();
+	void increaseBGMVolume();
+	void decreaseBGMVolume();
+	void playSpawnSound();
+	void playPrestigeSound();
 };

@@ -23,6 +23,14 @@ Game::Game() {
 	ladybugTexture = sf::Texture();
 	antTexture.loadFromFile("./resources/ant.png");
 	ladybugTexture.loadFromFile("./resources/ladybug1spritesheet.png", sf::IntRect(2, 2, 27, 29));
+	clock = sf::Clock();
+	spawnSoundBuf.loadFromFile("./resources/spawnsound.wav");
+	spawnSound = sf::Sound(spawnSoundBuf);
+	prestigeSoundBuf.loadFromFile("./resources/prestigesound.wav");
+	prestigeSound = sf::Sound(prestigeSoundBuf);
+	backgroundMusic.openFromFile("./resources/bgm.wav");
+	backgroundMusic.setLoop(true);
+	backgroundMusic.play();
 }
 
 Game* Game::getGame() {
@@ -30,6 +38,10 @@ Game* Game::getGame() {
 		game = new Game();
 	}
 	return game;
+}
+
+sf::Time Game::getElapsedTime() {
+	return elapsedTime;
 }
 
 void Game::drawAll() {
@@ -52,6 +64,7 @@ void Game::draw(sf::Sprite sprite) {
 }
 
 void Game::update(sf::Event event) {
+	elapsedTime = clock.restart();
 	for (unsigned int i = 0; i < entities.size(); i++) {
 		entities[i]->update();
 	}
@@ -130,5 +143,46 @@ void Game::killLadybug() {
 		}
 	}
 }
+
+void Game::increaseSFXVolume() {
+	sfxVolume += 0.1f;
+	if (sfxVolume > 1.f) {
+		sfxVolume = 1.f;
+	}
+	spawnSound.setVolume(sfxVolume);
+	prestigeSound.setVolume(sfxVolume);
+}
+
+void Game::decreaseSFXVolume() {
+	sfxVolume -= 0.1f;
+	if (sfxVolume < 0.f) {
+		sfxVolume = 0.f;
+	}
+	spawnSound.setVolume(sfxVolume);
+	prestigeSound.setVolume(sfxVolume);
+}
+
+void Game::increaseBGMVolume() {
+	bgmVolume += 0.1f;
+	if (bgmVolume > 1.f) {
+		bgmVolume = 1.f;
+	}
+}
+
+void Game::decreaseBGMVolume() {
+	bgmVolume -= 0.1f;
+	if (bgmVolume < 0.f) {
+		bgmVolume = 0.f;
+	}
+}
+
+void Game::playSpawnSound() {
+	spawnSound.play();
+}
+
+void Game::playPrestigeSound() {
+	prestigeSound.play();
+}
+
 
 Game* Game::game = NULL;
