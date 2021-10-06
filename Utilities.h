@@ -8,10 +8,10 @@ float angle(sf::Vector2f a, sf::Vector2f b) {
 }
 
 sf::Vector2f normalize(sf::Vector2f vec) {
-	float mag = sqrt(pow(vec.x, 2) + pow(vec.y, 2));
+	float mag = sqrt(powf(vec.x, 2) + powf(vec.y, 2));
 	return sf::Vector2f(vec.x / mag, vec.y / mag);
 }
 
 float distance(sf::Vector2f a, sf::Vector2f b) {
-	return sqrt(pow((b.x - a.x), 2) + pow((b.y - a.y), 2));
+	return sqrt(powf((b.x - a.x), 2) + powf((b.y - a.y), 2));
 }
