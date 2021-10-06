@@ -66,8 +66,13 @@ void Game::draw(sf::Sprite sprite) {
 
 void Game::update(sf::Event event) {
 	elapsedTime = clock.restart();
+	growthTimer -= elapsedTime;
+	if (growthTimer <= sf::Time::Zero) {
+		growthTimer = sf::seconds(1.f);
+		vegGrowth();
+	}
 	for (unsigned int i = 0; i < bugs.size(); i++) {
-		bugs[i]->move();
+		bugs[i]->update();
 	}
 }
 
@@ -190,6 +195,13 @@ void Game::playSpawnSound() {
 
 void Game::playPrestigeSound() {
 	prestigeSound.play();
+}
+
+void Game::vegGrowth() {
+	int growths = 0;
+	while (growths < currentLevel) {
+
+	}
 }
 
 Game* Game::game = NULL;
