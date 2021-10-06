@@ -8,7 +8,8 @@ class Button :
 public:
     int x;
     int y;
-    sf::FloatRect buttonRect = sprite.getGlobalBounds();
-    sf::Event event;
+    Button(sf::Sprite s);
+    sf::FloatRect buttonRect;
     int ifClick(float x, float y);
+    
 };
