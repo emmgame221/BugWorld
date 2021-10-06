@@ -2,6 +2,11 @@
 #include "Game.h"
 #include "Entity.h"
 
+Button::Button(sf::Sprite s) {
+	sprite = s;
+	buttonRect = sprite.getGlobalBounds();
+}
+
 int Button::onClick(int x, int y) {
 	while (window.pollEvent(event)) {
 		switch (event.type) {

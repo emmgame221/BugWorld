@@ -6,7 +6,8 @@ class Button :
     public Entity
 {
 public:
-    sf::FloatRect buttonRect = sprite.getGlobalBounds();
+    Button(sf::Sprite s);
+    sf::FloatRect buttonRect;
     sf::RenderWindow window;
     sf::Event event;
     int onClick(int x, int y);
