@@ -34,6 +34,7 @@ Game::Game() {
 	backgroundMusic.openFromFile("./resources/bgm.wav");
 	backgroundMusic.setLoop(true);
 	backgroundMusic.play();
+	rng = std::mt19937(rd());
 }
 
 Game* Game::getGame() {
