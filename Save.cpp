@@ -1,39 +1,30 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <direct.h>
 #include "Game.h"
 #include "Tile.h"
 #include "Entity.h"
+#pragma warning(disable: 4996)
 
+void main() {
+	// Get environment name
+	std::string get_user = getenv("USERNAME");
+	std::string save_directory = string save_directory = "C:\\Users\\" + get_user + "\\AppData\\Local\\BugWorldSave\\save.txt";
+	std::string directory = "C:\\Users\\" + get_user + "\\AppData\\Local\\BugWorldSave";
 
+	const char* conver_dir_to_const = directory.c_str();
+	if (mkdir(conver_dir_to_const) == -1)
+		std::cerr << "Error: " << strerror(errno) << std::endl;
+	else
+		std::cout << "File created" << std::endl;
 
-using namespace std;
+	ofstream save_file;
+	save_file.open(save_directory);
 
-int main() 
-{
-    string get_name = getenv("USERNAME");
-    // Change directory 
-    string directory = "C:\\Users\\" + get_name + "\\Documents\\CS 370\\SaveFile\\save.txt";
+	save_file << "Writing to file.." << std::endl;
+	save_file.close();
 
-    int arr[10];
-    for (int i = 0; i < 10; i++) {
-        arr[i] = 1 + 2;
-    }
+	return 0;
+}
 
-    for (int i = 0; i < 10; i++) {
-        cout << "arr pos " << i << " value: " << arr[i] << endl;
-    }
-
-    ofstream Save_File;
-    Save_File.open(directory);
-
-    Save_File << "Writing to file...." << endl;
-
-    for (int i = 0; i < 10; i++) {
-        Save_File << "arr pos " << i << " value: " << arr[i] << endl;
-    }
-
-
-
-    return 0;
-}}
