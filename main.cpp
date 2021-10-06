@@ -38,8 +38,8 @@ int main()
                 }
                 break;
             }
-            game->update(event);
         }
+        game->update(event);
         window.clear(sf::Color::White);
         game->drawAll();
         window.display();
