@@ -22,6 +22,8 @@ Game::Game() {
 	vegTextures[3].loadFromFile("./resources/veg3.png");
 	antTexture = sf::Texture();
 	ladybugTexture = sf::Texture();
+	plusTexture = sf::Texture();
+	minusTexture = sf::Texture();
 	antTexture.loadFromFile("./resources/ant.png");
 	ladybugTexture.loadFromFile("./resources/ladybug1spritesheet.png", sf::IntRect(2, 2, 27, 29));
 	plusTexture.loadFromFile("./resources/plus.png");
@@ -34,8 +36,6 @@ Game::Game() {
 	backgroundMusic.openFromFile("./resources/bgm.wav");
 	backgroundMusic.setLoop(true);
 	backgroundMusic.play();
-	plusTexture = sf::Texture();
-	minusTexture = sf::Texture();
 }
 
 Game* Game::getGame() {
