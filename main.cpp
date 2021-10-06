@@ -9,23 +9,36 @@ int main()
     Game* game = Game::getGame();
     game->setWindow(&window);
     game->createTiles();
-    Button* addAnt;
-    Button* subtractAnt;
-    Button* addLadybug;
-    Button* subtractLadybug;
-    AddBug* antButton;
-    AddBug* ladybugButton;
+    game->spawnButtons();
 
     while (window.isOpen())
-    {
+    {                                                        
         sf::Event event;
         while (window.pollEvent(event))
         {
-            if (event.type == sf::Event::Closed) {
+            switch (event.type) {
+            case sf::Event::Closed:
                 window.close();
+                break;
+            case sf::Event::KeyPressed:
+                if (event.key.code == sf::Keyboard::A) {
+                    game->spawnAnt();
+                }
+                if (event.key.code == sf::Keyboard::Escape) {
+                    window.close();
+                }
+                if (event.key.code == sf::Keyboard::Up) {
+                    game->increaseBGMVolume();
+                    game->increaseSFXVolume();
+                }
+                if (event.key.code == sf::Keyboard::Down) {
+                    game->decreaseBGMVolume();
+                    game->decreaseSFXVolume();
+                }
+                break;
             }
-            game->update(event);
         }
+        game->update(event);
         window.clear(sf::Color::White);
         game->drawAll();
         window.display();
