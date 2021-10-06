@@ -33,7 +33,6 @@ protected:
 	std::vector<Entity*> entities;
 	std::vector<Entity*> tiles;
 	std::vector<Entity*> buttons;
-	std::vector<sf::Sprite> button;
 	std::vector<Bug*> bugs;
 public:
 	sf::Texture vegTextures[4];
