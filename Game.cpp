@@ -154,11 +154,11 @@ void Game::killLadybug() {
 void Game::spawnButtons() {
 	AllButtonSprite allButtons;
 	buttons.push_back(allButtons.antPic());
-	allButtons.plusAnt();
-	allButtons.minusAnt();
-	allButtons.ladybugPic();
-	allButtons.plusLadybug();
-	allButtons.minusLadybug();
+	buttons.push_back(allButtons.plusAnt());
+	buttons.push_back(allButtons.minusAnt());
+	buttons.push_back(allButtons.ladybugPic());
+	buttons.push_back(allButtons.plusLadybug());
+	buttons.push_back(allButtons.minusLadybug());
 }
 
 void Game::increaseSFXVolume() {

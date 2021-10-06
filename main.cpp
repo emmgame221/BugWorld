@@ -15,6 +15,7 @@ int main()
     Button* subtractLadybug;
     AddBug* antButton;
     AddBug* ladybugButton;
+    game->spawnButtons();
 
     while (window.isOpen())
     {
