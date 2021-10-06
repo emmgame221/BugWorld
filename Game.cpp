@@ -6,12 +6,10 @@ Game::Game() {
 	this->setGridSize(15, 10);
 	std::vector<Entity*> tiles;
 	this->tiles = tiles;
-	std::vector<Entity*> entities;
-	this->entities = entities;
+	std::vector<Bug*> bugs;
+	this->bugs = bugs;
 	std::vector<Entity*> buttons;
 	this->buttons = buttons;
-	food = 0;
-	currentLevel = 1;
 	vegTextures[0] = sf::Texture();
 	vegTextures[1] = sf::Texture();
 	vegTextures[2] = sf::Texture();
@@ -53,9 +51,6 @@ void Game::drawAll() {
 	for (unsigned int i = 0; i < tiles.size(); i++) {
 		tiles[i]->draw();
 	}
-	for (unsigned int i = 0; i < entities.size(); i++) {
-		entities[i]->draw();
-	}
 	for (unsigned int i = 0; i < buttons.size(); i++) {
 		buttons[i]->draw();
 	}
@@ -70,8 +65,13 @@ void Game::draw(sf::Sprite sprite) {
 
 void Game::update(sf::Event event) {
 	elapsedTime = clock.restart();
-	for (unsigned int i = 0; i < entities.size(); i++) {
-		entities[i]->update();
+	growthTimer -= elapsedTime;
+	if (growthTimer <= sf::Time::Zero) {
+		growthTimer = sf::seconds(1.f);
+		vegGrowth();
+	}
+	for (unsigned int i = 0; i < bugs.size(); i++) {
+		bugs[i]->update();
 	}
 }
 
@@ -108,11 +108,11 @@ float Game::getTileSize() {
 
 
 void Game::spawnAnt() {
-	if (food >= antCost) {
+	
 		bugs.push_back(new Ant());
 		playSpawnSound();
 		food -= antCost;
-	}
+	
 }
 
 void Game::spawnLadybug() {
@@ -123,11 +123,6 @@ void Game::spawnLadybug() {
 	}
 }
 
-void Game::moveBugs() {
-	for (unsigned int i = 0; i < bugs.size(); i++) {
-		bugs[i]->move();
-	}
-}
 
 void Game::killAnt() {
 	if (bugs.size() > 0) {
@@ -199,6 +194,13 @@ void Game::playSpawnSound() {
 
 void Game::playPrestigeSound() {
 	prestigeSound.play();
+}
+
+void Game::vegGrowth() {
+	int growths = 0;
+	while (growths < currentLevel) {
+
+	}
 }
 
 Game* Game::game = NULL;

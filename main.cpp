@@ -10,17 +10,10 @@ int main()
     Button* button;
     game->setWindow(&window);
     game->createTiles();
-    Button* addAnt;
-    Button* subtractAnt;
-    Button* addLadybug;
-    Button* subtractLadybug;
-    AddBug* antButton;
-    AddBug* ladybugButton;
     game->spawnButtons();
 
     while (window.isOpen())
-    {
-        game->moveBugs();                                                         //currently makes bugs move off screen
+    {                                                        
         sf::Event event;
         while (window.pollEvent(event))
         {
@@ -51,8 +44,8 @@ int main()
                     }
                 }
             }
-            game->update(event);
         }
+        game->update(event);
         window.clear(sf::Color::White);
         game->drawAll();
         window.display();
