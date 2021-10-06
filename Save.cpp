@@ -1,50 +1,30 @@
 #include <iostream>
 #include <fstream>
+#include <string>
+#include <direct.h>
 #include "Game.h"
 #include "Tile.h"
 #include "Entity.h"
+#pragma warning(disable: 4996)
 
+void main() {
+	// Get environment name
+	std::string get_user = getenv("USERNAME");
+	std::string save_directory = string save_directory = "C:\\Users\\" + get_user + "\\AppData\\Local\\BugWorldSave\\save.txt";
+	std::string directory = "C:\\Users\\" + get_user + "\\AppData\\Local\\BugWorldSave";
 
+	const char* conver_dir_to_const = directory.c_str();
+	if (mkdir(conver_dir_to_const) == -1)
+		std::cerr << "Error: " << strerror(errno) << std::endl;
+	else
+		std::cout << "File created" << std::endl;
 
-using namespace std;
+	ofstream save_file;
+	save_file.open(save_directory);
 
-int main() {
-    // initialized data to be saved to the file
-    char letter = 'a';
-    int num = 1;
-    double dec = 2.0;
-    int arr[10];
+	save_file << "Writing to file.." << std::endl;
+	save_file.close();
 
-    // for loop to fill the array
-    for (int i = 0; i < 10; i++) {
-        arr[i] = 1 + 2;
-    }
+	return 0;
+}
 
-    // display the contents of the array
-    for (int j = 0; j < 10; j++) {
-        cout << "arr pos" << j << " Value: " << arr[j] << endl;
-    }
-    // declare file name
-    ofstream Save_File;
-
-    // opening the file and stating where it will be saved and what type of file it is
-    Save_File.open("C:\\Users\\Adr\\Documents\\CS 370\\SaveFile\\Save.txt");
-
-    // information saved to the file
-    Save_File << "Writing this to a file.\n";
-    Save_File << letter << endl;
-    Save_File << num << endl;
-    Save_File << dec << endl;
-
-    // for loop to display the contents of the array in the file
-    for (int j = 0; j < 10; j++) {
-        Save_File << "arra pos " << j << " Value: " << arr[j] << endl;
-
-    }
-
-    // close the file
-    Save_File.close();
-    return 0;
-
-
-}}
