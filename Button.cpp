@@ -8,10 +8,10 @@ Button::Button(sf::Sprite s) {
 }
 
 int Button::ifClick(float x, float y) {
-	if (buttonRect.contains(sf::Vector2f(x, y)) {
-		return 1;
+	if (buttonRect.contains(sf::Vector2f((float)x, (float)y)) {
+		return true;
 	}
 	else {
-		return 0;
+		return false;
 	}
 }
