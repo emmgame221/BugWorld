@@ -10,8 +10,6 @@ Game::Game() {
 	this->entities = entities;
 	std::vector<Entity*> buttons;
 	this->buttons = buttons;
-	food = 0;
-	currentLevel = 1;
 	vegTextures[0] = sf::Texture();
 	vegTextures[1] = sf::Texture();
 	vegTextures[2] = sf::Texture();
