@@ -1,7 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 
-#define PI 3.14159
+#define PI 3.14159f
 
 double angle(sf::Vector2f a, sf::Vector2f b) {
 	return (atan2((b.y - a.y), (b.x - a.x)) * 180 / PI);
