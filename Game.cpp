@@ -203,7 +203,15 @@ void Game::playPrestigeSound() {
 void Game::vegGrowth() {
 	int growths = 0;
 	while (growths < currentLevel) {
-
+		int x = widthRange(rng);
+		int y = heightRange(rng);
+		float prob = countAdjVeg(x, y) / 27.f;
+		float rand = urd01(rng);
+		if (prob >= rand) {
+			if (getTileAt(x, y)->incLushness()) {
+				growths++;
+			}
+		}
 	}
 }
 
@@ -233,6 +241,14 @@ int Game::countAdjVeg(int x, int y) {
 		if (y < gridHeight - 1) {
 			total += getTileAt(x + 1, y + 1)->lushness;
 		}
+	}
+	return total;
+}
+
+int Game::totalLushness() {
+	int total = 0;
+	for (Entity* t : tiles) {
+		total += ((Tile*)t)->lushness;
 	}
 	return total;
 }

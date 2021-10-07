@@ -72,5 +72,6 @@ public:
 	void spawnButtons();
 	void vegGrowth();
 	int countAdjVeg(int x, int y);
+	int totalLushness();
 	Tile* getTileAt(int x, int y);
 };
