@@ -56,9 +56,10 @@ public:
 	void setGridSize(int width, int height);
 	void createTiles();
 	float getTileSize();
+	int getTileH();
+	int getTileW();
 	void spawnAnt();
 	void spawnLadybug();
-	void moveBugs();
 	void killAnt();
 	void killLadybug();
 	void increaseSFXVolume();

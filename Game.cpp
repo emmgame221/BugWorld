@@ -102,13 +102,18 @@ float Game::getTileSize() {
 	return tileSize;
 }
 
+int Game::getTileH() {
+	return gridHeight;
+}
+
+int Game::getTileW(){
+	return gridWidth;
+}
 
 void Game::spawnAnt() {
-	
-		bugs.push_back(new Ant());
-		playSpawnSound();
-		food -= antCost;
-	
+	bugs.push_back(new Ant());
+	playSpawnSound();
+	food -= antCost;
 }
 
 void Game::spawnLadybug() {
