@@ -1,14 +1,14 @@
 #pragma once
 #include "Entity.h"
 #include <SFML/Graphics.hpp>
+#include <functional>
 
 class Button : 
     public Entity
 {
+private:
+    std::function<void()> toCall;
 public:
-    sf::FloatRect buttonRect = sprite.getGlobalBounds();
-    sf::RenderWindow window;
-    sf::Event event;
-    int onClick(int x, int y);
-    
+    Button(sf::Sprite s, std::function<void()> func);
+    void onClick();
 };

@@ -20,6 +20,8 @@ Game::Game() {
 	vegTextures[3].loadFromFile("./resources/veg3.png");
 	antTexture = sf::Texture();
 	ladybugTexture = sf::Texture();
+	plusTexture = sf::Texture();
+	minusTexture = sf::Texture();
 	antTexture.loadFromFile("./resources/ant.png");
 	ladybugTexture.loadFromFile("./resources/ladybug1spritesheet.png", sf::IntRect(2, 2, 27, 29));
 	plusTexture.loadFromFile("./resources/plus.png");
@@ -32,9 +34,8 @@ Game::Game() {
 	backgroundMusic.openFromFile("./resources/bgm.wav");
 	backgroundMusic.setLoop(true);
 	backgroundMusic.play();
-	plusTexture = sf::Texture();
-	minusTexture = sf::Texture();
 	rng = std::mt19937(rd());
+	urd01 = std::uniform_real_distribution<float>(0.f, 1.f);
 }
 
 Game* Game::getGame() {
@@ -46,6 +47,24 @@ Game* Game::getGame() {
 
 sf::Time Game::getElapsedTime() {
 	return elapsedTime;
+}
+
+void Game::checkClick(int x, int y) {
+	sf::Vector2u size = window->getSize();
+	if (x < size.x * 0.9f && y < size.y * 0.9f) {
+		// Click in the game area
+	}
+	else {
+		// Click in the UI area
+		// Check each button to see if the click is on that button
+		// Once one is found trigger that button's onClick and then break
+		for (Entity* b : buttons) {
+			if (b->sprite.getGlobalBounds().contains(x, y)) {
+				((Button*)b)->onClick();
+				break;
+			}
+		}
+	}
 }
 
 void Game::drawAll() {
@@ -66,8 +85,13 @@ void Game::draw(sf::Sprite sprite) {
 
 void Game::update(sf::Event event) {
 	elapsedTime = clock.restart();
+	growthTimer -= elapsedTime;
+	if (growthTimer <= sf::Time::Zero) {
+		growthTimer = sf::seconds(1.f);
+		vegGrowth();
+	}
 	for (unsigned int i = 0; i < bugs.size(); i++) {
-		bugs[i]->move();
+		bugs[i]->update();
 	}
 }
 
@@ -78,6 +102,8 @@ void Game::addFood(int f) {
 void Game::setGridSize(int width, int height) {
 	gridWidth = width;
 	gridHeight = height;
+	widthRange = std::uniform_int_distribution<int>(0, gridWidth - 1);
+	heightRange = std::uniform_int_distribution<int>(0, gridHeight - 1);
 	sf::Vector2u windowSize = (window == nullptr) ? sf::Vector2u(1440, 1080) : window->getSize();
 	float gameWorldWidth = windowSize.x * 0.9f;
 	float gameWorldHeight = windowSize.y * 0.9f;
@@ -195,6 +221,65 @@ void Game::playSpawnSound() {
 
 void Game::playPrestigeSound() {
 	prestigeSound.play();
+}
+
+void Game::vegGrowth() {
+	int growths = 0;
+	int limit = currentLevel;
+	int curTotal = totalLushness();
+	int max = 3 * gridWidth * gridHeight;
+	if (limit + curTotal > max) {
+		limit = max - curTotal;
+	}
+	while (growths < limit) {
+		int x = widthRange(rng);
+		int y = heightRange(rng);
+		float prob = countAdjVeg(x, y) + 1 / 27.f;
+		float rand = urd01(rng);
+		if (prob >= rand) {
+			if (getTileAt(x, y)->incLushness()) {
+				growths++;
+			}
+		}
+	}
+}
+
+Tile* Game::getTileAt(int x, int y) {
+	return (Tile*)tiles[x * gridHeight + y];
+}
+
+int Game::countAdjVeg(int x, int y) {
+	int total = 0;
+	total += getTileAt(x, y)->lushness;
+	if (x > 0) {
+		total += getTileAt(x - 1, y)->lushness;
+		if (y > 0) {
+			total += getTileAt(x, y - 1)->lushness;
+			total += getTileAt(x - 1, y - 1)->lushness;
+		}
+		if (y < gridHeight - 1) {
+			total += getTileAt(x, y + 1)->lushness;
+			total += getTileAt(x - 1, y + 1)->lushness;
+		}
+	}
+	if (x < gridWidth - 1) {
+		total += getTileAt(x + 1, y)->lushness;
+		if (y > 0) {
+			total += getTileAt(x + 1, y - 1)->lushness;
+		}
+		if (y < gridHeight - 1) {
+			total += getTileAt(x + 1, y + 1)->lushness;
+		}
+	}
+	return total;
+}
+
+int Game::totalLushness() {
+	int total = 0;
+	for (Entity* t : tiles) {
+		total += ((Tile*)t)->lushness;
+	}
+	return total;
 }
 
 Game* Game::game = NULL;

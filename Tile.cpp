@@ -10,20 +10,22 @@ Tile::Tile(int lushness, float x, float y, float tileSize) {
 	sprite.setScale(sf::Vector2f(scale, scale));
 }
 
-void Tile::incLushness() {
+bool Tile::incLushness() {
 	if (lushness == 3) {
-		return;
+		return false;
 	}
 	lushness++;
 	Game* game = Game::getGame();
 	sprite.setTexture(game->vegTextures[lushness]);
+	return true;
 }
 
-void Tile::decLushness() {
+bool Tile::decLushness() {
 	if (lushness == 0) {
-		return;
+		return false;
 	}
 	lushness--;
 	Game* game = Game::getGame();
 	sprite.setTexture(game->vegTextures[lushness]);
+	return true;
 }
