@@ -68,4 +68,6 @@ public:
 	void playPrestigeSound();
 	void spawnButtons();
 	void vegGrowth();
+	Tile* getTileAt(int x, int y);
+	int countAdjVeg(int x, int y);
 };

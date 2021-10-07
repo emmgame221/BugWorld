@@ -204,4 +204,34 @@ void Game::vegGrowth() {
 	}
 }
 
+Tile* Game::getTileAt(int x, int y) {
+	return (Tile*)tiles[x * gridHeight + y];
+}
+
+int Game::countAdjVeg(int x, int y) {
+	int total = 0;
+	total += getTileAt(x, y)->lushness;
+	if (x > 0) {
+		total += getTileAt(x - 1, y)->lushness;
+		if (y > 0) {
+			total += getTileAt(x, y - 1)->lushness;
+			total += getTileAt(x - 1, y - 1)->lushness;
+		}
+		if (y < gridHeight - 1) {
+			total += getTileAt(x, y + 1)->lushness;
+			total += getTileAt(x - 1, y + 1)->lushness;
+		}
+	}
+	if (x < gridWidth - 1) {
+		total += getTileAt(x + 1, y)->lushness;
+		if (y > 0) {
+			total += getTileAt(x + 1, y - 1)->lushness;
+		}
+		if (y < gridHeight - 1) {
+			total += getTileAt(x + 1, y + 1)->lushness;
+		}
+	}
+	return total;
+}
+
 Game* Game::game = NULL;
