@@ -49,6 +49,24 @@ sf::Time Game::getElapsedTime() {
 	return elapsedTime;
 }
 
+void Game::checkClick(int x, int y) {
+	sf::Vector2u size = window->getSize();
+	if (x < size.x * 0.9f && y < size.y * 0.9f) {
+		// Click in the game area
+	}
+	else {
+		// Click in the UI area
+		// Check each button to see if the click is on that button
+		// Once one is found trigger that button's onClick and then break
+		for (Entity* b : buttons) {
+			if (b->sprite.getGlobalBounds().contains(x, y)) {
+				((Button*)b)->onClick();
+				break;
+			}
+		}
+	}
+}
+
 void Game::drawAll() {
 	for (unsigned int i = 0; i < tiles.size(); i++) {
 		tiles[i]->draw();

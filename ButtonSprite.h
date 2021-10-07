@@ -2,16 +2,17 @@
 #include "Entity.h"
 #include "Game.h"
 #include "Button.h"
+#include <functional>
 #include <string>
 #include <SFML/Graphics.hpp>
 
-class AllButtonSprite : public Entity, protected Game {
+static class AllButtonSprite {
 	
 public:
-    Button* antPic();
-	Button* plusAnt();
-	Button* minusAnt();
-	Button* ladybugPic();
-	Button* plusLadybug();
-	Button* minusLadybug();
+    static Button* antPic();
+	static Button* plusAnt();
+	static Button* minusAnt();
+	static Button* ladybugPic();
+	static Button* plusLadybug();
+	static Button* minusLadybug();
 };

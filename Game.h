@@ -52,6 +52,7 @@ public:
 	static Game* getGame();
 	sf::Time getElapsedTime();
 	void setWindow(sf::RenderWindow* win);
+	void checkClick(int x, int y);
 	void drawAll();
 	void draw(sf::Sprite sprite);
 	void update(sf::Event event);
