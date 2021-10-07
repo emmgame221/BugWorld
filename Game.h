@@ -29,7 +29,6 @@ protected:
 	int currentLevel;
 	int totalBugs;
 
-	std::vector<Entity*> entities;
 	std::vector<Entity*> tiles;
 	std::vector<Entity*> buttons;
 	std::vector<sf::Sprite> button;
@@ -44,6 +43,8 @@ public:
 	int ladyCost = 8;
 	int antSell = 3;
 	int ladySell = 4;
+	std::random_device rd;
+	std::mt19937 rng;
 
 	static Game* getGame();
 	sf::Time getElapsedTime();

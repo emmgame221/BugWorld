@@ -17,8 +17,7 @@ int main()
     AddBug* ladybugButton;
 
     while (window.isOpen())
-    {
-        game->moveBugs();                                                         //currently makes bugs move off screen
+    {                                                        
         sf::Event event;
         while (window.pollEvent(event))
         {
@@ -43,8 +42,9 @@ int main()
                 }
                 break;
             }
-            game->update(event);
         }
+
+        game->update(event);
         window.clear(sf::Color::White);
         game->drawAll();
         window.display();
