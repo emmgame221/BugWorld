@@ -35,6 +35,7 @@ Game::Game() {
 	backgroundMusic.setLoop(true);
 	backgroundMusic.play();
 	rng = std::mt19937(rd());
+	urd01 = std::uniform_real_distribution<float>(0.f, 1.f);
 }
 
 Game* Game::getGame() {
@@ -83,6 +84,8 @@ void Game::addFood(int f) {
 void Game::setGridSize(int width, int height) {
 	gridWidth = width;
 	gridHeight = height;
+	widthRange = std::uniform_int_distribution<int>(0, gridWidth);
+	heightRange = std::uniform_int_distribution<int>(0, gridHeight);
 	sf::Vector2u windowSize = (window == nullptr) ? sf::Vector2u(1440, 1080) : window->getSize();
 	float gameWorldWidth = windowSize.x * 0.9f;
 	float gameWorldHeight = windowSize.y * 0.9f;
