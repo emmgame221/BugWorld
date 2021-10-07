@@ -1,30 +1,76 @@
 #include <iostream>
-#include <fstream>
-#include <string>
 #include <direct.h>
-#include "Game.h"
-#include "Tile.h"
-#include "Entity.h"
+#include <string>
+#include <fstream>
+
 #pragma warning(disable: 4996)
 
+using namespace std;
+
+// Prototypes
+//////////////////////////////////////////////////////////
+void add_to_file(string directory);
+void create_directory();
+
+//////////////////////////////////////////////////////////
+
+
 void main() {
-	// Get environment name
-	std::string get_user = getenv("USERNAME");
-	std::string save_directory = string save_directory = "C:\\Users\\" + get_user + "\\AppData\\Local\\BugWorldSave\\save.txt";
-	std::string directory = "C:\\Users\\" + get_user + "\\AppData\\Local\\BugWorldSave";
 
-	const char* conver_dir_to_const = directory.c_str();
-	if (mkdir(conver_dir_to_const) == -1)
-		std::cerr << "Error: " << strerror(errno) << std::endl;
-	else
-		std::cout << "File created" << std::endl;
+	create_directory();
 
-	ofstream save_file;
-	save_file.open(save_directory);
-
-	save_file << "Writing to file.." << std::endl;
-	save_file.close();
-
-	return 0;
+	return;
 }
 
+void create_directory() {
+	// Get User info and set directories
+	//////////////////////////////////////////////////////////
+	string get_user = getenv("USERNAME");
+	string save_directory = "C:\\Users\\" + get_user + "\\AppData\\Local\\BugWorldSave\\save.txt";
+	string directory = "C:\\Users\\" + get_user + "\\AppData\\Local\\BugWorldSave";
+	//////////////////////////////////////////////////////////
+
+	// Convert directory string to a const
+	//////////////////////////////////////////////////////////
+	const char* convert_dir_to_string = directory.c_str();
+	//////////////////////////////////////////////////////////
+
+	// Create the directory
+	//////////////////////////////////////////////////////////
+	if (mkdir(convert_dir_to_string) == -1) {
+		cerr << "Error: " << strerror(errno) << endl;
+	}
+	else {
+		cout << "File created";
+	}
+	//////////////////////////////////////////////////////////
+
+	// Call function to add to file
+	//////////////////////////////////////////////////////////
+	add_to_file(save_directory);
+	//////////////////////////////////////////////////////////
+
+	return;
+}
+
+void add_to_file(string directory) {
+
+	//Save to file											
+	//////////////////////////////////////////////////////////
+	ofstream save_file;
+
+	save_file.open(directory);
+
+
+	save_file << "Writing to file..." << endl;
+	save_file << "something" << endl;
+	save_file << endl;
+
+
+
+	save_file.close();
+	//////////////////////////////////////////////////////////
+
+	return;
+
+}

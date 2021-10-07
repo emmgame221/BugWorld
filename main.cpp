@@ -11,6 +11,7 @@ int main()
     game->createTiles();
     game->spawnButtons();
 
+
     while (window.isOpen())
     {                                                        
         sf::Event event;
