@@ -10,7 +10,6 @@ protected:
     float speed;
     float eatSpeed;
     int state = 0; //0-searching 1-go to target 2-return
-
 public:
     int type;
     void move();

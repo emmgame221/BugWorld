@@ -5,13 +5,26 @@
 #include <random>
 
 
+sf::Vector2f movement = sf::Vector2f(1.0f, 1.0f);
+
 void Bug::move() {
 	Game* game = Game::getGame();
 	std::uniform_real_distribution<> range(0,1);
+	int x = sprite.getPosition().x;
+	int y = sprite.getPosition().y;
 
-	sf::Vector2f move = sf::Vector2f(range(game->rng) * 2, range(game->rng) * 2);
+	//sf::Vector2f move = sf::Vector2f(range(game->rng), range(game->rng));
+	
 
-	sprite.move(move);
+	if ((x > (game->getTileW() * game->getTileSize())) || (x < 0)) {
+		movement.x *= -1;
+	}
+	if ((y > (game->getTileH() * game->getTileSize())) || (y < 0)) {
+		movement.y *= -1;
+	}
+
+	sprite.setRotation(angle(sprite.getPosition() + movement, sprite.getPosition()) - 90);
+	sprite.move(normalize(movement));
 }
 
 void Bug::eat() {

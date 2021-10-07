@@ -45,10 +45,14 @@ public:
 	int ladySell = 4;
 	std::random_device rd;
 	std::mt19937 rng;
+	std::uniform_real_distribution<float> urd01;
+	std::uniform_int_distribution<int> widthRange;
+	std::uniform_int_distribution<int> heightRange;
 
 	static Game* getGame();
 	sf::Time getElapsedTime();
 	void setWindow(sf::RenderWindow* win);
+	void checkClick(int x, int y);
 	void drawAll();
 	void draw(sf::Sprite sprite);
 	void update(sf::Event event);
@@ -56,9 +60,10 @@ public:
 	void setGridSize(int width, int height);
 	void createTiles();
 	float getTileSize();
+	int getTileH();
+	int getTileW();
 	void spawnAnt();
 	void spawnLadybug();
-	void moveBugs();
 	void killAnt();
 	void killLadybug();
 	void increaseSFXVolume();
@@ -69,4 +74,7 @@ public:
 	void playPrestigeSound();
 	void spawnButtons();
 	void vegGrowth();
+	int countAdjVeg(int x, int y);
+	int totalLushness();
+	Tile* getTileAt(int x, int y);
 };

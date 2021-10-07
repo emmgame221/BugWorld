@@ -7,7 +7,7 @@ class Tile :
 public:
     Tile(int lushness, float x, float y, float tileSize);
     int lushness;
-    void incLushness();
-    void decLushness();
+    bool incLushness();
+    bool decLushness();
 };
 

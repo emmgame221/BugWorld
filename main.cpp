@@ -1,7 +1,6 @@
 #include <SFML/Graphics.hpp>
 #include "Game.h"
 #include "Button.h"
-#include "AddBug.h"
 
 int main()
 {
@@ -37,6 +36,10 @@ int main()
                     game->decreaseSFXVolume();
                 }
                 break;
+            case sf::Event::MouseButtonPressed:
+                if (event.mouseButton.button == sf::Mouse::Left) {
+                    game->checkClick(event.mouseButton.x, event.mouseButton.y);
+                }
             }
         }
         game->update(event);
