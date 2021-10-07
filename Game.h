@@ -58,7 +58,6 @@ public:
 	float getTileSize();
 	void spawnAnt();
 	void spawnLadybug();
-	void moveBugs();
 	void killAnt();
 	void killLadybug();
 	void increaseSFXVolume();
