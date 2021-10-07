@@ -7,10 +7,7 @@
 
 void Bug::move() {
 	Game* game = Game::getGame();
-	std::uniform_real_distribution<> range(0,1);
-
-	sf::Vector2f move = sf::Vector2f(range(game->rng) * 2, range(game->rng) * 2);
-
+	sf::Vector2f move = sf::Vector2f(game->urd01(game->rng) * 2, game->urd01(game->rng) * 2);
 	sprite.move(move);
 }
 
