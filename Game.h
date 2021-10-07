@@ -22,16 +22,16 @@ protected:
 	float bgmVolume = 0.5f;
 	sf::Time elapsedTime;
 	sf::Clock clock;
+	sf::Time growthTimer = sf::seconds(1.f);
 	int gridWidth;
 	int gridHeight;
 	float tileSize;
-	int food;
-	int currentLevel;
-	int totalBugs;
+	int food = 0;
+	int currentLevel = 1;
+	int totalBugs = 0;
 
 	std::vector<Entity*> tiles;
 	std::vector<Entity*> buttons;
-	std::vector<sf::Sprite> button;
 	std::vector<Bug*> bugs;
 public:
 	sf::Texture vegTextures[4];
@@ -68,4 +68,5 @@ public:
 	void playSpawnSound();
 	void playPrestigeSound();
 	void spawnButtons();
+	void vegGrowth();
 };

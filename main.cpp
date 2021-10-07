@@ -9,12 +9,7 @@ int main()
     Game* game = Game::getGame();
     game->setWindow(&window);
     game->createTiles();
-    Button* addAnt;
-    Button* subtractAnt;
-    Button* addLadybug;
-    Button* subtractLadybug;
-    AddBug* antButton;
-    AddBug* ladybugButton;
+    game->spawnButtons();
 
     while (window.isOpen())
     {                                                        
@@ -43,7 +38,6 @@ int main()
                 break;
             }
         }
-
         game->update(event);
         window.clear(sf::Color::White);
         game->drawAll();
