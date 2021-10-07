@@ -102,8 +102,8 @@ void Game::addFood(int f) {
 void Game::setGridSize(int width, int height) {
 	gridWidth = width;
 	gridHeight = height;
-	widthRange = std::uniform_int_distribution<int>(0, gridWidth);
-	heightRange = std::uniform_int_distribution<int>(0, gridHeight);
+	widthRange = std::uniform_int_distribution<int>(0, gridWidth - 1);
+	heightRange = std::uniform_int_distribution<int>(0, gridHeight - 1);
 	sf::Vector2u windowSize = (window == nullptr) ? sf::Vector2u(1440, 1080) : window->getSize();
 	float gameWorldWidth = windowSize.x * 0.9f;
 	float gameWorldHeight = windowSize.y * 0.9f;
@@ -220,10 +220,16 @@ void Game::playPrestigeSound() {
 
 void Game::vegGrowth() {
 	int growths = 0;
-	while (growths < currentLevel) {
+	int limit = currentLevel;
+	int curTotal = totalLushness();
+	int max = 3 * gridWidth * gridHeight;
+	if (limit + curTotal > max) {
+		limit = max - curTotal;
+	}
+	while (growths < limit) {
 		int x = widthRange(rng);
 		int y = heightRange(rng);
-		float prob = countAdjVeg(x, y) / 27.f;
+		float prob = countAdjVeg(x, y) + 1 / 27.f;
 		float rand = urd01(rng);
 		if (prob >= rand) {
 			if (getTileAt(x, y)->incLushness()) {
