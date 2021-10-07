@@ -45,6 +45,9 @@ public:
 	int ladySell = 4;
 	std::random_device rd;
 	std::mt19937 rng;
+	std::uniform_real_distribution<float> urd01;
+	std::uniform_int_distribution<int> widthRange;
+	std::uniform_int_distribution<int> heightRange;
 
 	static Game* getGame();
 	sf::Time getElapsedTime();
@@ -58,7 +61,6 @@ public:
 	float getTileSize();
 	void spawnAnt();
 	void spawnLadybug();
-	void moveBugs();
 	void killAnt();
 	void killLadybug();
 	void increaseSFXVolume();
@@ -69,4 +71,6 @@ public:
 	void playPrestigeSound();
 	void spawnButtons();
 	void vegGrowth();
+	int countAdjVeg(int x, int y);
+	Tile* getTileAt(int x, int y);
 };
