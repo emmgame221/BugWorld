@@ -7,6 +7,7 @@ int main()
 {
     sf::RenderWindow window(sf::VideoMode(1440, 1080), "Bug World");
     Game* game = Game::getGame();
+    Button* button;
     game->setWindow(&window);
     game->createTiles();
     game->spawnButtons();
@@ -36,6 +37,12 @@ int main()
                     game->decreaseSFXVolume();
                 }
                 break;
+            case sf::Event::MouseButtonPressed:
+                if (event.mouseButton.button == sf::Mouse::Left) {
+                    if (button->ifClick((float)event.mouseButton.x, (float)event.mouseButton.y)){
+                        
+                    }
+                }
             }
         }
         game->update(event);
