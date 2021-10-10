@@ -10,9 +10,10 @@ protected:
     float speed;
     float eatSpeed;
     int state = 0; //0-searching 1-go to target 2-return
+    sf::Vector2f movement = sf::Vector2f(1.0f, 1.0f);
 public:
     int type;
-    void move();
+    void update();
     void eat();
 };
 

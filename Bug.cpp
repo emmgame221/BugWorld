@@ -5,17 +5,17 @@
 #include <random>
 
 
-sf::Vector2f movement = sf::Vector2f(1.0f, 1.0f);
 
-void Bug::move() {
+
+void Bug::update() {
 	Game* game = Game::getGame();
-	std::uniform_real_distribution<> range(0,1);
+	std::uniform_int_distribution<> range(-10,10);
 	int x = sprite.getPosition().x;
 	int y = sprite.getPosition().y;
 
-	//sf::Vector2f move = sf::Vector2f(range(game->rng), range(game->rng));
+	sf::Vector2f move = sf::Vector2f(range(game->rng), range(game->rng));
+	movement += move;
 	
-
 	if ((x > (game->getTileW() * game->getTileSize())) || (x < 0)) {
 		movement.x *= -1;
 	}
@@ -24,7 +24,7 @@ void Bug::move() {
 	}
 
 	sprite.setRotation(angle(sprite.getPosition() + movement, sprite.getPosition()) - 90);
-	sprite.move(normalize(movement));
+	sprite.move(normalize(movement) * game->getElapsedTime().asSeconds() * speed);
 }
 
 void Bug::eat() {
@@ -32,7 +32,7 @@ void Bug::eat() {
 
 Ant::Ant() {
 	Game* game = Game::getGame();
-	this->speed = 1.0f;
+	this->speed = 100.0f;
 	this->eatSpeed = 1.0f;
 	this->type = 0;
 	sprite = sf::Sprite(game->antTexture);
