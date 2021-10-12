@@ -58,6 +58,7 @@ public:
 	void update(sf::Event event);
 	void addFood(int f);
 	void setGridSize(int width, int height);
+	void initLevel();
 	void createTiles();
 	float getTileSize();
 	int getTileH();

@@ -93,6 +93,10 @@ void Game::update(sf::Event event) {
 	for (unsigned int i = 0; i < bugs.size(); i++) {
 		bugs[i]->update();
 	}
+	if (totalLushness() == 0) {
+		currentLevel++;
+		initLevel();
+	}
 }
 
 void Game::addFood(int f) {
@@ -116,7 +120,18 @@ void Game::setWindow(sf::RenderWindow* win) {
 	window = win;
 }
 
+void Game::initLevel() {
+	createTiles();
+	for (int i = 0; i < currentLevel * 10; i++) {
+		vegGrowth();
+	}
+}
+
 void Game::createTiles() {
+	for (Entity* e : tiles) {
+		delete e;
+	}
+	tiles.clear();
 	for (int i = 0; i < gridWidth; i++) {
 		for (int j = 0; j < gridHeight; j++) {
 			tiles.push_back(new Tile(0, i * tileSize, j * tileSize, tileSize));

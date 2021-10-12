@@ -7,7 +7,7 @@ int main()
     sf::RenderWindow window(sf::VideoMode(1440, 1080), "Bug World");
     Game* game = Game::getGame();
     game->setWindow(&window);
-    game->createTiles();
+    game->initLevel();
     game->spawnButtons();
 
 
