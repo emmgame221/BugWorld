@@ -83,7 +83,7 @@ void Game::draw(sf::Sprite sprite) {
 	window->draw(sprite);
 }
 
-void Game::update(sf::Event event) {
+void Game::update() {
 	elapsedTime = clock.restart();
 	growthTimer -= elapsedTime;
 	if (growthTimer <= sf::Time::Zero) {

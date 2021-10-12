@@ -42,7 +42,7 @@ int main()
                 }
             }
         }
-        game->update(event);
+        game->update();
         window.clear(sf::Color::White);
         game->drawAll();
         window.display();

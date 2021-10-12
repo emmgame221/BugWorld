@@ -55,7 +55,7 @@ public:
 	void checkClick(int x, int y);
 	void drawAll();
 	void draw(sf::Sprite sprite);
-	void update(sf::Event event);
+	void update();
 	void addFood(int f);
 	void setGridSize(int width, int height);
 	void initLevel();
