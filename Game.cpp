@@ -50,8 +50,9 @@ sf::Time Game::getElapsedTime() {
 }
 
 void Game::checkClick(int x, int y) {
-	sf::Vector2u size = window->getSize();
-	if (x < size.x * 0.9f && y < size.y * 0.9f) {
+	float gameAreaWidth = tileSize * gridWidth;
+	float gameAreaHeight = tileSize * gridHeight;
+	if (x < gameAreaWidth && y < gameAreaHeight) {
 		// Click in the game area
 		int xi = (int)(((float)x) / tileSize);
 		int yi = (int)(((float)y) / tileSize);
@@ -159,12 +160,14 @@ int Game::getTileW(){
 }
 
 void Game::spawnAnt() {
+	std::cout << "Hello from spawnAnt()" << std::endl;
 	bugs.push_back(new Ant());
 	playSpawnSound();
 	food -= antCost;
 }
 
 void Game::spawnLadybug() {
+	std::cout << "Hello from spawnLadybug()" << std::endl;
 	if (food >= ladyCost) {
 		bugs.push_back(new Ladybug());
 		playSpawnSound();
@@ -174,8 +177,9 @@ void Game::spawnLadybug() {
 
 
 void Game::killAnt() {
+	std::cout << "Hello from killAnt()" << std::endl;
 	if (bugs.size() > 0) {
-		for (int i = bugs.size(); i >= 0; i--) {
+		for (int i = bugs.size() - 1; i >= 0; i--) {
 			if (bugs[i]->type == 0) {
 				bugs.erase(bugs.begin() + i);
 				food += antSell;
@@ -185,8 +189,9 @@ void Game::killAnt() {
 }
 
 void Game::killLadybug() {
+	std::cout << "Hello from killLadybug()" << std::endl;
 	if (bugs.size() > 0) {
-		for (int i = bugs.size(); i >= 0; i--) {
+		for (int i = bugs.size() - 1; i >= 0; i--) {
 			if (bugs[i]->type == 1) {
 				bugs.erase(bugs.begin() + i);
 				food += ladySell;

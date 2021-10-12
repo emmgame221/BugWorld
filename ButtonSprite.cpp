@@ -53,7 +53,7 @@ Button* AllButtonSprite::minusLadybug() {
 	Game* game = Game::getGame();
 	sf::Sprite sprite(game->minusTexture);
 	sprite.setPosition(sf::Vector2f(95.0f, 965.0f));
-	std::function<void()> func = std::bind(&Game::spawnLadybug, game);
+	std::function<void()> func = std::bind(&Game::killLadybug, game);
 	Button* b = new Button(sprite, func);
 	return b;
 }
