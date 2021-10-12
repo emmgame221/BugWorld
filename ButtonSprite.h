@@ -6,7 +6,7 @@
 #include <string>
 #include <SFML/Graphics.hpp>
 
-static class AllButtonSprite {
+class AllButtonSprite {
 	
 public:
     static Button* antPic();
