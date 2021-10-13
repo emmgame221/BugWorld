@@ -31,6 +31,10 @@ void Bug::update() {
 		movement.y *= -1;
 	}
 
+	if (game->getTileAt(target.x / game->getTileSize(), target.y / game->getTileSize())->lushness == 0) {
+		state = 0;
+	}
+
 	if (state == 1) {
 		if (distance(target, sf::Vector2f(x, y)) >= 10) {
 			movement.x = target.x - x;
