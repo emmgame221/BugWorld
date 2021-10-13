@@ -27,7 +27,9 @@ protected:
 	int gridWidth;
 	int gridHeight;
 	float tileSize;
-	
+	sf::Font font;
+	sf::Text foodText;
+	sf::Text levelText;
 
 	std::vector<Entity*> tiles;
 	std::vector<Entity*> buttons;

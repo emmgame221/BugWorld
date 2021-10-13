@@ -36,8 +36,14 @@ Game::Game() {
 	backgroundMusic.play();
 	rng = std::mt19937(rd());
 	urd01 = std::uniform_real_distribution<float>(0.f, 1.f);
-	sf::Font font;
+	font = sf::Font();
 	font.loadFromFile("./resources/NewYork.otf");
+	foodText = sf::Text("Food: " + std::to_string(food), font);
+	foodText.setFillColor(sf::Color::Black);
+	foodText.setPosition(sf::Vector2f(1300.f, 0.f));
+	levelText = sf::Text("Level: " + std::to_string(currentLevel), font);
+	levelText.setFillColor(sf::Color::Black);
+	levelText.setPosition(sf::Vector2f(1300.f, 50.f));
 }
 
 Game* Game::getGame() {
@@ -78,6 +84,8 @@ void Game::checkClick(int x, int y) {
 }
 
 void Game::drawAll() {
+	window->draw(foodText);
+	window->draw(levelText);
 	for (unsigned int i = 0; i < tiles.size(); i++) {
 		tiles[i]->draw();
 	}
@@ -94,6 +102,8 @@ void Game::draw(sf::Sprite sprite) {
 }
 
 void Game::update() {
+	foodText.setString("Food: " + std::to_string(food));
+	levelText.setString("Level: " + std::to_string(currentLevel));
 	elapsedTime = clock.restart();
 	growthTimer -= elapsedTime;
 	if (growthTimer <= sf::Time::Zero) {
@@ -162,14 +172,12 @@ int Game::getTileW(){
 }
 
 void Game::spawnAnt() {
-	std::cout << "Hello from spawnAnt()" << std::endl;
 	bugs.push_back(new Ant());
 	playSpawnSound();
 	food -= antCost;
 }
 
 void Game::spawnLadybug() {
-	std::cout << "Hello from spawnLadybug()" << std::endl;
 	if (food >= ladyCost) {
 		bugs.push_back(new Ladybug());
 		playSpawnSound();
@@ -179,7 +187,6 @@ void Game::spawnLadybug() {
 
 
 void Game::killAnt() {
-	std::cout << "Hello from killAnt()" << std::endl;
 	if (bugs.size() > 0) {
 		for (int i = bugs.size() - 1; i >= 0; i--) {
 			if (bugs[i]->type == 0) {
@@ -191,7 +198,6 @@ void Game::killAnt() {
 }
 
 void Game::killLadybug() {
-	std::cout << "Hello from killLadybug()" << std::endl;
 	if (bugs.size() > 0) {
 		for (int i = bugs.size() - 1; i >= 0; i--) {
 			if (bugs[i]->type == 1) {
@@ -210,8 +216,6 @@ void Game::spawnButtons() {
 	buttons.push_back(allButtons.ladybugPic());
 	buttons.push_back(allButtons.plusLadybug());
 	buttons.push_back(allButtons.minusLadybug());
-	buttons.push_back(allButtons.foodCount());
-	buttons.push_back(allButtons.levelCount());
 }
 
 void Game::increaseSFXVolume() {

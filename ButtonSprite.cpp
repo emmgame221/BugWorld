@@ -57,30 +57,3 @@ Button* AllButtonSprite::minusLadybug() {
 	Button* b = new Button(sprite, func);
 	return b;
 }
-
-Button* AllButtonSprite::foodCount() {
-	Game* game = Game::getGame();
-	int food = game->food;
-	std::string foodString;
-	sf::Text foodText;
-	foodString = std::to_string(food);
-	foodText.setString("Food: " + foodString);
-	foodText.setFillColor(sf::Color::Black);
-	foodText.setPosition(sf::Vector2f(0.0f, 585.f));
-	Button* b = new Button(foodText);
-	return b;
-
-}
-
-Button* AllButtonSprite::levelCount() {
-	Game* game = Game::getGame();
-	int currentLevel = game->currentLevel;
-	std::string levelString;
-	sf::Text levelText;
-	levelString = std::to_string(currentLevel);
-	levelText.setString("Level: " + levelString);
-	levelText.setFillColor(sf::Color::Black);
-	levelText.setPosition(sf::Vector2f(500.f, 585.f));
-	Button* b = new Button(levelText);
-	return b;
-}
