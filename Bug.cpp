@@ -100,7 +100,8 @@ Ladybug::Ladybug() {
 	this->type = 1;
 	sprite = sf::Sprite(game->ladybugTexture);
 	sprite.setPosition(sf::Vector2f(0.0f, 0.0f));
-	float scale = game->getTileSize() / sprite.getLocalBounds().width;
+	//float scale = game->getTileSize() / sprite.getLocalBounds().width;
+	float scale = 2;
 	sprite.setScale(sf::Vector2f(scale, scale));
 }
 
