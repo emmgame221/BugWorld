@@ -36,6 +36,8 @@ Game::Game() {
 	backgroundMusic.play();
 	rng = std::mt19937(rd());
 	urd01 = std::uniform_real_distribution<float>(0.f, 1.f);
+	sf::Font font;
+	font.loadFromFile("./resources/NewYork.otf");
 }
 
 Game* Game::getGame() {
@@ -208,6 +210,8 @@ void Game::spawnButtons() {
 	buttons.push_back(allButtons.ladybugPic());
 	buttons.push_back(allButtons.plusLadybug());
 	buttons.push_back(allButtons.minusLadybug());
+	buttons.push_back(allButtons.foodCount());
+	buttons.push_back(allButtons.levelCount());
 }
 
 void Game::increaseSFXVolume() {

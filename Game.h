@@ -27,9 +27,7 @@ protected:
 	int gridWidth;
 	int gridHeight;
 	float tileSize;
-	int food = 0;
-	int currentLevel = 1;
-	int totalBugs = 0;
+	
 
 	std::vector<Entity*> tiles;
 	std::vector<Entity*> buttons;
@@ -44,6 +42,9 @@ public:
 	int ladyCost = 8;
 	int antSell = 3;
 	int ladySell = 4;
+	int food = 0;
+	int currentLevel = 1;
+	int totalBugs = 0;
 	std::random_device rd;
 	std::mt19937 rng;
 	std::uniform_real_distribution<float> urd01;

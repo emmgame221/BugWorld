@@ -10,5 +10,6 @@ private:
     std::function<void()> toCall;
 public:
     Button(sf::Sprite s, std::function<void()> func);
+    Button(sf::Text t);
     void onClick();
 };
