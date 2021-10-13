@@ -3,6 +3,7 @@
 #include "Utilities.h"
 #include <SFML/Graphics.hpp>
 #include <random>
+#include <iostream>
 
 
 
@@ -12,6 +13,13 @@ void Bug::update() {
 	std::uniform_int_distribution<> range(-10,10);
 	int x = sprite.getPosition().x;
 	int y = sprite.getPosition().y;
+
+	sf::CircleShape circle = sf::CircleShape(eatRad);
+	circle.setOrigin(game->getTileSize(), game->getTileSize());
+	circle.setPosition(x,y);
+	sf::FloatRect fov = circle.getGlobalBounds();
+
+	
 
 	sf::Vector2f move = sf::Vector2f(range(game->rng), range(game->rng));
 	movement += move;
@@ -23,17 +31,59 @@ void Bug::update() {
 		movement.y *= -1;
 	}
 
+	if (state == 1) {
+		if (distance(target, sf::Vector2f(x, y)) >= 10) {
+			movement.x = target.x - x;
+			movement.y = target.y - y;
+		}
+		else {
+			this->eat(game->getTileAt(target.x / game->getTileSize(),target.y / game->getTileSize()));
+			return;
+		}
+	}
+	else {
+		for (int xx = 0; xx < game->getTileW(); xx++) {
+			for (int yy = 0; yy < game->getTileH(); yy++) {
+				sf::Vector2f pt = sf::Vector2f((xx * game->getTileSize()) + (game->getTileSize() / 2), (yy * game->getTileSize()) + (game->getTileSize() / 2));
+				if (fov.contains(pt) && game->getTileAt(xx, yy)->lushness >= 1 && !game->getTileAt(xx, yy)->eating) {
+					Tile* tile = game->getTileAt(xx, yy);
+					target = pt;
+					tile->startEat();
+					this->state = 1;
+					break;
+				}
+			}
+			if (state == 1)
+				break;
+		}
+	}
+
+
+
 	sprite.setRotation(angle(sprite.getPosition() + movement, sprite.getPosition()) - 90);
 	sprite.move(normalize(movement) * game->getElapsedTime().asSeconds() * speed);
 }
 
-void Bug::eat() {
+void Bug::eat(Tile* tile) {
+	Game* game = Game::getGame();
+	eatTimer -= game->getElapsedTime();
+	if (tile->lushness >= 1 && eatTimer <= sf::Time::Zero) {
+		tile->decLushness();
+		game->addFood(1);
+		if (tile->lushness == 0) {
+			this->state = 0;
+			tile->eating = false;
+		}
+		eatTimer = sf::seconds(this->eatSpeed);
+	}
 }
 
 Ant::Ant() {
 	Game* game = Game::getGame();
 	this->speed = 100.0f;
 	this->eatSpeed = 1.0f;
+	this->eatTimer = sf::seconds(eatSpeed);
+	this->eatRad = game->getTileSize();
 	this->type = 0;
 	sprite = sf::Sprite(game->antTexture);
 	sprite.setPosition(sf::Vector2f(0.0f,0.0f));

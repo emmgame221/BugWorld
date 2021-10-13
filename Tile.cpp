@@ -29,3 +29,11 @@ bool Tile::decLushness() {
 	sprite.setTexture(game->vegTextures[lushness]);
 	return true;
 }
+
+void Tile::startEat() {
+	this->eating = true;
+}
+
+bool Tile::checkEat() {
+	return eating;
+}

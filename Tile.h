@@ -7,7 +7,10 @@ class Tile :
 public:
     Tile(int lushness, float x, float y, float tileSize);
     int lushness;
+    bool eating = false;
     bool incLushness();
     bool decLushness();
+    void startEat();
+    bool checkEat();
 };
 
