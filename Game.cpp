@@ -23,7 +23,7 @@ Game::Game() {
 	plusTexture = sf::Texture();
 	minusTexture = sf::Texture();
 	antTexture.loadFromFile("./resources/ant.png");
-	ladybugTexture.loadFromFile("./resources/ladybug1spritesheet.png", sf::IntRect(2, 2, 27, 29));
+	ladybugTexture.loadFromFile("./resources/ladybug.png");
 	plusTexture.loadFromFile("./resources/plus.png");
 	minusTexture.loadFromFile("./resources/minus.png");
 	clock = sf::Clock();
@@ -113,6 +113,7 @@ void Game::update() {
 	for (unsigned int i = 0; i < bugs.size(); i++) {
 		bugs[i]->update();
 	}
+
 	if (totalLushness() == 0) {
 		currentLevel++;
 		initLevel();
@@ -172,9 +173,11 @@ int Game::getTileW(){
 }
 
 void Game::spawnAnt() {
-	bugs.push_back(new Ant());
-	playSpawnSound();
-	food -= antCost;
+	if (food >= antCost) {
+		bugs.push_back(new Ant());
+		playSpawnSound();
+		food -= antCost;
+	}
 }
 
 void Game::spawnLadybug() {
@@ -192,6 +195,7 @@ void Game::killAnt() {
 			if (bugs[i]->type == 0) {
 				bugs.erase(bugs.begin() + i);
 				food += antSell;
+				break;
 			}
 		}
 	}
@@ -203,6 +207,7 @@ void Game::killLadybug() {
 			if (bugs[i]->type == 1) {
 				bugs.erase(bugs.begin() + i);
 				food += ladySell;
+				break;
 			}
 		}
 	}

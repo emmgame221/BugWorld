@@ -10,7 +10,7 @@
 
 void Bug::update() {
 	Game* game = Game::getGame();
-	std::uniform_int_distribution<> range(-10,10);
+	std::uniform_int_distribution<> range(-5,5);
 	int x = sprite.getPosition().x;
 	int y = sprite.getPosition().y;
 
@@ -45,7 +45,7 @@ void Bug::update() {
 		for (int xx = 0; xx < game->getTileW(); xx++) {
 			for (int yy = 0; yy < game->getTileH(); yy++) {
 				sf::Vector2f pt = sf::Vector2f((xx * game->getTileSize()) + (game->getTileSize() / 2), (yy * game->getTileSize()) + (game->getTileSize() / 2));
-				if (fov.contains(pt) && game->getTileAt(xx, yy)->lushness >= 1 && !game->getTileAt(xx, yy)->eating) {
+				if (fov.contains(pt) && game->getTileAt(xx, yy)->lushness >= 1 /* && !game->getTileAt(xx, yy)->eating*/) {
 					Tile* tile = game->getTileAt(xx, yy);
 					target = pt;
 					tile->startEat();
@@ -81,27 +81,30 @@ void Bug::eat(Tile* tile) {
 Ant::Ant() {
 	Game* game = Game::getGame();
 	this->speed = 100.0f;
-	this->eatSpeed = 1.0f;
+	this->eatSpeed = 5.0f;
 	this->eatTimer = sf::seconds(eatSpeed);
-	this->eatRad = game->getTileSize();
+	this->eatRad = game->getTileSize() * 2;
 	this->type = 0;
 	sprite = sf::Sprite(game->antTexture);
 	sprite.setPosition(sf::Vector2f(0.0f,0.0f));
 	float scale = game->getTileSize() / sprite.getLocalBounds().width;
-	sprite.setScale(sf::Vector2f(scale,scale));
-	sprite.setOrigin(sf::Vector2f(game->getTileSize()/2,0));
+	sprite.setOrigin(sf::Vector2f((sprite.getLocalBounds().width / 2), 0));
+	sprite.setScale(sf::Vector2f(scale * .75,scale * .75));
 }
 
 
 Ladybug::Ladybug() {
 	Game* game = Game::getGame();
-	this->speed = 1.0f;
+	this->speed = 500.0f;
 	this->eatSpeed = 1.0f;
+	this->eatTimer = sf::seconds(eatSpeed);
+	this->eatRad = game->getTileSize();
 	this->type = 1;
 	sprite = sf::Sprite(game->ladybugTexture);
 	sprite.setPosition(sf::Vector2f(0.0f, 0.0f));
 	float scale = game->getTileSize() / sprite.getLocalBounds().width;
-	sprite.setScale(sf::Vector2f(scale, scale));
+	sprite.setOrigin(sf::Vector2f((sprite.getLocalBounds().width / 2), 0));
+	sprite.setScale(sf::Vector2f(scale / 2, scale / 2));
 }
 
 Pheremone::Pheremone(sf::Vector2f inPt, int inType) {
