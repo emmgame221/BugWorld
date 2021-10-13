@@ -19,8 +19,8 @@ protected:
 	sf::Sound spawnSound;
 	sf::SoundBuffer prestigeSoundBuf;
 	sf::Sound prestigeSound;
-	float sfxVolume = 0.5f;
-	float bgmVolume = 0.5f;
+	float sfxVolume = 50.f;
+	float bgmVolume = 50.f;
 	sf::Time elapsedTime;
 	sf::Clock clock;
 	sf::Time growthTimer = sf::seconds(1.f);

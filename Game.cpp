@@ -219,16 +219,16 @@ void Game::spawnButtons() {
 }
 
 void Game::increaseSFXVolume() {
-	sfxVolume += 0.1f;
-	if (sfxVolume > 1.f) {
-		sfxVolume = 1.f;
+	sfxVolume += 10.f;
+	if (sfxVolume > 100.f) {
+		sfxVolume = 100.f;
 	}
 	spawnSound.setVolume(sfxVolume);
 	prestigeSound.setVolume(sfxVolume);
 }
 
 void Game::decreaseSFXVolume() {
-	sfxVolume -= 0.1f;
+	sfxVolume -= 10.f;
 	if (sfxVolume < 0.f) {
 		sfxVolume = 0.f;
 	}
@@ -237,17 +237,19 @@ void Game::decreaseSFXVolume() {
 }
 
 void Game::increaseBGMVolume() {
-	bgmVolume += 0.1f;
-	if (bgmVolume > 1.f) {
-		bgmVolume = 1.f;
+	bgmVolume += 10.f;
+	if (bgmVolume > 100.f) {
+		bgmVolume = 100.f;
 	}
+	backgroundMusic.setVolume(bgmVolume);
 }
 
 void Game::decreaseBGMVolume() {
-	bgmVolume -= 0.1f;
+	bgmVolume -= 10.f;
 	if (bgmVolume < 0.f) {
 		bgmVolume = 0.f;
 	}
+	backgroundMusic.setVolume(bgmVolume);
 }
 
 void Game::playSpawnSound() {
