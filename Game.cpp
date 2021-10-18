@@ -3,7 +3,6 @@
 #include "ButtonSprite.h"
 
 Game::Game() {
-	this->setGridSize(15, 10);
 	std::vector<Entity*> tiles;
 	this->tiles = tiles;
 	std::vector<Bug*> bugs;
@@ -117,6 +116,25 @@ void Game::update() {
 	if (totalLushness() == 0) {
 		currentLevel++;
 		initLevel();
+	}
+}
+
+void Game::resize() {
+	sf::Vector2u windowSize = (window == nullptr) ? sf::Vector2u(1440, 1080) : window->getSize();
+	float gameWorldWidth = windowSize.x * 0.9f;
+	float gameWorldHeight = windowSize.y * 0.9f;
+	float tileWidth = gameWorldWidth / gridWidth;
+	float tileHeight = gameWorldHeight / gridHeight;
+	tileSize = (tileWidth > tileHeight) ? tileHeight : tileWidth;
+	for (int i = 0; i < gridWidth; i++) {
+		for (int j = 0; j < gridHeight; j++) {
+			Tile* t = getTileAt(i, j);
+			t->setSize(tileSize);
+			t->setPosition(i * tileSize, j * tileSize);
+		}
+	}
+	for (Entity* tile : tiles) {
+		((Tile*)tile)->setSize(tileSize);
 	}
 }
 

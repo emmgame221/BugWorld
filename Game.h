@@ -60,6 +60,7 @@ public:
 	void drawAll();
 	void draw(sf::Sprite sprite);
 	void update();
+	void resize();
 	void addFood(int f);
 	void setGridSize(int width, int height);
 	void initLevel();
