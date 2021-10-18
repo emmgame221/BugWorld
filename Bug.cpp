@@ -111,6 +111,18 @@ Ladybug::Ladybug() {
 	sprite.setScale(sf::Vector2f(scale / 2, scale / 2));
 }
 
+Stinkbug::Stinkbug() {
+	Game* game = Game::getGame();
+	this->speed = 100.0f;
+	this->eatRad = game->getTileSize() * 3;
+	this->type = 2;
+	sprite = sf::Sprite(game->stinkbugTexture);
+	sprite.setPosition(sf::Vector2f(0.0f, 0.0f));
+	float scale = game->getTileSize() / sprite.getLocalBounds().width;
+	sprite.setOrigin(sf::Vector2f((sprite.getLocalBounds().width / 2), 0));
+	sprite.setScale(sf::Vector2f(scale / 2, scale / 2));
+}
+
 Pheremone::Pheremone(sf::Vector2f inPt, int inType) {
 	this->point = inPt;
 	this->type = inType;
