@@ -1,6 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include "Game.h"
 #include "Button.h"
+#include "InfoMenu.h"
 
 int main()
 {
@@ -9,6 +10,8 @@ int main()
     game->setWindow(&window);
     game->initLevel();
     game->spawnButtons();
+    Menu menu;
+    
 
 
     while (window.isOpen())
@@ -34,6 +37,9 @@ int main()
                 if (event.key.code == sf::Keyboard::Down) {
                     game->decreaseBGMVolume();
                     game->decreaseSFXVolume();
+                }
+                if (event.key.code == sf::Keyboard::Space) {
+                    menu.bugMenu();
                 }
                 break;
             case sf::Event::MouseButtonPressed:
