@@ -139,7 +139,8 @@ void Game::resize() {
 	levelText.setScale(sf::Vector2f(windowSize.x * 0.08f / levelText.getLocalBounds().width, windowSize.y * 0.08f / levelText.getLocalBounds().width));
 	for (Bug* bug : bugs) {
 		sf::Vector2f lastPos = bug->getPosition();
-		bug->setPosition(sf::Vector2f(lastPos.x * prevWinSize.x / windowSize.x, lastPos.y * prevWinSize.y / windowSize.y));
+		bug->setPosition(sf::Vector2f(lastPos.x * windowSize.x / prevWinSize.x, lastPos.y * windowSize.y / prevWinSize.y));
+		bug->setScale(tileSize);
 	}
 	prevWinSize = windowSize;
 }
