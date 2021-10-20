@@ -37,12 +37,6 @@ Game::Game() {
 	urd01 = std::uniform_real_distribution<float>(0.f, 1.f);
 	font = sf::Font();
 	font.loadFromFile("./resources/NewYork.otf");
-	foodText = sf::Text("Food: " + std::to_string(food), font);
-	foodText.setFillColor(sf::Color::Black);
-	foodText.setPosition(sf::Vector2f(1300.f, 0.f));
-	levelText = sf::Text("Level: " + std::to_string(currentLevel), font);
-	levelText.setFillColor(sf::Color::Black);
-	levelText.setPosition(sf::Vector2f(1300.f, 50.f));
 }
 
 Game* Game::getGame() {
@@ -73,11 +67,10 @@ void Game::checkClick(int x, int y) {
 	else {
 		// Click in the UI area
 		// Check each button to see if the click is on that button
-		// Once one is found trigger that button's onClick and then break
+		// Once one is found trigger that button's onClick
 		for (Entity* b : buttons) {
 			if (b->sprite.getGlobalBounds().contains(x, y)) {
 				((Button*)b)->onClick();
-				break;
 			}
 		}
 	}
@@ -140,6 +133,10 @@ void Game::resize() {
 	for (Entity* tile : tiles) {
 		((Tile*)tile)->setSize(tileSize);
 	}
+	foodText.setPosition(sf::Vector2f(windowSize.x * 0.9f, 0.f));
+	foodText.setScale(sf::Vector2f(windowSize.x * 0.08f / foodText.getLocalBounds().width, windowSize.y * 0.08f / foodText.getLocalBounds().width));
+	levelText.setPosition(sf::Vector2f(windowSize.x * 0.9f, windowSize.y * 0.1f));
+	levelText.setScale(sf::Vector2f(windowSize.x * 0.08f / levelText.getLocalBounds().width, windowSize.y * 0.08f / levelText.getLocalBounds().width));
 }
 
 void Game::addFood(int f) {
@@ -243,6 +240,18 @@ void Game::spawnButtons() {
 	buttons.push_back(allButtons.ladybugPic());
 	buttons.push_back(allButtons.plusLadybug());
 	buttons.push_back(allButtons.minusLadybug());
+}
+
+void Game::spawnLabels() {
+	sf::Vector2u winSize = window->getSize();
+	foodText = sf::Text("Food: " + std::to_string(food), font);
+	foodText.setFillColor(sf::Color::Black);
+	foodText.setPosition(sf::Vector2f(winSize.x * 0.9f, 0.f));
+	foodText.setScale(sf::Vector2f(winSize.x * 0.08f / foodText.getLocalBounds().width, winSize.y * 0.08f / foodText.getLocalBounds().width));
+	levelText = sf::Text("Level: " + std::to_string(currentLevel), font);
+	levelText.setFillColor(sf::Color::Black);
+	levelText.setPosition(sf::Vector2f(winSize.x * 0.9f, winSize.y * 0.1f));
+	levelText.setScale(sf::Vector2f(winSize.x * 0.08f / levelText.getLocalBounds().width, winSize.y * 0.08f / levelText.getLocalBounds().width));
 }
 
 void Game::increaseSFXVolume() {

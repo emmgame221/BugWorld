@@ -79,6 +79,7 @@ public:
 	void playSpawnSound();
 	void playPrestigeSound();
 	void spawnButtons();
+	void spawnLabels();
 	void vegGrowth();
 	int countAdjVeg(int x, int y);
 	int totalLushness();

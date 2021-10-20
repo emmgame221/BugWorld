@@ -24,6 +24,7 @@ int main()
     game->setGridSize(START_GRID_WIDTH, START_GRID_HEIGHT);
     game->initLevel();
     game->spawnButtons();
+    game->spawnLabels();
 
 
     while (window.isOpen())
