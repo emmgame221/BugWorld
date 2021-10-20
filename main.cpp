@@ -77,6 +77,7 @@ int main()
                     window.setSize(sf::Vector2u(event.size.width, newHeight));
                 }
                 else {
+                    window.setView(sf::View(sf::FloatRect(0, 0, event.size.width, event.size.height)));
                     game->resize();
                 }
                 break;
