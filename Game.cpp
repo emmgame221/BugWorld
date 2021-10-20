@@ -121,11 +121,15 @@ void Game::update() {
 
 void Game::resize() {
 	sf::Vector2u windowSize = (window == nullptr) ? sf::Vector2u(1440, 1080) : window->getSize();
+	std::cout << "Window Width: " << windowSize.x << "Window Height: " << windowSize.y << std::endl;
 	float gameWorldWidth = windowSize.x * 0.9f;
 	float gameWorldHeight = windowSize.y * 0.9f;
+	std::cout << "Game World Width: " << gameWorldWidth << "Game World Height: " << gameWorldHeight << std::endl;
 	float tileWidth = gameWorldWidth / gridWidth;
 	float tileHeight = gameWorldHeight / gridHeight;
+	std::cout << "Tile Width: " << tileWidth << "Tile Height: " << tileHeight << std::endl;
 	tileSize = (tileWidth > tileHeight) ? tileHeight : tileWidth;
+	std::cout << "Tile Size: " << tileSize << std::endl;
 	for (int i = 0; i < gridWidth; i++) {
 		for (int j = 0; j < gridHeight; j++) {
 			Tile* t = getTileAt(i, j);

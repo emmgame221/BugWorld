@@ -6,8 +6,8 @@ const int WIN_MIN_WIDTH = 720;
 const int WIN_MIN_HEIGHT = 540;
 const int WIN_DEF_WIDTH = 1440;
 const int WIN_DEF_HEIGHT = 1080;
-const int START_GRID_WIDTH = 15;
-const int START_GRID_HEIGHT = 10;
+const int START_GRID_WIDTH = 16;
+const int START_GRID_HEIGHT = 9;
 
 int main()
 {
@@ -57,6 +57,8 @@ int main()
                 }
                 break;
             case sf::Event::Resized:
+                float aspectRatio = (float)event.size.width / (float)event.size.height;
+
                 if (event.size.width < WIN_MIN_WIDTH && event.size.height < WIN_MIN_HEIGHT) {
                     window.setSize(sf::Vector2u(WIN_MIN_WIDTH, WIN_MIN_HEIGHT));
                 }
@@ -65,6 +67,14 @@ int main()
                 }
                 else if (event.size.height < WIN_MIN_HEIGHT) {
                     window.setSize(sf::Vector2u(event.size.width, WIN_MIN_HEIGHT));
+                }
+                else if (aspectRatio < 1.33f) {
+                    int newWidth = event.size.height * 4 / 3;
+                    window.setSize(sf::Vector2u(newWidth, event.size.height));
+                }
+                else if (aspectRatio > 1.79f) {
+                    int newHeight = event.size.width * 9 / 16;
+                    window.setSize(sf::Vector2u(event.size.width, newHeight));
                 }
                 else {
                     game->resize();
