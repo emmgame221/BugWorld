@@ -83,4 +83,5 @@ public:
 	int countAdjVeg(int x, int y);
 	int totalLushness();
 	Tile* getTileAt(int x, int y);
+	sf::Vector2u getWindowSize();
 };

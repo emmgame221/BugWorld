@@ -134,6 +134,9 @@ void Game::resize() {
 			t->setPosition(i * tileSize, j * tileSize);
 		}
 	}
+	for (Entity* button : buttons) {
+		((Button*)button)->updateTransform();
+	}
 	for (Entity* tile : tiles) {
 		((Tile*)tile)->setSize(tileSize);
 	}
@@ -341,6 +344,10 @@ int Game::totalLushness() {
 		total += ((Tile*)t)->lushness;
 	}
 	return total;
+}
+
+sf::Vector2u Game::getWindowSize() {
+	return window->getSize();
 }
 
 Game* Game::game = NULL;

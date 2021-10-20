@@ -8,7 +8,12 @@ class Button :
 {
 private:
     std::function<void()> toCall;
+    float xOffset; // These offsets and sizes are a percentage of screen size
+    float yOffset;
+    float xSize;
+    float ySize;
 public:
-    Button(sf::Sprite s, std::function<void()> func);
+    Button(sf::Sprite s, std::function<void()> func, float xOffset, float yOffset, float xSize, float ySize);
     void onClick();
+    void updateTransform();
 };

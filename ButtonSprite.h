@@ -3,7 +3,6 @@
 #include "Game.h"
 #include "Button.h"
 #include <functional>
-#include <string>
 #include <SFML/Graphics.hpp>
 
 class AllButtonSprite {
@@ -15,6 +14,4 @@ public:
 	static Button* ladybugPic();
 	static Button* plusLadybug();
 	static Button* minusLadybug();
-	static Button* foodCount();
-	static Button* levelCount();
 };
