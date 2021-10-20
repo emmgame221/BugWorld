@@ -38,6 +38,7 @@ public:
 	sf::Texture vegTextures[4];
 	sf::Texture antTexture;
 	sf::Texture ladybugTexture;
+	sf::Texture stinkbugTexture;
 	sf::Texture plusTexture;
 	sf::Texture minusTexture;
 	int antCost = 5;

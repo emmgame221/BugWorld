@@ -20,10 +20,12 @@ Game::Game() {
 	vegTextures[3].loadFromFile("./resources/veg3.png");
 	antTexture = sf::Texture();
 	ladybugTexture = sf::Texture();
+	stinkbugTexture = sf::Texture();
 	plusTexture = sf::Texture();
 	minusTexture = sf::Texture();
 	antTexture.loadFromFile("./resources/ant.png");
 	ladybugTexture.loadFromFile("./resources/ladybug.png");
+	stinkbugTexture.loadFromFile("./resources/stinkbug.png");
 	plusTexture.loadFromFile("./resources/plus.png");
 	minusTexture.loadFromFile("./resources/minus.png");
 	clock = sf::Clock();

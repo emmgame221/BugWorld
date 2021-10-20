@@ -37,6 +37,14 @@ public:
     void move();
 };
 
+class Stinkbug :
+    public Bug
+{
+public:
+    Stinkbug();
+    void move();
+};
+
 class Pheremone
 {
 public:
