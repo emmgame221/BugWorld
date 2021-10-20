@@ -27,6 +27,7 @@ protected:
 	int gridWidth;
 	int gridHeight;
 	float tileSize;
+	sf::Vector2u prevWinSize;
 	sf::Font font;
 	sf::Text foodText;
 	sf::Text levelText;

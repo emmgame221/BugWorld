@@ -6,3 +6,11 @@ void Entity::draw() {
 }
 
 void Entity::update() {}
+
+sf::Vector2f Entity::getPosition() {
+	return sprite.getPosition();
+}
+
+void Entity::setPosition(sf::Vector2f pos) {
+	sprite.setPosition(pos);
+}

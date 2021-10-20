@@ -7,5 +7,7 @@ public:
 	sf::Sprite sprite;
 	void update();
 	void draw();
+	sf::Vector2f getPosition();
+	void setPosition(sf::Vector2f pos);
 };
 

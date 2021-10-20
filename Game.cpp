@@ -137,6 +137,11 @@ void Game::resize() {
 	foodText.setScale(sf::Vector2f(windowSize.x * 0.08f / foodText.getLocalBounds().width, windowSize.y * 0.08f / foodText.getLocalBounds().width));
 	levelText.setPosition(sf::Vector2f(windowSize.x * 0.9f, windowSize.y * 0.1f));
 	levelText.setScale(sf::Vector2f(windowSize.x * 0.08f / levelText.getLocalBounds().width, windowSize.y * 0.08f / levelText.getLocalBounds().width));
+	for (Bug* bug : bugs) {
+		sf::Vector2f lastPos = bug->getPosition();
+		bug->setPosition(sf::Vector2f(lastPos.x * prevWinSize.x / windowSize.x, lastPos.y * prevWinSize.y / windowSize.y));
+	}
+	prevWinSize = windowSize;
 }
 
 void Game::addFood(int f) {
@@ -158,6 +163,7 @@ void Game::setGridSize(int width, int height) {
 
 void Game::setWindow(sf::RenderWindow* win) {
 	window = win;
+	prevWinSize = window->getSize();
 }
 
 void Game::initLevel() {
@@ -318,6 +324,9 @@ void Game::vegGrowth() {
 }
 
 Tile* Game::getTileAt(int x, int y) {
+	if (x >= gridWidth || y >= gridHeight) {
+		return (Tile*)tiles[(gridWidth - 1) * gridHeight + gridHeight - 1];
+	}
 	return (Tile*)tiles[x * gridHeight + y];
 }
 
