@@ -15,6 +15,9 @@ public:
 	static Button* ladybugPic();
 	static Button* plusLadybug();
 	static Button* minusLadybug();
+	static Button* stinkbugPic();
+	static Button* plusStinkbug();
+	static Button* minusStinkbug();
 	static Button* foodCount();
 	static Button* levelCount();
 };

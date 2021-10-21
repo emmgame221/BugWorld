@@ -3,11 +3,13 @@
 
 class Tile :
     public Entity
+
 {
 public:
     Tile(int lushness, float x, float y, float tileSize);
     int lushness;
     bool eating = false;
+    bool scent = false;
     bool incLushness();
     bool decLushness();
     void startEat();

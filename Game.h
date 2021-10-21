@@ -31,7 +31,7 @@ protected:
 	sf::Text foodText;
 	sf::Text levelText;
 
-	std::vector<Entity*> tiles;
+	std::vector<Tile*> tiles;
 	std::vector<Entity*> buttons;
 	std::vector<Bug*> bugs;
 public:
@@ -43,8 +43,10 @@ public:
 	sf::Texture minusTexture;
 	int antCost = 5;
 	int ladyCost = 8;
+	int stinkCost = 10;
 	int antSell = 3;
 	int ladySell = 4;
+	int stinkSell = 5;
 	int food = 0;
 	int currentLevel = 1;
 	int totalBugs = 0;
@@ -70,8 +72,10 @@ public:
 	int getTileW();
 	void spawnAnt();
 	void spawnLadybug();
+	void spawnStinkbug();
 	void killAnt();
 	void killLadybug();
+	void killStinkbug();
 	void increaseSFXVolume();
 	void decreaseSFXVolume();
 	void increaseBGMVolume();
