@@ -37,3 +37,12 @@ void Tile::startEat() {
 bool Tile::checkEat() {
 	return eating;
 }
+
+void Tile::setSize(float size) {
+	float scale = size / sprite.getLocalBounds().width;
+	sprite.setScale(sf::Vector2f(scale, scale));
+}
+
+void Tile::setPosition(float x, float y) {
+	sprite.setPosition(sf::Vector2f(x, y));
+}

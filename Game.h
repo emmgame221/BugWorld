@@ -27,6 +27,7 @@ protected:
 	int gridWidth;
 	int gridHeight;
 	float tileSize;
+	sf::Vector2u prevWinSize;
 	sf::Font font;
 	sf::Text foodText;
 	sf::Text levelText;
@@ -63,6 +64,7 @@ public:
 	void drawAll();
 	void draw(sf::Sprite sprite);
 	void update();
+	void resize();
 	void addFood(int f);
 	void setGridSize(int width, int height);
 	void initLevel();
@@ -83,8 +85,10 @@ public:
 	void playSpawnSound();
 	void playPrestigeSound();
 	void spawnButtons();
+	void spawnLabels();
 	void vegGrowth();
 	int countAdjVeg(int x, int y);
 	int totalLushness();
 	Tile* getTileAt(int x, int y);
+	sf::Vector2u getWindowSize();
 };

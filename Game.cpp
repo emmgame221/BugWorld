@@ -3,8 +3,7 @@
 #include "ButtonSprite.h"
 
 Game::Game() {
-	this->setGridSize(15, 10);
-	std::vector<Tile*> tiles;
+	std::vector<Entity*> tiles;
 	this->tiles = tiles;
 	std::vector<Bug*> bugs;
 	this->bugs = bugs;
@@ -40,12 +39,6 @@ Game::Game() {
 	urd01 = std::uniform_real_distribution<float>(0.f, 1.f);
 	font = sf::Font();
 	font.loadFromFile("./resources/NewYork.otf");
-	foodText = sf::Text("Food: " + std::to_string(food), font);
-	foodText.setFillColor(sf::Color::Black);
-	foodText.setPosition(sf::Vector2f(1300.f, 0.f));
-	levelText = sf::Text("Level: " + std::to_string(currentLevel), font);
-	levelText.setFillColor(sf::Color::Black);
-	levelText.setPosition(sf::Vector2f(1300.f, 50.f));
 }
 
 Game* Game::getGame() {
@@ -60,6 +53,7 @@ sf::Time Game::getElapsedTime() {
 }
 
 void Game::checkClick(int x, int y) {
+	//std::cout << "Click: " << x << "," << y << std::endl;
 	float gameAreaWidth = tileSize * gridWidth;
 	float gameAreaHeight = tileSize * gridHeight;
 	if (x < gameAreaWidth && y < gameAreaHeight) {
@@ -75,11 +69,10 @@ void Game::checkClick(int x, int y) {
 	else {
 		// Click in the UI area
 		// Check each button to see if the click is on that button
-		// Once one is found trigger that button's onClick and then break
+		// Once one is found trigger that button's onClick
 		for (Entity* b : buttons) {
 			if (b->sprite.getGlobalBounds().contains(x, y)) {
 				((Button*)b)->onClick();
-				break;
 			}
 		}
 	}
@@ -130,6 +123,38 @@ void Game::update() {
 	}
 }
 
+void Game::resize() {
+	sf::Vector2u windowSize = (window == nullptr) ? sf::Vector2u(1440, 1080) : window->getSize();
+	float gameWorldWidth = windowSize.x * 0.9f;
+	float gameWorldHeight = windowSize.y * 0.9f;
+	float tileWidth = gameWorldWidth / gridWidth;
+	float tileHeight = gameWorldHeight / gridHeight;
+	tileSize = (tileWidth > tileHeight) ? tileHeight : tileWidth;
+	for (int i = 0; i < gridWidth; i++) {
+		for (int j = 0; j < gridHeight; j++) {
+			Tile* t = getTileAt(i, j);
+			t->setSize(tileSize);
+			t->setPosition(i * tileSize, j * tileSize);
+		}
+	}
+	for (Entity* button : buttons) {
+		((Button*)button)->updateTransform();
+	}
+	for (Entity* tile : tiles) {
+		((Tile*)tile)->setSize(tileSize);
+	}
+	foodText.setPosition(sf::Vector2f(windowSize.x * 0.9f, 0.f));
+	foodText.setScale(sf::Vector2f(windowSize.x * 0.08f / foodText.getLocalBounds().width, windowSize.y * 0.08f / foodText.getLocalBounds().width));
+	levelText.setPosition(sf::Vector2f(windowSize.x * 0.9f, windowSize.y * 0.1f));
+	levelText.setScale(sf::Vector2f(windowSize.x * 0.08f / levelText.getLocalBounds().width, windowSize.y * 0.08f / levelText.getLocalBounds().width));
+	for (Bug* bug : bugs) {
+		sf::Vector2f lastPos = bug->getPosition();
+		bug->setPosition(sf::Vector2f(lastPos.x * windowSize.x / prevWinSize.x, lastPos.y * windowSize.y / prevWinSize.y));
+		bug->setScale(tileSize);
+	}
+	prevWinSize = windowSize;
+}
+
 void Game::addFood(int f) {
 	food += f;
 }
@@ -149,6 +174,7 @@ void Game::setGridSize(int width, int height) {
 
 void Game::setWindow(sf::RenderWindow* win) {
 	window = win;
+	prevWinSize = window->getSize();
 }
 
 void Game::initLevel() {
@@ -256,6 +282,18 @@ void Game::spawnButtons() {
 	buttons.push_back(allButtons.minusStinkbug());
 }
 
+void Game::spawnLabels() {
+	sf::Vector2u winSize = window->getSize();
+	foodText = sf::Text("Food: " + std::to_string(food), font);
+	foodText.setFillColor(sf::Color::Black);
+	foodText.setPosition(sf::Vector2f(winSize.x * 0.9f, 0.f));
+	foodText.setScale(sf::Vector2f(winSize.x * 0.08f / foodText.getLocalBounds().width, winSize.y * 0.08f / foodText.getLocalBounds().width));
+	levelText = sf::Text("Level: " + std::to_string(currentLevel), font);
+	levelText.setFillColor(sf::Color::Black);
+	levelText.setPosition(sf::Vector2f(winSize.x * 0.9f, winSize.y * 0.1f));
+	levelText.setScale(sf::Vector2f(winSize.x * 0.08f / levelText.getLocalBounds().width, winSize.y * 0.08f / levelText.getLocalBounds().width));
+}
+
 void Game::increaseSFXVolume() {
 	sfxVolume += 10.f;
 	if (sfxVolume > 100.f) {
@@ -320,6 +358,9 @@ void Game::vegGrowth() {
 }
 
 Tile* Game::getTileAt(int x, int y) {
+	if (x >= gridWidth || y >= gridHeight) {
+		return (Tile*)tiles[(gridWidth - 1) * gridHeight + gridHeight - 1];
+	}
 	return (Tile*)tiles[x * gridHeight + y];
 }
 
@@ -355,6 +396,10 @@ int Game::totalLushness() {
 		total += ((Tile*)t)->lushness;
 	}
 	return total;
+}
+
+sf::Vector2u Game::getWindowSize() {
+	return window->getSize();
 }
 
 Game* Game::game = NULL;

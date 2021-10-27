@@ -3,16 +3,31 @@
 #include "Button.h"
 #include "InfoMenu.h"
 
+const int WIN_MIN_WIDTH = 720;
+const int WIN_MIN_HEIGHT = 540;
+const int WIN_DEF_WIDTH = 1440;
+const int WIN_DEF_HEIGHT = 1080;
+const int START_GRID_WIDTH = 16;
+const int START_GRID_HEIGHT = 9;
+
 int main()
 {
-    sf::RenderWindow window(sf::VideoMode(1440, 1080), "Bug World");
+    sf::VideoMode mode = sf::VideoMode::getDesktopMode();
+    if (mode.width >= WIN_DEF_WIDTH) {
+        mode.width = WIN_DEF_WIDTH;
+    }
+    if (mode.height >= WIN_DEF_HEIGHT) {
+        mode.height = WIN_DEF_HEIGHT;
+    }
+    sf::RenderWindow window(mode, "Bug World");
     Game* game = Game::getGame();
     game->setWindow(&window);
+    game->setGridSize(START_GRID_WIDTH, START_GRID_HEIGHT);
     game->initLevel();
     game->spawnButtons();
+    game->spawnLabels();
     Menu menu;
     
-
 
     while (window.isOpen())
     {                                                        
@@ -46,6 +61,32 @@ int main()
                 if (event.mouseButton.button == sf::Mouse::Left) {
                     game->checkClick(event.mouseButton.x, event.mouseButton.y);
                 }
+                break;
+            case sf::Event::Resized:
+                float aspectRatio = (float)event.size.width / (float)event.size.height;
+
+                if (event.size.width < WIN_MIN_WIDTH && event.size.height < WIN_MIN_HEIGHT) {
+                    window.setSize(sf::Vector2u(WIN_MIN_WIDTH, WIN_MIN_HEIGHT));
+                }
+                else if (event.size.width < WIN_MIN_WIDTH) {
+                    window.setSize(sf::Vector2u(WIN_MIN_WIDTH, event.size.height));
+                }
+                else if (event.size.height < WIN_MIN_HEIGHT) {
+                    window.setSize(sf::Vector2u(event.size.width, WIN_MIN_HEIGHT));
+                }
+                else if (aspectRatio < 1.33f) {
+                    int newWidth = event.size.height * 4 / 3;
+                    window.setSize(sf::Vector2u(newWidth, event.size.height));
+                }
+                else if (aspectRatio > 1.79f) {
+                    int newHeight = event.size.width * 9 / 16;
+                    window.setSize(sf::Vector2u(event.size.width, newHeight));
+                }
+                else {
+                    window.setView(sf::View(sf::FloatRect(0, 0, event.size.width, event.size.height)));
+                    game->resize();
+                }
+                break;
             }
         }
         game->update();

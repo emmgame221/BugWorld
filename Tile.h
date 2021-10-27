@@ -14,5 +14,7 @@ public:
     bool decLushness();
     void startEat();
     bool checkEat();
+    void setSize(float size);
+    void setPosition(float x, float y);
 };
 
