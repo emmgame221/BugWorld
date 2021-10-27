@@ -4,7 +4,7 @@
 
 Game::Game() {
 	this->setGridSize(15, 10);
-	std::vector<Entity*> tiles;
+	std::vector<Tile*> tiles;
 	this->tiles = tiles;
 	std::vector<Bug*> bugs;
 	this->bugs = bugs;
@@ -20,10 +20,12 @@ Game::Game() {
 	vegTextures[3].loadFromFile("./resources/veg3.png");
 	antTexture = sf::Texture();
 	ladybugTexture = sf::Texture();
+	stinkbugTexture = sf::Texture();
 	plusTexture = sf::Texture();
 	minusTexture = sf::Texture();
 	antTexture.loadFromFile("./resources/ant.png");
 	ladybugTexture.loadFromFile("./resources/ladybug.png");
+	stinkbugTexture.loadFromFile("./resources/stinkbug.png");
 	plusTexture.loadFromFile("./resources/plus.png");
 	minusTexture.loadFromFile("./resources/minus.png");
 	clock = sf::Clock();
@@ -113,7 +115,15 @@ void Game::update() {
 	for (unsigned int i = 0; i < bugs.size(); i++) {
 		bugs[i]->update();
 	}
-
+	for (unsigned int i = 0; i < tiles.size(); i++) {
+		if (tiles[i]->scent) {
+			tiles[i]->sprite.setColor(sf::Color(255, 0, 0));
+		}
+		if (tiles[i]->lushness == 0 && tiles[i]->scent) {
+			tiles[i]->sprite.setColor(sf::Color(255, 255, 255));
+			tiles[i]->scent = false;
+		}
+	}
 	if (totalLushness() == 0) {
 		currentLevel++;
 		initLevel();
@@ -188,6 +198,14 @@ void Game::spawnLadybug() {
 	}
 }
 
+void Game::spawnStinkbug() {
+	if (food >= stinkCost) {
+		bugs.push_back(new Stinkbug());
+		playSpawnSound();
+		food -= stinkCost;
+	}
+}
+
 
 void Game::killAnt() {
 	if (bugs.size() > 0) {
@@ -213,6 +231,18 @@ void Game::killLadybug() {
 	}
 }
 
+void Game::killStinkbug() {
+	if (bugs.size() > 0) {
+		for (int i = bugs.size() - 1; i >= 0; i--) {
+			if (bugs[i]->type == 2) {
+				bugs.erase(bugs.begin() + i);
+				food += stinkSell;
+				break;
+			}
+		}
+	}
+}
+
 void Game::spawnButtons() {
 	AllButtonSprite allButtons;
 	buttons.push_back(allButtons.antPic());
@@ -221,6 +251,9 @@ void Game::spawnButtons() {
 	buttons.push_back(allButtons.ladybugPic());
 	buttons.push_back(allButtons.plusLadybug());
 	buttons.push_back(allButtons.minusLadybug());
+	buttons.push_back(allButtons.stinkbugPic());
+	buttons.push_back(allButtons.plusStinkbug());
+	buttons.push_back(allButtons.minusStinkbug());
 }
 
 void Game::increaseSFXVolume() {

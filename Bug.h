@@ -17,7 +17,7 @@ protected:
     float eatRad;
 public:
     int type;
-    void update();
+    virtual void update();
     void eat(Tile*);
 };
 
@@ -34,7 +34,16 @@ class Ladybug :
 {
 public:
     Ladybug();
-    void move();
+    void update();
+};
+
+class Stinkbug :
+    public Bug
+{
+public:
+    Stinkbug();
+    void update();
+    void stink(sf::Vector2i);
 };
 
 class Pheremone
