@@ -102,14 +102,14 @@ void Game::update() {
 	elapsedTime = clock.restart();
 	growthTimer -= elapsedTime;
 	if (growthTimer <= sf::Time::Zero && totalVegetation >= 5) {
-		growthTimer = sf::seconds(1.f);
+		growthTimer = sf::seconds(GROWTH_SECS);
 		vegGrowth();
 	}
 	if (totalVegetation < 5) {
 		lowVegTimer -= elapsedTime;
 		if (lowVegTimer <= sf::Time::Zero) {
-			lowVegTimer = sf::seconds(3.f);
-			growthTimer = sf::seconds(1.f);
+			lowVegTimer = sf::seconds(LOW_VEG_SECS);
+			growthTimer = sf::seconds(GROWTH_SECS);
 			vegGrowth();
 		}
 	}
@@ -303,35 +303,35 @@ void Game::spawnLabels() {
 }
 
 void Game::increaseSFXVolume() {
-	sfxVolume += 10.f;
-	if (sfxVolume > 100.f) {
-		sfxVolume = 100.f;
+	sfxVolume += VOL_INC;
+	if (sfxVolume > MAX_VOL) {
+		sfxVolume = MAX_VOL;
 	}
 	spawnSound.setVolume(sfxVolume);
 	prestigeSound.setVolume(sfxVolume);
 }
 
 void Game::decreaseSFXVolume() {
-	sfxVolume -= 10.f;
-	if (sfxVolume < 0.f) {
-		sfxVolume = 0.f;
+	sfxVolume -= VOL_INC;
+	if (sfxVolume < MIN_VOL) {
+		sfxVolume = MIN_VOL;
 	}
 	spawnSound.setVolume(sfxVolume);
 	prestigeSound.setVolume(sfxVolume);
 }
 
 void Game::increaseBGMVolume() {
-	bgmVolume += 10.f;
-	if (bgmVolume > 100.f) {
-		bgmVolume = 100.f;
+	bgmVolume += VOL_INC;
+	if (bgmVolume > MAX_VOL) {
+		bgmVolume = MAX_VOL;
 	}
 	backgroundMusic.setVolume(bgmVolume);
 }
 
 void Game::decreaseBGMVolume() {
-	bgmVolume -= 10.f;
-	if (bgmVolume < 0.f) {
-		bgmVolume = 0.f;
+	bgmVolume -= VOL_INC;
+	if (bgmVolume < MIN_VOL) {
+		bgmVolume = MIN_VOL;
 	}
 	backgroundMusic.setVolume(bgmVolume);
 }

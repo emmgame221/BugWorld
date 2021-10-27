@@ -8,6 +8,13 @@
 #include <vector>
 #include <random>
 
+const float GROWTH_SECS = 1.f;
+const float LOW_VEG_SECS = 3.f;
+const float DEFAULT_VOL = 50.f;
+const float MAX_VOL = 100.f;
+const float MIN_VOL = 0.f;
+const float VOL_INC = 10.f;
+
 class Game
 {
 protected:
@@ -19,12 +26,12 @@ protected:
 	sf::Sound spawnSound;
 	sf::SoundBuffer prestigeSoundBuf;
 	sf::Sound prestigeSound;
-	float sfxVolume = 50.f;
-	float bgmVolume = 50.f;
+	float sfxVolume = DEFAULT_VOL;
+	float bgmVolume = DEFAULT_VOL;
 	sf::Time elapsedTime;
 	sf::Clock clock;
-	sf::Time growthTimer = sf::seconds(1.f);
-	sf::Time lowVegTimer = sf::seconds(3.f);
+	sf::Time growthTimer = sf::seconds(GROWTH_SECS);
+	sf::Time lowVegTimer = sf::seconds(LOW_VEG_SECS);
 	int gridWidth;
 	int gridHeight;
 	float tileSize;
