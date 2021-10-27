@@ -150,7 +150,7 @@ void Game::resize() {
 	for (Bug* bug : bugs) {
 		sf::Vector2f lastPos = bug->getPosition();
 		bug->setPosition(sf::Vector2f(lastPos.x * windowSize.x / prevWinSize.x, lastPos.y * windowSize.y / prevWinSize.y));
-		bug->setScale(tileSize);
+		bug->setScale(tileSize / 2.f);
 	}
 	prevWinSize = windowSize;
 }
