@@ -101,9 +101,17 @@ void Game::update() {
 	levelText.setString("Level: " + std::to_string(currentLevel));
 	elapsedTime = clock.restart();
 	growthTimer -= elapsedTime;
-	if (growthTimer <= sf::Time::Zero) {
+	if (growthTimer <= sf::Time::Zero && totalVegetation >= 5) {
 		growthTimer = sf::seconds(1.f);
 		vegGrowth();
+	}
+	if (totalVegetation < 5) {
+		lowVegTimer -= elapsedTime;
+		if (lowVegTimer <= sf::Time::Zero) {
+			lowVegTimer = sf::seconds(3.f);
+			growthTimer = sf::seconds(1.f);
+			vegGrowth();
+		}
 	}
 	for (unsigned int i = 0; i < bugs.size(); i++) {
 		bugs[i]->update();
@@ -117,7 +125,7 @@ void Game::update() {
 			tiles[i]->scent = false;
 		}
 	}
-	if (totalLushness() == 0) {
+	if (totalVegetation == 0) {
 		currentLevel++;
 		initLevel();
 	}
@@ -339,7 +347,7 @@ void Game::playPrestigeSound() {
 void Game::vegGrowth() {
 	int growths = 0;
 	int limit = currentLevel;
-	int curTotal = totalLushness();
+	int curTotal = totalVegetation;
 	int max = 3 * gridWidth * gridHeight;
 	if (limit + curTotal > max) {
 		limit = max - curTotal;
@@ -386,14 +394,6 @@ int Game::countAdjVeg(int x, int y) {
 		if (y < gridHeight - 1) {
 			total += getTileAt(x + 1, y + 1)->lushness;
 		}
-	}
-	return total;
-}
-
-int Game::totalLushness() {
-	int total = 0;
-	for (Entity* t : tiles) {
-		total += ((Tile*)t)->lushness;
 	}
 	return total;
 }

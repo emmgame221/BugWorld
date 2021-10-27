@@ -24,6 +24,7 @@ protected:
 	sf::Time elapsedTime;
 	sf::Clock clock;
 	sf::Time growthTimer = sf::seconds(1.f);
+	sf::Time lowVegTimer = sf::seconds(3.f);
 	int gridWidth;
 	int gridHeight;
 	float tileSize;
@@ -51,6 +52,7 @@ public:
 	int food = 0;
 	int currentLevel = 1;
 	int totalBugs = 0;
+	int totalVegetation = 0;
 	std::random_device rd;
 	std::mt19937 rng;
 	std::uniform_real_distribution<float> urd01;
@@ -88,7 +90,6 @@ public:
 	void spawnLabels();
 	void vegGrowth();
 	int countAdjVeg(int x, int y);
-	int totalLushness();
 	Tile* getTileAt(int x, int y);
 	sf::Vector2u getWindowSize();
 };

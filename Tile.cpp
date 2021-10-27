@@ -16,6 +16,7 @@ bool Tile::incLushness() {
 	}
 	lushness++;
 	Game* game = Game::getGame();
+	game->totalVegetation++;
 	sprite.setTexture(game->vegTextures[lushness]);
 	return true;
 }
@@ -26,6 +27,7 @@ bool Tile::decLushness() {
 	}
 	lushness--;
 	Game* game = Game::getGame();
+	game->totalVegetation--;
 	sprite.setTexture(game->vegTextures[lushness]);
 	return true;
 }
