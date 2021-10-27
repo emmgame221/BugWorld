@@ -3,7 +3,7 @@
 #include "ButtonSprite.h"
 
 Game::Game() {
-	std::vector<Entity*> tiles;
+	std::vector<Tile*> tiles;
 	this->tiles = tiles;
 	std::vector<Bug*> bugs;
 	this->bugs = bugs;
@@ -140,8 +140,8 @@ void Game::resize() {
 	for (Entity* button : buttons) {
 		((Button*)button)->updateTransform();
 	}
-	for (Entity* tile : tiles) {
-		((Tile*)tile)->setSize(tileSize);
+	for (Tile* tile : tiles) {
+		tile->setSize(tileSize);
 	}
 	foodText.setPosition(sf::Vector2f(windowSize.x * 0.9f, 0.f));
 	foodText.setScale(sf::Vector2f(windowSize.x * 0.08f / foodText.getLocalBounds().width, windowSize.y * 0.08f / foodText.getLocalBounds().width));

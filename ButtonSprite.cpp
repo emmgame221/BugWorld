@@ -81,28 +81,38 @@ Button* AllButtonSprite::minusLadybug() {
 Button* AllButtonSprite::stinkbugPic() {
 	Game* game = Game::getGame();
 	sf::Sprite sprite(game->stinkbugTexture);
-	sprite.scale(2, 2);
-	sprite.setPosition(sf::Vector2f(218.0f, 860.0f));
-	sprite.rotate(90);
 	std::function<void()> func = []() {}; // This button doesn't do anything
-	Button* b = new Button(sprite, func);
+	float xofs = 0.25f;
+	float yofs = 0.9f;
+	float xsize = 0.05f;
+	float ysize = 0.1f;
+	Button* b = new Button(sprite, func, xofs, yofs, xsize, ysize);
+	b->updateTransform();
 	return b;
 }
 
 Button* AllButtonSprite::plusStinkbug() {
 	Game* game = Game::getGame();
 	sf::Sprite sprite(game->plusTexture);
-	sprite.setPosition(sf::Vector2f(190.0f, 912.0f));
 	std::function<void()> func = std::bind(&Game::spawnStinkbug, game);
-	Button* b = new Button(sprite, func);
+	float xofs = 0.2f;
+	float yofs = 0.9f;
+	float xsize = 0.05f;
+	float ysize = 0.05f;
+	Button* b = new Button(sprite, func, xofs, yofs, xsize, ysize);
+	b->updateTransform();
 	return b;
 }
 
 Button* AllButtonSprite::minusStinkbug() {
 	Game* game = Game::getGame();
 	sf::Sprite sprite(game->minusTexture);
-	sprite.setPosition(sf::Vector2f(190.0f, 965.0f));
 	std::function<void()> func = std::bind(&Game::killStinkbug, game);
-	Button* b = new Button(sprite, func);
+	float xofs = 0.2f;
+	float yofs = 0.95f;
+	float xsize = 0.05f;
+	float ysize = 0.05f;
+	Button* b = new Button(sprite, func, xofs, yofs, xsize, ysize);
+	b->updateTransform();
 	return b;
 }
