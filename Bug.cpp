@@ -151,14 +151,14 @@ void Ladybug::update() {
 		for (int xx = 0; xx < game->getTileW(); xx++) {
 			for (int yy = 0; yy < game->getTileH(); yy++) {
 				sf::Vector2f pt = sf::Vector2f((xx * game->getTileSize()) + (game->getTileSize() / 2), (yy * game->getTileSize()) + (game->getTileSize() / 2));
-				if (game->getTileAt(xx, yy)->scent && distance(pt, sf::Vector2f(x, y)) <= game->getTileSize() * 3.5) {
+				if (game->getTileAt(xx, yy)->scent && distance(pt, sf::Vector2f(x, y)) <= game->getTileSize() * 3.5 && !game->getTileAt(xx, yy)->eating) {
 					Tile* tile = game->getTileAt(xx, yy);
 					target = pt;
 					tile->startEat();
 					this->state = 1;
 					break;
 				}
-				if (fov.contains(pt) && game->getTileAt(xx, yy)->lushness >= 1 /* && !game->getTileAt(xx, yy)->eating*/) {
+				if (fov.contains(pt) && game->getTileAt(xx, yy)->lushness >= 1  && !game->getTileAt(xx, yy)->eating) {
 					Tile* tile = game->getTileAt(xx, yy);
 					target = pt;
 					tile->startEat();
@@ -206,9 +206,15 @@ void Stinkbug::update() {
 	movement += move;
 
 	if ((x > (game->getTileW() * game->getTileSize())) || (x < 0)) {
+		movement.x += 10;
 		movement.x *= -1;
 	}
 	if ((y > (game->getTileH() * game->getTileSize())) || (y < 0)) {
+		if(y < 0)
+			sprite.move(sf::Vector2f(0, -y));
+		else
+			sprite.move(sf::Vector2f(0, (game->getTileH() * game->getTileSize())-y));
+
 		movement.y *= -1;
 	}
 
@@ -224,6 +230,7 @@ void Stinkbug::update() {
 		}
 		else {
 			game->getTileAt(target.x / game->getTileSize(), target.y / game->getTileSize())->scent = true;
+			game->getTileAt(target.x / game->getTileSize(), target.y / game->getTileSize())->scenting = false;
 			return;
 		}
 	}
@@ -231,8 +238,9 @@ void Stinkbug::update() {
 		for (int xx = 0; xx < game->getTileW(); xx++) {
 			for (int yy = 0; yy < game->getTileH(); yy++) {
 				sf::Vector2f pt = sf::Vector2f((xx * game->getTileSize()) + (game->getTileSize() / 2), (yy * game->getTileSize()) + (game->getTileSize() / 2));
-				if (fov.contains(pt) && game->getTileAt(xx, yy)->lushness >= 1 && !game->getTileAt(xx, yy)->scent/* && !game->getTileAt(xx, yy)->eating*/) {
+				if (fov.contains(pt) && game->getTileAt(xx, yy)->lushness >= 1 && !game->getTileAt(xx, yy)->scent && !game->getTileAt(xx, yy)->scenting) {
 					Tile* tile = game->getTileAt(xx, yy);
+					tile->scenting = true;
 					target = pt;
 					this->state = 1;
 					break;

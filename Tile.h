@@ -10,6 +10,7 @@ public:
     int lushness;
     bool eating = false;
     bool scent = false;
+    bool scenting = false;
     bool incLushness();
     bool decLushness();
     void startEat();
