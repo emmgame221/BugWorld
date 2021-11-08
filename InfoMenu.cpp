@@ -27,21 +27,18 @@
     while (window.isOpen())
     {
         sf::Event event;
-        infoText.setString(infoString);
-        window.draw(infoText);
         while (window.pollEvent(event))
         {
             switch (event.type) {
             case sf::Event::Closed:
                 window.close();
                 break;
-
-                window.clear(sf::Color::White);
-                window.display();
-                infoText.setString(infoString);
-                window.draw(infoText);
             }
         }
+        window.clear(sf::Color::White);
+        infoText.setString(infoString);
+        window.draw(infoText);
+        window.display();
     }
     return 0;
 }
