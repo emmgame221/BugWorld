@@ -100,6 +100,9 @@ void Game::update() {
 	foodText.setString("Food: " + std::to_string(food));
 	levelText.setString("Level: " + std::to_string(currentLevel));
 	elapsedTime = clock.restart();
+	if (elapsedTime > sf::milliseconds(50)) {
+		elapsedTime = sf::milliseconds(50);
+	}
 	growthTimer -= elapsedTime;
 	if (growthTimer <= sf::Time::Zero && totalVegetation >= 5) {
 		growthTimer = sf::seconds(GROWTH_SECS);
