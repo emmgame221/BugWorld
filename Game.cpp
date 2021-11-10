@@ -106,6 +106,9 @@ void Game::update() {
 	stinkBuyText.setString(": " + std::to_string(stinkCost));
 	stinkSellText.setString(": " + std::to_string(stinkSell));
 	elapsedTime = clock.restart();
+	if (elapsedTime > sf::milliseconds(50)) {
+		elapsedTime = sf::milliseconds(50);
+	}
 	growthTimer -= elapsedTime;
 	if (growthTimer <= sf::Time::Zero && totalVegetation >= 5) {
 		growthTimer = sf::seconds(GROWTH_SECS);
