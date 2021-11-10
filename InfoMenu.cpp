@@ -3,7 +3,7 @@
 #include "InfoMenu.h"
 
   int Menu::bugMenu() {
-    sf::RenderWindow window(sf::VideoMode(1000, 1000), "Info Menu");
+    sf::RenderWindow window(sf::VideoMode(1400, 500), "Info Menu");
     
     infoText.setString(infoString);
     window.draw(infoText);
@@ -20,7 +20,7 @@
     infoText.setFont(font);
     infoText.setString(infoString);
     infoText.setFillColor(sf::Color::Black);
-    infoText.setPosition(sf::Vector2f(100.f, 100.f));
+    infoText.setPosition(sf::Vector2f(5.f, 0.f));
     window.draw(infoText);
     std::cout << infoString << std::endl;
 

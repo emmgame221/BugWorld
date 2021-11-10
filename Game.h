@@ -39,6 +39,12 @@ protected:
 	sf::Font font;
 	sf::Text foodText;
 	sf::Text levelText;
+	sf::Text antBuyText;
+	sf::Text antSellText;
+	sf::Text ladyBuyText;
+	sf::Text ladySellText;
+	sf::Text stinkBuyText;
+	sf::Text stinkSellText;
 
 	std::vector<Tile*> tiles;
 	std::vector<Entity*> buttons;

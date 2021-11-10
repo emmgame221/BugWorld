@@ -99,6 +99,12 @@ void Game::draw(sf::Sprite sprite) {
 void Game::update() {
 	foodText.setString("Food: " + std::to_string(food));
 	levelText.setString("Level: " + std::to_string(currentLevel));
+	antBuyText.setString(": " + std::to_string(antCost));
+	antSellText.setString(": " + std::to_string(antSell));
+	ladyBuyText.setString(": " + std::to_string(ladyCost));
+	ladySellText.setString(": " + std::to_string(ladySell));
+	stinkBuyText.setString(": " + std::to_string(stinkCost));
+	stinkSellText.setString(": " + std::to_string(stinkSell));
 	elapsedTime = clock.restart();
 	growthTimer -= elapsedTime;
 	if (growthTimer <= sf::Time::Zero && totalVegetation >= 5) {
@@ -155,6 +161,8 @@ void Game::resize() {
 	foodText.setScale(sf::Vector2f(windowSize.x * 0.08f / foodText.getLocalBounds().width, windowSize.y * 0.08f / foodText.getLocalBounds().width));
 	levelText.setPosition(sf::Vector2f(windowSize.x * 0.9f, windowSize.y * 0.1f));
 	levelText.setScale(sf::Vector2f(windowSize.x * 0.08f / levelText.getLocalBounds().width, windowSize.y * 0.08f / levelText.getLocalBounds().width));
+	antBuyText.setPosition(sf::Vector2f(windowSize.x, 100.f));
+	antBuyText.setScale(sf::Vector2f(windowSize.x * 0.08f / antBuyText.getLocalBounds().width, windowSize.y * 0.08f / antBuyText.getLocalBounds().width));
 	for (Bug* bug : bugs) {
 		sf::Vector2f lastPos = bug->getPosition();
 		bug->setPosition(sf::Vector2f(lastPos.x * windowSize.x / prevWinSize.x, lastPos.y * windowSize.y / prevWinSize.y));
@@ -300,6 +308,10 @@ void Game::spawnLabels() {
 	levelText.setFillColor(sf::Color::Black);
 	levelText.setPosition(sf::Vector2f(winSize.x * 0.9f, winSize.y * 0.1f));
 	levelText.setScale(sf::Vector2f(winSize.x * 0.08f / levelText.getLocalBounds().width, winSize.y * 0.08f / levelText.getLocalBounds().width));
+	antBuyText = sf::Text(": " + std::to_string(antCost), font);
+	antBuyText.setFillColor(sf::Color::Black);
+	antBuyText.setPosition(sf::Vector2f(winSize.x, 100.f));
+	antBuyText.setScale(sf::Vector2f(winSize.x * 0.08f / antBuyText.getLocalBounds().width, winSize.y * 0.08f / antBuyText.getLocalBounds().width));
 }
 
 void Game::increaseSFXVolume() {
