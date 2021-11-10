@@ -8,13 +8,11 @@
 class Menu {
 public:
 	int bugMenu();
+	sf::RenderWindow window;
 	std::string infoString;
 	sf::Text infoText;
 	char ch;
 	sf::Font font;
 	std::ifstream inputFile;
-	std::string loadInfo();
 	
-
-
 };

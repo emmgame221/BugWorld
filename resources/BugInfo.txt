@@ -1,3 +1,11 @@
 Ant:
+The biggest threat to picnics and farms the world has ever seen.
+This bug moves and eats at a steady pace, but the real danger is how it guides other bugs to the food.
+
 Ladybug:
+It may look cute, but this bug is fast and dangerous.
+While not the best at finding food, it eats and moves faster than the other bugs.
+
 Stinkbug:
+Be more careful about the horrible smell that this bug brings with it.
+Instead of eating this bug releases a cloud of stink to summon nearby ladybugs to the food.
