@@ -10,12 +10,29 @@
 #include <vector>
 #include <random>
 
+#ifndef GAMESAVE_H
+#define GAMESAVE_H
+
+#include <iostream>
+#include <fstream>
+#include <direct.h>
+#include <string>
+#include <boost/archive/xml_oarchive.hpp>
+#include <boost/archive/xml_iarchive.hpp>
+
+void save();
+void load();
+
+#endif // !GAMESAVE_H
+
 const float GROWTH_SECS = 1.f;
 const float LOW_VEG_SECS = 3.f;
 const float DEFAULT_VOL = 50.f;
 const float MAX_VOL = 100.f;
 const float MIN_VOL = 0.f;
 const float VOL_INC = 10.f;
+
+
 
 class Game
 {
@@ -65,7 +82,7 @@ public:
 
 	Game(int f, int cL, int tB) :
 		food(f), currentLevel(cL), totalBugs(tB) {}
-	void save();
+
 	sf::Texture vegTextures[4];
 	sf::Texture antTexture;
 	sf::Texture ladybugTexture;

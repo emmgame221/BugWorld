@@ -57,7 +57,10 @@ int main()
                     menu.bugMenu();
                 }
                 if (event.key.code == sf::Keyboard::F8) {
-                    
+                    save();
+                }
+                if (event.key.code == sf::Keyboard::F9) {
+                    load();
                 }
                 break;
             case sf::Event::MouseButtonPressed:
