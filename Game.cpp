@@ -112,14 +112,14 @@ void Game::update() {
 	growthTimer -= elapsedTime;
 	if (growthTimer <= sf::Time::Zero && totalVegetation >= 5) {
 		growthTimer = sf::seconds(GROWTH_SECS);
-		vegGrowth();
+		vegGrowth(currentLevel);
 	}
 	if (totalVegetation < 5) {
 		lowVegTimer -= elapsedTime;
 		if (lowVegTimer <= sf::Time::Zero) {
 			lowVegTimer = sf::seconds(LOW_VEG_SECS);
 			growthTimer = sf::seconds(GROWTH_SECS);
-			vegGrowth();
+			vegGrowth(currentLevel);
 		}
 	}
 	for (unsigned int i = 0; i < bugs.size(); i++) {
@@ -135,8 +135,7 @@ void Game::update() {
 		}
 	}
 	if (totalVegetation == 0) {
-		currentLevel++;
-		initLevel();
+		nextLevel();
 	}
 }
 
@@ -196,11 +195,24 @@ void Game::setWindow(sf::RenderWindow* win) {
 	prevWinSize = window->getSize();
 }
 
+void Game::nextLevel() {
+	currentLevel++;
+	initLevel();
+}
+
 void Game::initLevel() {
-	createTiles();
-	for (int i = 0; i < currentLevel * 10; i++) {
-		vegGrowth();
+	if (currentLevel != 1 && expansion < 2 && gridWidth < MAX_GRID_WIDTH) {
+		setGridSize(gridWidth + 1, gridHeight);
+		expansion = (gridHeight < MAX_GRID_HEIGHT) ? expansion + 1 : 0;
 	}
+	else if (currentLevel != 1 && gridHeight < MAX_GRID_HEIGHT) {
+		setGridSize(gridWidth, gridHeight + 1);
+		expansion = 0;
+	}
+	createTiles();
+	resize();
+	int maxVeg = 3 * gridWidth * gridHeight;
+	vegGrowth(maxVeg / 2);
 }
 
 void Game::createTiles() {
@@ -208,6 +220,7 @@ void Game::createTiles() {
 		delete e;
 	}
 	tiles.clear();
+	totalVegetation = 0;
 	for (int i = 0; i < gridWidth; i++) {
 		for (int j = 0; j < gridHeight; j++) {
 			tiles.push_back(new Tile(0, i * tileSize, j * tileSize, tileSize));
@@ -359,9 +372,8 @@ void Game::playPrestigeSound() {
 	prestigeSound.play();
 }
 
-void Game::vegGrowth() {
+void Game::vegGrowth(int limit) {
 	int growths = 0;
-	int limit = currentLevel;
 	int curTotal = totalVegetation;
 	int max = 3 * gridWidth * gridHeight;
 	if (limit + curTotal > max) {
