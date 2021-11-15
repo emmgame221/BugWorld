@@ -4,6 +4,8 @@
 #include "Bug.h"
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
+#include <boost/archive/xml_oarchive.hpp>
+#include <boost/archive/xml_iarchive.hpp>
 #include <iostream>
 #include <vector>
 #include <random>
@@ -18,7 +20,16 @@ const float VOL_INC = 10.f;
 class Game
 {
 protected:
-	Game();
+	friend class boost::serialization::access;
+	template<class Archive>
+	void serialize(Archive& archive, const unsigned int version)
+	{
+		// Read/Write from and to archive
+		archive& BOOST_SERIALIZATION_NVP(food);
+		archive& BOOST_SERIALIZATION_NVP(currentLevel);
+		archive& BOOST_SERIALIZATION_NVP(totalBugs);
+	}
+
 	static Game* game;
 	sf::RenderWindow* window;
 	sf::Music backgroundMusic;
@@ -50,6 +61,11 @@ protected:
 	std::vector<Entity*> buttons;
 	std::vector<Bug*> bugs;
 public:
+	Game();
+
+	Game(int f, int cL, int tB) :
+		food(f), currentLevel(cL), totalBugs(tB) {}
+	void save();
 	sf::Texture vegTextures[4];
 	sf::Texture antTexture;
 	sf::Texture ladybugTexture;

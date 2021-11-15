@@ -56,6 +56,9 @@ int main()
                 if (event.key.code == sf::Keyboard::Space) {
                     menu.bugMenu();
                 }
+                if (event.key.code == sf::Keyboard::F8) {
+                    
+                }
                 break;
             case sf::Event::MouseButtonPressed:
                 if (event.mouseButton.button == sf::Mouse::Left) {
