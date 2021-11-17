@@ -14,6 +14,8 @@ const float DEFAULT_VOL = 50.f;
 const float MAX_VOL = 100.f;
 const float MIN_VOL = 0.f;
 const float VOL_INC = 10.f;
+const int MAX_GRID_WIDTH = 96;
+const int MAX_GRID_HEIGHT = 49;
 
 class Game
 {
@@ -34,6 +36,7 @@ protected:
 	sf::Time lowVegTimer = sf::seconds(LOW_VEG_SECS);
 	int gridWidth;
 	int gridHeight;
+	int expansion = 0;
 	float tileSize;
 	sf::Vector2u prevWinSize;
 	sf::Font font;
@@ -49,6 +52,7 @@ protected:
 	std::vector<Tile*> tiles;
 	std::vector<Entity*> buttons;
 	std::vector<Bug*> bugs;
+
 public:
 	sf::Texture vegTextures[4];
 	sf::Texture antTexture;
@@ -82,6 +86,7 @@ public:
 	void resize();
 	void addFood(int f);
 	void setGridSize(int width, int height);
+	void nextLevel();
 	void initLevel();
 	void createTiles();
 	float getTileSize();
@@ -102,7 +107,6 @@ public:
 	void spawnButtons();
 	void spawnLabels();
 	void vegGrowth();
-	void prestige();
 	int countAdjVeg(int x, int y);
 	Tile* getTileAt(int x, int y);
 	sf::Vector2u getWindowSize();
