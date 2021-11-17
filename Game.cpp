@@ -22,11 +22,15 @@ Game::Game() {
 	stinkbugTexture = sf::Texture();
 	plusTexture = sf::Texture();
 	minusTexture = sf::Texture();
+	saveTexture = sf::Texture();
+	loadTexture = sf::Texture();
 	antTexture.loadFromFile("./resources/ant.png");
 	ladybugTexture.loadFromFile("./resources/ladybug.png");
 	stinkbugTexture.loadFromFile("./resources/stinkbug.png");
 	plusTexture.loadFromFile("./resources/plus.png");
 	minusTexture.loadFromFile("./resources/minus.png");
+	saveTexture.loadFromFile("./resources/save.png");
+	loadTexture.loadFromFile("./resources/load.png");
 	clock = sf::Clock();
 	spawnSoundBuf.loadFromFile("./resources/spawnsound.wav");
 	spawnSound = sf::Sound(spawnSoundBuf);
@@ -206,18 +210,18 @@ void Game::setWindow(sf::RenderWindow* win) {
 
 void Game::nextLevel() {
 	currentLevel++;
+	if (expansion < 2 && gridWidth < MAX_GRID_WIDTH) {
+		setGridSize(gridWidth + 1, gridHeight);
+		expansion = (gridHeight < MAX_GRID_HEIGHT) ? expansion + 1 : 0;
+	}
+	else if (gridHeight < MAX_GRID_HEIGHT) {
+		setGridSize(gridWidth, gridHeight + 1);
+		expansion = 0;
+	}
 	initLevel();
 }
 
 void Game::initLevel() {
-	if (currentLevel != 1 && expansion < 2 && gridWidth < MAX_GRID_WIDTH) {
-		setGridSize(gridWidth + 1, gridHeight);
-		expansion = (gridHeight < MAX_GRID_HEIGHT) ? expansion + 1 : 0;
-	}
-	else if (currentLevel != 1 && gridHeight < MAX_GRID_HEIGHT) {
-		setGridSize(gridWidth, gridHeight + 1);
-		expansion = 0;
-	}
 	createTiles();
 	resize();
 	int maxVeg = 3 * gridWidth * gridHeight;
@@ -254,6 +258,7 @@ void Game::spawnAnt() {
 		bugs.push_back(new Ant());
 		playSpawnSound();
 		food -= antCost;
+		antCount++;
 	}
 }
 
@@ -262,6 +267,7 @@ void Game::spawnLadybug() {
 		bugs.push_back(new Ladybug());
 		playSpawnSound();
 		food -= ladyCost;
+		ladybugCount++;
 	}
 }
 
@@ -270,6 +276,7 @@ void Game::spawnStinkbug() {
 		bugs.push_back(new Stinkbug());
 		playSpawnSound();
 		food -= stinkCost;
+		stinkbugCount++;
 	}
 }
 
@@ -280,6 +287,7 @@ void Game::killAnt() {
 			if (bugs[i]->type == 0) {
 				bugs.erase(bugs.begin() + i);
 				food += antSell;
+				antCount--;
 				break;
 			}
 		}
@@ -292,6 +300,7 @@ void Game::killLadybug() {
 			if (bugs[i]->type == 1) {
 				bugs.erase(bugs.begin() + i);
 				food += ladySell;
+				ladybugCount--;
 				break;
 			}
 		}
@@ -304,6 +313,7 @@ void Game::killStinkbug() {
 			if (bugs[i]->type == 2) {
 				bugs.erase(bugs.begin() + i);
 				food += stinkSell;
+				stinkbugCount--;
 				break;
 			}
 		}
@@ -321,6 +331,8 @@ void Game::spawnButtons() {
 	buttons.push_back(allButtons.stinkbugPic());
 	buttons.push_back(allButtons.plusStinkbug());
 	buttons.push_back(allButtons.minusStinkbug());
+	buttons.push_back(allButtons.saveButton());
+	buttons.push_back(allButtons.loadButton());
 }
 
 void Game::spawnLabels() {
@@ -442,22 +454,104 @@ sf::Vector2u Game::getWindowSize() {
 	return window->getSize();
 }
 
+namespace fs = std::filesystem;
+
+void Game::save() {
+	// Get user info
+	std::string getUser = getenv("USERNAME");
+	fs::path filename = "C:\\Users\\" + getUser + "\\AppData\\Local\\BugWorld\\save.txt";
+	fs::path directory = "C:\\Users\\" + getUser + "\\AppData\\Local\\BugWorld";
+	std::ofstream out;
+	// Create the save directory if necessary and open the save file to write to
+	try
+	{
+		fs::create_directory(directory);
+	}
+	catch (const std::exception& e)
+	{
+		std::cerr << e.what() << std::endl;
+		std::cerr << "Failed to create directory: " << directory << std::endl;
+		return;
+	}
+	try
+	{
+		out = std::ofstream(filename);
+	}
+	catch (const std::exception& e)
+	{
+		std::cerr << e.what() << std::endl;
+		std::cerr << "Failed to create save file: " << filename << std::endl;
+		return;
+	}
+	// Write the values to the file
+	out << std::to_string(food) << std::endl;
+	out << std::to_string(currentLevel) << std::endl;
+	out << std::to_string(antCount) << std::endl;
+	out << std::to_string(ladybugCount) << std::endl;
+	out << std::to_string(stinkbugCount) << std::endl;
+	out << std::to_string(gridWidth) << std::endl;
+	out << std::to_string(gridHeight) << std::endl;
+
+	out.close();
+}
+
+void Game::load() {
+	// Get user info
+	std::string getUser = getenv("USERNAME");
+	fs::path filename = "C:\\Users\\" + getUser + "\\AppData\\Local\\BugWorld\\save.txt";
+	fs::path directory = "C:\\Users\\" + getUser + "\\AppData\\Local\\BugWorld";
+	if (!fs::exists(directory) || !fs::exists(filename)) {
+		std::cerr << "Attempted to load with no save file" << std::endl;
+		return;
+	}
+	// Read in the values from the file
+	std::ifstream in(filename);
+
+	in >> food;
+	in >> currentLevel;
+	in >> antCount;
+	in >> ladybugCount;
+	in >> stinkbugCount;
+	int width;
+	int height;
+	in >> width;
+	in >> height;
+
+	in.close();
+
+	// Fix everything to match loaded values
+	for (Bug* bug : bugs) {
+		delete bug;
+	}
+	bugs.clear();
+	for (int i = 0; i < antCount; i++) {
+		bugs.push_back(new Ant());
+	}
+	for (int i = 0; i < ladybugCount; i++) {
+		bugs.push_back(new Ladybug());
+	}
+	for (int i = 0; i < stinkbugCount; i++) {
+		bugs.push_back(new Stinkbug());
+	}
+	setGridSize(width, height);
+	initLevel();
+}
+
 void Game::prestige() {
 	food = 0;
 	currentLevel = 1;
 	expansion = 0;
 	totalVegetation = 0;
 	totalBugs = 0;
-
 	for (Bug* bug : bugs) {
 		delete bug;
 	}
 	bugs.clear();
-	setGridSize(START_GRID_WIDTH, START_GRID_HEIGHT);
+  setGridSize(START_GRID_WIDTH, START_GRID_HEIGHT);
 	initLevel();
 	prestigeCount += 1;
 	gold += 1;
 	playPrestigeSound();
 }
-
+  
 Game* Game::game = NULL;

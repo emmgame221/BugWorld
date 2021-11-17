@@ -4,9 +4,15 @@
 #include "Bug.h"
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
+#include <cstdlib>
+#include <filesystem>
+#include <fstream>
 #include <iostream>
+#include <string>
 #include <vector>
 #include <random>
+
+#pragma warning(disable: 4996) // disable security warning for getenv
 
 const float GROWTH_SECS = 1.f;
 const float LOW_VEG_SECS = 3.f;
@@ -14,6 +20,8 @@ const float DEFAULT_VOL = 50.f;
 const float MAX_VOL = 100.f;
 const float MIN_VOL = 0.f;
 const float VOL_INC = 10.f;
+const int START_GRID_WIDTH = 16;
+const int START_GRID_HEIGHT = 9;
 const int MAX_GRID_WIDTH = 96;
 const int MAX_GRID_HEIGHT = 49;
 
@@ -37,6 +45,9 @@ protected:
 	int gridWidth;
 	int gridHeight;
 	int expansion = 0;
+	int antCount = 0;
+	int ladybugCount = 0;
+	int stinkbugCount = 0;
 	float tileSize;
 	sf::Vector2u prevWinSize;
 	sf::Font font;
@@ -62,6 +73,8 @@ public:
 	sf::Texture stinkbugTexture;
 	sf::Texture plusTexture;
 	sf::Texture minusTexture;
+	sf::Texture saveTexture;
+	sf::Texture loadTexture;
 	int antCost = 5;
 	int ladyCost = 8;
 	int stinkCost = 10;
@@ -117,4 +130,6 @@ public:
 	int countAdjVeg(int x, int y);
 	Tile* getTileAt(int x, int y);
 	sf::Vector2u getWindowSize();
+	void save();
+	void load();
 };

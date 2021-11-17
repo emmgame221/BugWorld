@@ -17,4 +17,6 @@ public:
 	static Button* stinkbugPic();
 	static Button* plusStinkbug();
 	static Button* minusStinkbug();
+	static Button* saveButton();
+	static Button* loadButton();
 };
