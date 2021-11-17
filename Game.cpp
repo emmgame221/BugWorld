@@ -169,8 +169,11 @@ void Game::resize() {
 	foodText.setScale(sf::Vector2f(windowSize.x * 0.08f / foodText.getLocalBounds().width, windowSize.y * 0.08f / foodText.getLocalBounds().width));
 	levelText.setPosition(sf::Vector2f(windowSize.x * 0.9f, windowSize.y * 0.1f));
 	levelText.setScale(sf::Vector2f(windowSize.x * 0.08f / levelText.getLocalBounds().width, windowSize.y * 0.08f / levelText.getLocalBounds().width));
-	antBuyText.setPosition(sf::Vector2f(windowSize.x, 100.f));
-	antBuyText.setScale(sf::Vector2f(windowSize.x * 0.08f / antBuyText.getLocalBounds().width, windowSize.y * 0.08f / antBuyText.getLocalBounds().width));
+	antBuyText.setPosition(sf::Vector2f(windowSize.x * 0.1f, windowSize.y * 0.9f));
+	antBuyText.setScale(sf::Vector2f(windowSize.x * 0.04f / antBuyText.getLocalBounds().width, windowSize.y * 0.04f / antBuyText.getLocalBounds().width));
+	antSellText.setPosition(sf::Vector2f(windowSize.x * 0.1f, windowSize.y * 0.95f));
+	antSellText.setScale(sf::Vector2f(windowSize.x * 0.04f / antSellText.getLocalBounds().width, windowSize.y * 0.04f / antSellText.getLocalBounds().width));
+	ladyBuyText.setScale(sf::Vector2f(windowSize.x * 0.04f / ladyBuyText.getLocalBounds().width, windowSize.y * 0.04f / ladyBuyText.getLocalBounds().width));
 	for (Bug* bug : bugs) {
 		sf::Vector2f lastPos = bug->getPosition();
 		bug->setPosition(sf::Vector2f(lastPos.x * windowSize.x / prevWinSize.x, lastPos.y * windowSize.y / prevWinSize.y));
@@ -332,8 +335,12 @@ void Game::spawnLabels() {
 	levelText.setScale(sf::Vector2f(winSize.x * 0.08f / levelText.getLocalBounds().width, winSize.y * 0.08f / levelText.getLocalBounds().width));
 	antBuyText = sf::Text(": " + std::to_string(antCost), font);
 	antBuyText.setFillColor(sf::Color::Black);
-	antBuyText.setPosition(sf::Vector2f(winSize.x, 100.f));
-	antBuyText.setScale(sf::Vector2f(winSize.x * 0.08f / antBuyText.getLocalBounds().width, winSize.y * 0.08f / antBuyText.getLocalBounds().width));
+	antBuyText.setPosition(sf::Vector2f(winSize.x * 0.1f, winSize.y * 0.9f));
+	antBuyText.setScale(sf::Vector2f(winSize.x * 0.04f / antBuyText.getLocalBounds().width, winSize.y * 0.04f / antBuyText.getLocalBounds().width));
+	antSellText = sf::Text(": " + std::to_string(antSell), font);
+	antSellText.setFillColor(sf::Color::Black);
+	antSellText.setPosition(sf::Vector2f(winSize.x * 0.1f, winSize.y * 0.95f));
+	antSellText.setScale(sf::Vector2f(winSize.x * 0.04f / antSellText.getLocalBounds().width, winSize.y * 0.04f / antSellText.getLocalBounds().width));
 }
 
 void Game::increaseSFXVolume() {
