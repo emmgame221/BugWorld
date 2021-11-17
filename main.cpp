@@ -59,6 +59,9 @@ int main()
                 if (event.key.code == sf::Keyboard::N) {
                     game->nextLevel();
                 }
+                if (event.key.code == sf::Keyboard::P) {
+                    game->prestige();
+                }
                 break;
             case sf::Event::MouseButtonPressed:
                 if (event.mouseButton.button == sf::Mouse::Left) {

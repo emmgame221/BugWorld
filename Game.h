@@ -53,6 +53,8 @@ protected:
 	std::vector<Entity*> buttons;
 	std::vector<Bug*> bugs;
 
+	
+
 public:
 	sf::Texture vegTextures[4];
 	sf::Texture antTexture;
@@ -70,11 +72,15 @@ public:
 	int currentLevel = 1;
 	int totalBugs = 0;
 	int totalVegetation = 0;
+	int prestigeCount = 0;
+	int gold = 0;
 	std::random_device rd;
 	std::mt19937 rng;
 	std::uniform_real_distribution<float> urd01;
 	std::uniform_int_distribution<int> widthRange;
 	std::uniform_int_distribution<int> heightRange;
+	const int START_GRID_WIDTH = 16;
+	const int START_GRID_HEIGHT = 9;
 
 	static Game* getGame();
 	sf::Time getElapsedTime();
@@ -106,7 +112,8 @@ public:
 	void playPrestigeSound();
 	void spawnButtons();
 	void spawnLabels();
-	void vegGrowth();
+	void prestige();
+	void vegGrowth(int limit);
 	int countAdjVeg(int x, int y);
 	Tile* getTileAt(int x, int y);
 	sf::Vector2u getWindowSize();
