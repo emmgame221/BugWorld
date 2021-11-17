@@ -197,18 +197,18 @@ void Game::setWindow(sf::RenderWindow* win) {
 
 void Game::nextLevel() {
 	currentLevel++;
+	if (expansion < 2 && gridWidth < MAX_GRID_WIDTH) {
+		setGridSize(gridWidth + 1, gridHeight);
+		expansion = (gridHeight < MAX_GRID_HEIGHT) ? expansion + 1 : 0;
+	}
+	else if (gridHeight < MAX_GRID_HEIGHT) {
+		setGridSize(gridWidth, gridHeight + 1);
+		expansion = 0;
+	}
 	initLevel();
 }
 
 void Game::initLevel() {
-	if (currentLevel != 1 && expansion < 2 && gridWidth < MAX_GRID_WIDTH) {
-		setGridSize(gridWidth + 1, gridHeight);
-		expansion = (gridHeight < MAX_GRID_HEIGHT) ? expansion + 1 : 0;
-	}
-	else if (currentLevel != 1 && gridHeight < MAX_GRID_HEIGHT) {
-		setGridSize(gridWidth, gridHeight + 1);
-		expansion = 0;
-	}
 	createTiles();
 	resize();
 	int maxVeg = 3 * gridWidth * gridHeight;
