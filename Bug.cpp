@@ -93,7 +93,7 @@ Ant::Ant() {
 	sprite.setPosition(sf::Vector2f(0.0f,0.0f));
 	float scale = game->getTileSize() / sprite.getLocalBounds().width;
 	sprite.setOrigin(sf::Vector2f((sprite.getLocalBounds().width / 2), 0));
-	sprite.setScale(sf::Vector2f(scale * .75,scale * .75));
+	sprite.setScale(sf::Vector2f(scale / 2,scale / 2));
 }
 
 
