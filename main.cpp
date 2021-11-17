@@ -7,8 +7,6 @@ const int WIN_MIN_WIDTH = 720;
 const int WIN_MIN_HEIGHT = 540;
 const int WIN_DEF_WIDTH = 1440;
 const int WIN_DEF_HEIGHT = 1080;
-const int START_GRID_WIDTH = 16;
-const int START_GRID_HEIGHT = 9;
 
 int main()
 {

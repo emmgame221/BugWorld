@@ -470,6 +470,8 @@ void Game::save() {
 	out << std::to_string(antCount) << std::endl;
 	out << std::to_string(ladybugCount) << std::endl;
 	out << std::to_string(stinkbugCount) << std::endl;
+	out << std::to_string(gridWidth) << std::endl;
+	out << std::to_string(gridHeight) << std::endl;
 
 	out.close();
 }
@@ -491,6 +493,10 @@ void Game::load() {
 	in >> antCount;
 	in >> ladybugCount;
 	in >> stinkbugCount;
+	int width;
+	int height;
+	in >> width;
+	in >> height;
 
 	in.close();
 
@@ -499,7 +505,17 @@ void Game::load() {
 		delete bug;
 	}
 	bugs.clear();
-	totalBugs = antCount + ladybugCount + stinkbugCount;
+	for (int i = 0; i < antCount; i++) {
+		bugs.push_back(new Ant());
+	}
+	for (int i = 0; i < ladybugCount; i++) {
+		bugs.push_back(new Ladybug());
+	}
+	for (int i = 0; i < stinkbugCount; i++) {
+		bugs.push_back(new Stinkbug());
+	}
+	setGridSize(width, height);
+	initLevel();
 }
 
 Game* Game::game = NULL;

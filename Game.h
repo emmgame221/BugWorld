@@ -18,6 +18,8 @@ const float DEFAULT_VOL = 50.f;
 const float MAX_VOL = 100.f;
 const float MIN_VOL = 0.f;
 const float VOL_INC = 10.f;
+const int START_GRID_WIDTH = 16;
+const int START_GRID_HEIGHT = 9;
 const int MAX_GRID_WIDTH = 96;
 const int MAX_GRID_HEIGHT = 49;
 
