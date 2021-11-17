@@ -4,7 +4,10 @@
 #include "Bug.h"
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
+#include <cstdlib>
+#include <fstream>
 #include <iostream>
+#include <string>
 #include <vector>
 #include <random>
 
@@ -110,4 +113,6 @@ public:
 	int countAdjVeg(int x, int y);
 	Tile* getTileAt(int x, int y);
 	sf::Vector2u getWindowSize();
+	void save();
+	void load();
 };

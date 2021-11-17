@@ -429,4 +429,19 @@ sf::Vector2u Game::getWindowSize() {
 	return window->getSize();
 }
 
+void Game::save() {
+	// Get user info
+	std::string getUser = getenv("USERNAME");
+	std::string filename = "C:\\Users\\" + getUser + "\\AppData\\Local\\BugWorld\\save.txt";
+	std::string directory = "C:\\Users\\" + getUser + "\\AppData\\Local\\BugWorldSave";
+	/*create an ofstream object for writing to file*/
+	std::ofstream out(filename);
+}
+
+void Game::load() {
+	std::string username = std::getenv("USERNAME");
+	std::string saveFilePath = "C:\\Users\\" + username + "\\Appdata\\Local\\BugWorld\\save.dat";
+
+}
+
 Game* Game::game = NULL;
