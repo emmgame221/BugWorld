@@ -116,3 +116,29 @@ Button* AllButtonSprite::minusStinkbug() {
 	b->updateTransform();
 	return b;
 }
+
+Button* AllButtonSprite::saveButton() {
+	Game* game = Game::getGame();
+	sf::Sprite sprite(game->saveTexture);
+	std::function<void()> func = std::bind(&Game::save, game);
+	float xofs = 0.80f;
+	float yofs = 0.90f;
+	float xsize = 0.1f;
+	float ysize = 0.1f;
+	Button* b = new Button(sprite, func, xofs, yofs, xsize, ysize);
+	b->updateTransform();
+	return b;
+}
+
+Button* AllButtonSprite::loadButton() {
+	Game* game = Game::getGame();
+	sf::Sprite sprite(game->loadTexture);
+	std::function<void()> func = std::bind(&Game::load, game);
+	float xofs = 0.90f;
+	float yofs = 0.90f;
+	float xsize = 0.1f;
+	float ysize = 0.1f;
+	Button* b = new Button(sprite, func, xofs, yofs, xsize, ysize);
+	b->updateTransform();
+	return b;
+}

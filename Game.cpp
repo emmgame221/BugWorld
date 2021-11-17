@@ -22,11 +22,15 @@ Game::Game() {
 	stinkbugTexture = sf::Texture();
 	plusTexture = sf::Texture();
 	minusTexture = sf::Texture();
+	saveTexture = sf::Texture();
+	loadTexture = sf::Texture();
 	antTexture.loadFromFile("./resources/ant.png");
 	ladybugTexture.loadFromFile("./resources/ladybug.png");
 	stinkbugTexture.loadFromFile("./resources/stinkbug.png");
 	plusTexture.loadFromFile("./resources/plus.png");
 	minusTexture.loadFromFile("./resources/minus.png");
+	saveTexture.loadFromFile("./resources/save.png");
+	loadTexture.loadFromFile("./resources/load.png");
 	clock = sf::Clock();
 	spawnSoundBuf.loadFromFile("./resources/spawnsound.wav");
 	spawnSound = sf::Sound(spawnSoundBuf);
@@ -318,6 +322,8 @@ void Game::spawnButtons() {
 	buttons.push_back(allButtons.stinkbugPic());
 	buttons.push_back(allButtons.plusStinkbug());
 	buttons.push_back(allButtons.minusStinkbug());
+	buttons.push_back(allButtons.saveButton());
+	buttons.push_back(allButtons.loadButton());
 }
 
 void Game::spawnLabels() {

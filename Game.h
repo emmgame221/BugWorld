@@ -12,6 +12,8 @@
 #include <vector>
 #include <random>
 
+#pragma warning(disable: 4996) // disable security warning for getenv
+
 const float GROWTH_SECS = 1.f;
 const float LOW_VEG_SECS = 3.f;
 const float DEFAULT_VOL = 50.f;
@@ -69,6 +71,8 @@ public:
 	sf::Texture stinkbugTexture;
 	sf::Texture plusTexture;
 	sf::Texture minusTexture;
+	sf::Texture saveTexture;
+	sf::Texture loadTexture;
 	int antCost = 5;
 	int ladyCost = 8;
 	int stinkCost = 10;
