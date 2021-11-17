@@ -81,6 +81,12 @@ void Game::checkClick(int x, int y) {
 void Game::drawAll() {
 	window->draw(foodText);
 	window->draw(levelText);
+	window->draw(antBuyText);
+	window->draw(antSellText);
+	window->draw(ladyBuyText);
+	window->draw(ladySellText);
+	window->draw(stinkBuyText);
+	window->draw(stinkSellText);
 	for (unsigned int i = 0; i < tiles.size(); i++) {
 		tiles[i]->draw();
 	}
@@ -415,6 +421,10 @@ int Game::countAdjVeg(int x, int y) {
 
 sf::Vector2u Game::getWindowSize() {
 	return window->getSize();
+}
+
+void Game::prestige() {
+
 }
 
 Game* Game::game = NULL;

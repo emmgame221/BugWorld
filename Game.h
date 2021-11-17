@@ -102,6 +102,7 @@ public:
 	void spawnButtons();
 	void spawnLabels();
 	void vegGrowth();
+	void prestige();
 	int countAdjVeg(int x, int y);
 	Tile* getTileAt(int x, int y);
 	sf::Vector2u getWindowSize();
