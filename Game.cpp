@@ -429,11 +429,21 @@ sf::Vector2u Game::getWindowSize() {
 	return window->getSize();
 }
 
+namespace fs = std::filesystem;
+
 void Game::save() {
 	// Get user info
 	std::string getUser = getenv("USERNAME");
-	std::string filename = "C:\\Users\\" + getUser + "\\AppData\\Local\\BugWorld\\save.txt";
-	std::string directory = "C:\\Users\\" + getUser + "\\AppData\\Local\\BugWorldSave";
+	fs::path filename = "C:\\Users\\" + getUser + "\\AppData\\Local\\BugWorld\\save.txt";
+	fs::path directory = "C:\\Users\\" + getUser + "\\AppData\\Local\\BugWorld";
+	try
+	{
+		fs::create_directory(directory);
+	}
+	catch (const std::exception&)
+	{
+		std::cerr << "Failed to create directory: " << directory << std::endl;
+	}
 	/*create an ofstream object for writing to file*/
 	std::ofstream out(filename);
 }
