@@ -245,6 +245,7 @@ void Game::spawnAnt() {
 		bugs.push_back(new Ant());
 		playSpawnSound();
 		food -= antCost;
+		antCount++;
 	}
 }
 
@@ -253,6 +254,7 @@ void Game::spawnLadybug() {
 		bugs.push_back(new Ladybug());
 		playSpawnSound();
 		food -= ladyCost;
+		ladybugCount++;
 	}
 }
 
@@ -261,6 +263,7 @@ void Game::spawnStinkbug() {
 		bugs.push_back(new Stinkbug());
 		playSpawnSound();
 		food -= stinkCost;
+		stinkbugCount++;
 	}
 }
 
@@ -271,6 +274,7 @@ void Game::killAnt() {
 			if (bugs[i]->type == 0) {
 				bugs.erase(bugs.begin() + i);
 				food += antSell;
+				antCount--;
 				break;
 			}
 		}
@@ -283,6 +287,7 @@ void Game::killLadybug() {
 			if (bugs[i]->type == 1) {
 				bugs.erase(bugs.begin() + i);
 				food += ladySell;
+				ladybugCount--;
 				break;
 			}
 		}
@@ -295,6 +300,7 @@ void Game::killStinkbug() {
 			if (bugs[i]->type == 2) {
 				bugs.erase(bugs.begin() + i);
 				food += stinkSell;
+				stinkbugCount--;
 				break;
 			}
 		}
@@ -436,22 +442,64 @@ void Game::save() {
 	std::string getUser = getenv("USERNAME");
 	fs::path filename = "C:\\Users\\" + getUser + "\\AppData\\Local\\BugWorld\\save.txt";
 	fs::path directory = "C:\\Users\\" + getUser + "\\AppData\\Local\\BugWorld";
+	std::ofstream out;
+	// Create the save directory if necessary and open the save file to write to
 	try
 	{
 		fs::create_directory(directory);
 	}
-	catch (const std::exception&)
+	catch (const std::exception& e)
 	{
+		std::cerr << e.what() << std::endl;
 		std::cerr << "Failed to create directory: " << directory << std::endl;
+		return;
 	}
-	/*create an ofstream object for writing to file*/
-	std::ofstream out(filename);
+	try
+	{
+		out = std::ofstream(filename);
+	}
+	catch (const std::exception& e)
+	{
+		std::cerr << e.what() << std::endl;
+		std::cerr << "Failed to create save file: " << filename << std::endl;
+		return;
+	}
+	// Write the values to the file
+	out << std::to_string(food) << std::endl;
+	out << std::to_string(currentLevel) << std::endl;
+	out << std::to_string(antCount) << std::endl;
+	out << std::to_string(ladybugCount) << std::endl;
+	out << std::to_string(stinkbugCount) << std::endl;
+
+	out.close();
 }
 
 void Game::load() {
-	std::string username = std::getenv("USERNAME");
-	std::string saveFilePath = "C:\\Users\\" + username + "\\Appdata\\Local\\BugWorld\\save.dat";
+	// Get user info
+	std::string getUser = getenv("USERNAME");
+	fs::path filename = "C:\\Users\\" + getUser + "\\AppData\\Local\\BugWorld\\save.txt";
+	fs::path directory = "C:\\Users\\" + getUser + "\\AppData\\Local\\BugWorld";
+	if (!fs::exists(directory) || !fs::exists(filename)) {
+		std::cerr << "Attempted to load with no save file" << std::endl;
+		return;
+	}
+	// Read in the values from the file
+	std::ifstream in(filename);
 
+	in >> food;
+	in >> currentLevel;
+	in >> antCount;
+	in >> ladybugCount;
+	in >> stinkbugCount;
+
+	in.close();
+
+	// Fix everything to match loaded values
+	for (Bug* bug : bugs) {
+		delete bug;
+	}
+	bugs.clear();
+	totalBugs = antCount + ladybugCount + stinkbugCount;
 }
 
 Game* Game::game = NULL;

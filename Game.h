@@ -41,6 +41,9 @@ protected:
 	int gridWidth;
 	int gridHeight;
 	int expansion = 0;
+	int antCount = 0;
+	int ladybugCount = 0;
+	int stinkbugCount = 0;
 	float tileSize;
 	sf::Vector2u prevWinSize;
 	sf::Font font;
