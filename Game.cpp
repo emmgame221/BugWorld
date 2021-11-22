@@ -545,8 +545,14 @@ void Game::save() {
 void Game::load() {
 	// Get user info
 	std::string getUser = getenv("USERNAME");
+#ifdef _WIN32
 	fs::path filename = "C:\\Users\\" + getUser + "\\AppData\\Local\\BugWorld\\save.txt";
 	fs::path directory = "C:\\Users\\" + getUser + "\\AppData\\Local\\BugWorld";
+#endif
+#ifdef __linux__
+	fs::path filename = "/.BugWorld/save.txt";
+	fs::path directory = "/.BugWorld/";
+#endif	
 	if (!fs::exists(directory) || !fs::exists(filename)) {
 		std::cerr << "Attempted to load with no save file" << std::endl;
 		return;
