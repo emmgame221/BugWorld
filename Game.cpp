@@ -147,6 +147,43 @@ void Game::update() {
 	if (totalVegetation == 0) {
 		nextLevel();
 	}
+	// Enable/disable buttons as necessary
+	if (food < antCost) {
+		addAnt->disable();
+	}
+	else {
+		addAnt->enable();
+	}
+	if (food < ladyCost) {
+		addLadybug->disable();
+	}
+	else {
+		addLadybug->enable();
+	}
+	if (food < stinkCost) {
+		addStinkbug->disable();
+	}
+	else {
+		addStinkbug->enable();
+	}
+	if (antCount < 1) {
+		subAnt->disable();
+	}
+	else {
+		subAnt->enable();
+	}
+	if (ladybugCount < 1) {
+		subLadybug->disable();
+	}
+	else {
+		subLadybug->enable();
+	}
+	if (stinkbugCount < 1) {
+		subStinkbug->disable();
+	}
+	else {
+		subStinkbug->enable();
+	}
 }
 
 void Game::resize() {
@@ -323,14 +360,20 @@ void Game::killStinkbug() {
 void Game::spawnButtons() {
 	AllButtonSprite allButtons;
 	buttons.push_back(allButtons.antPic());
-	buttons.push_back(allButtons.plusAnt());
-	buttons.push_back(allButtons.minusAnt());
+	addAnt = allButtons.plusAnt();
+	subAnt = allButtons.minusAnt();
+	addLadybug = allButtons.plusLadybug();
+	subLadybug = allButtons.minusLadybug();
+	addStinkbug = allButtons.plusStinkbug();
+	subStinkbug = allButtons.minusStinkbug();
+	buttons.push_back(addAnt);
+	buttons.push_back(subAnt);
+	buttons.push_back(addLadybug);
+	buttons.push_back(subLadybug);
+	buttons.push_back(addStinkbug);
+	buttons.push_back(subStinkbug);
 	buttons.push_back(allButtons.ladybugPic());
-	buttons.push_back(allButtons.plusLadybug());
-	buttons.push_back(allButtons.minusLadybug());
 	buttons.push_back(allButtons.stinkbugPic());
-	buttons.push_back(allButtons.plusStinkbug());
-	buttons.push_back(allButtons.minusStinkbug());
 	buttons.push_back(allButtons.saveButton());
 	buttons.push_back(allButtons.loadButton());
 }
@@ -547,7 +590,7 @@ void Game::prestige() {
 		delete bug;
 	}
 	bugs.clear();
-  setGridSize(START_GRID_WIDTH, START_GRID_HEIGHT);
+	setGridSize(START_GRID_WIDTH, START_GRID_HEIGHT);
 	initLevel();
 	prestigeCount += 1;
 	gold += 1;

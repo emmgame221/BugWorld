@@ -24,3 +24,17 @@ void Button::updateTransform() {
 	sprite.setPosition(sf::Vector2f(xpos, ypos));
 	sprite.setScale(sf::Vector2f(xscale, yscale));
 }
+
+bool Button::isEnabled() {
+	return enabled;
+}
+
+void Button::enable() {
+	enabled = true;
+	sprite.setColor(sf::Color::White);
+}
+
+void Button::disable() {
+	enabled = false;
+	sprite.setColor(sf::Color(127, 127, 127));
+}

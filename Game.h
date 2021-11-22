@@ -64,7 +64,13 @@ protected:
 	std::vector<Entity*> buttons;
 	std::vector<Bug*> bugs;
 
-	
+	Button* addAnt;
+	Button* subAnt;
+	Button* addLadybug;
+	Button* subLadybug;
+	Button* addStinkbug;
+	Button* subStinkbug;
+	Button* presigeButton = nullptr;
 
 public:
 	sf::Texture vegTextures[4];
