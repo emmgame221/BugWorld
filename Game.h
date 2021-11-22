@@ -1,5 +1,7 @@
 #pragma once
 #include "Entity.h"
+#include "Button.h"
+#include "ButtonSprite.h"
 #include "Tile.h"
 #include "Bug.h"
 #include <SFML/Graphics.hpp>

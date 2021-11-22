@@ -1,6 +1,4 @@
 #include "Game.h"
-#include "Bug.h"
-#include "ButtonSprite.h"
 
 Game::Game() {
 	std::vector<Tile*> tiles;
