@@ -131,6 +131,7 @@ public:
 	void decreaseBGMVolume();
 	void playSpawnSound();
 	void playPrestigeSound();
+	void endMusic();
 	void spawnButtons();
 	void spawnLabels();
 	void prestige();

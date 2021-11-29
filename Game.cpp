@@ -461,6 +461,10 @@ void Game::playPrestigeSound() {
 	prestigeSound.play();
 }
 
+void Game::endMusic() {
+	backgroundMusic.stop();
+}
+
 void Game::vegGrowth(int limit) {
 	int growths = 0;
 	int curTotal = totalVegetation;

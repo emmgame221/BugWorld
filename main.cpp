@@ -34,6 +34,8 @@ int main()
         {
             switch (event.type) {
             case sf::Event::Closed:
+                game->save();
+                
                 window.close();
                 break;
             case sf::Event::KeyPressed:
