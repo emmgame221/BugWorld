@@ -39,6 +39,9 @@
     <ClCompile Include="InfoMenu.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="SaveState.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -73,5 +76,8 @@
     <ResourceCompile Include="Bug World.rc">
       <Filter>Resource Files</Filter>
     </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="openal32.dll" />
   </ItemGroup>
 </Project>
