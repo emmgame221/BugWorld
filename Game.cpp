@@ -212,7 +212,14 @@ void Game::resize() {
 	antBuyText.setScale(sf::Vector2f(windowSize.x * 0.04f / antBuyText.getLocalBounds().width, windowSize.y * 0.04f / antBuyText.getLocalBounds().width));
 	antSellText.setPosition(sf::Vector2f(windowSize.x * 0.1f, windowSize.y * 0.95f));
 	antSellText.setScale(sf::Vector2f(windowSize.x * 0.04f / antSellText.getLocalBounds().width, windowSize.y * 0.04f / antSellText.getLocalBounds().width));
+	ladyBuyText.setPosition(sf::Vector2f(windowSize.x * 0.25f, windowSize.y * 0.9f));
 	ladyBuyText.setScale(sf::Vector2f(windowSize.x * 0.04f / ladyBuyText.getLocalBounds().width, windowSize.y * 0.04f / ladyBuyText.getLocalBounds().width));
+	ladySellText.setPosition(sf::Vector2f(windowSize.x * 0.25f, windowSize.y * 0.95f));
+	ladySellText.setScale(sf::Vector2f(windowSize.x * 0.04f / ladySellText.getLocalBounds().width, windowSize.y * .04f / ladySellText.getLocalBounds().width));
+	stinkBuyText.setPosition(sf::Vector2f(windowSize.x * 0.4f, windowSize.y * 0.9f));
+	stinkBuyText.setScale(sf::Vector2f(windowSize.x * 0.04f / stinkSellText.getLocalBounds().width, windowSize.y * .04f / stinkSellText.getLocalBounds().width));
+	stinkSellText.setPosition(sf::Vector2f(windowSize.x * 0.4f, windowSize.y * 0.95f));
+	stinkSellText.setScale(sf::Vector2f(windowSize.x * 0.04f / stinkSellText.getLocalBounds().width, windowSize.y * .04f / stinkSellText.getLocalBounds().width));
 	for (Bug* bug : bugs) {
 		sf::Vector2f lastPos = bug->getPosition();
 		bug->setPosition(sf::Vector2f(lastPos.x * windowSize.x / prevWinSize.x, lastPos.y * windowSize.y / prevWinSize.y));
@@ -394,6 +401,22 @@ void Game::spawnLabels() {
 	antSellText.setFillColor(sf::Color::Black);
 	antSellText.setPosition(sf::Vector2f(winSize.x * 0.1f, winSize.y * 0.95f));
 	antSellText.setScale(sf::Vector2f(winSize.x * 0.04f / antSellText.getLocalBounds().width, winSize.y * 0.04f / antSellText.getLocalBounds().width));
+	ladyBuyText = sf::Text(": " + std::to_string(ladyCost), font);
+	ladyBuyText.setFillColor(sf::Color::Black);
+	ladyBuyText.setPosition(sf::Vector2f(winSize.x * 0.25f, winSize.y * 0.9f));
+	ladyBuyText.setScale(sf::Vector2f(winSize.x * 0.04f / ladyBuyText.getLocalBounds().width, winSize.y * 0.04f / ladyBuyText.getLocalBounds().width));
+	ladySellText = sf::Text(": " + std::to_string(ladySell), font);
+	ladySellText.setFillColor(sf::Color::Black);
+	ladySellText.setPosition(sf::Vector2f(winSize.x * 0.25f, winSize.y * 0.95f));
+	ladySellText.setScale(sf::Vector2f(winSize.x * 0.04f / ladySellText.getLocalBounds().width, winSize.y * .04f / ladySellText.getLocalBounds().width));
+	stinkBuyText = sf::Text(": " + std::to_string(stinkCost), font);
+	stinkBuyText.setFillColor(sf::Color::Black);
+	stinkBuyText.setPosition(sf::Vector2f(winSize.x * 0.4f, winSize.y * 0.9f));
+	stinkBuyText.setScale(sf::Vector2f(winSize.x * 0.04f / stinkSellText.getLocalBounds().width, winSize.y * .04f / stinkSellText.getLocalBounds().width));
+	stinkSellText = sf::Text(": " + std::to_string(stinkSell), font);
+	stinkSellText.setFillColor(sf::Color::Black);
+	stinkSellText.setPosition(sf::Vector2f(winSize.x * 0.4f, winSize.y * 0.95f));
+	stinkSellText.setScale(sf::Vector2f(winSize.x * 0.04f / stinkSellText.getLocalBounds().width, winSize.y * .04f / stinkSellText.getLocalBounds().width));
 }
 
 void Game::increaseSFXVolume() {
