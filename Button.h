@@ -12,8 +12,12 @@ private:
     float yOffset;
     float xSize;
     float ySize;
+    bool enabled = true;
 public:
     Button(sf::Sprite s, std::function<void()> func, float xOffset, float yOffset, float xSize, float ySize);
     void onClick();
     void updateTransform();
+    bool isEnabled();
+    void enable();
+    void disable();
 };

@@ -1,12 +1,20 @@
 #pragma once
 #include "Entity.h"
+#include "Button.h"
+#include "ButtonSprite.h"
 #include "Tile.h"
 #include "Bug.h"
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
+#include <cstdlib>
+#include <filesystem>
+#include <fstream>
 #include <iostream>
+#include <string>
 #include <vector>
 #include <random>
+
+#pragma warning(disable: 4996) // disable security warning for getenv
 
 const float GROWTH_SECS = 1.f;
 const float LOW_VEG_SECS = 3.f;
@@ -14,6 +22,10 @@ const float DEFAULT_VOL = 50.f;
 const float MAX_VOL = 100.f;
 const float MIN_VOL = 0.f;
 const float VOL_INC = 10.f;
+const int START_GRID_WIDTH = 16;
+const int START_GRID_HEIGHT = 9;
+const int MAX_GRID_WIDTH = 96;
+const int MAX_GRID_HEIGHT = 49;
 
 class Game
 {
@@ -34,6 +46,10 @@ protected:
 	sf::Time lowVegTimer = sf::seconds(LOW_VEG_SECS);
 	int gridWidth;
 	int gridHeight;
+	int expansion = 0;
+	int antCount = 0;
+	int ladybugCount = 0;
+	int stinkbugCount = 0;
 	float tileSize;
 	sf::Vector2u prevWinSize;
 	sf::Font font;
@@ -49,6 +65,15 @@ protected:
 	std::vector<Tile*> tiles;
 	std::vector<Entity*> buttons;
 	std::vector<Bug*> bugs;
+
+	Button* addAnt;
+	Button* subAnt;
+	Button* addLadybug;
+	Button* subLadybug;
+	Button* addStinkbug;
+	Button* subStinkbug;
+	Button* presigeButton = nullptr;
+
 public:
 	sf::Texture vegTextures[4];
 	sf::Texture antTexture;
@@ -56,6 +81,8 @@ public:
 	sf::Texture stinkbugTexture;
 	sf::Texture plusTexture;
 	sf::Texture minusTexture;
+	sf::Texture saveTexture;
+	sf::Texture loadTexture;
 	int antCost = 5;
 	int ladyCost = 8;
 	int stinkCost = 10;
@@ -66,11 +93,15 @@ public:
 	int currentLevel = 1;
 	int totalBugs = 0;
 	int totalVegetation = 0;
+	int prestigeCount = 0;
+	int gold = 0;
 	std::random_device rd;
 	std::mt19937 rng;
 	std::uniform_real_distribution<float> urd01;
 	std::uniform_int_distribution<int> widthRange;
 	std::uniform_int_distribution<int> heightRange;
+	const int START_GRID_WIDTH = 16;
+	const int START_GRID_HEIGHT = 9;
 
 	static Game* getGame();
 	sf::Time getElapsedTime();
@@ -82,6 +113,7 @@ public:
 	void resize();
 	void addFood(int f);
 	void setGridSize(int width, int height);
+	void nextLevel();
 	void initLevel();
 	void createTiles();
 	float getTileSize();
@@ -101,8 +133,11 @@ public:
 	void playPrestigeSound();
 	void spawnButtons();
 	void spawnLabels();
-	void vegGrowth();
+	void prestige();
+	void vegGrowth(int limit);
 	int countAdjVeg(int x, int y);
 	Tile* getTileAt(int x, int y);
 	sf::Vector2u getWindowSize();
+	void save();
+	void load();
 };

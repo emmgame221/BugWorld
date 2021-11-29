@@ -1,6 +1,4 @@
 #include "Game.h"
-#include "Bug.h"
-#include "ButtonSprite.h"
 
 Game::Game() {
 	std::vector<Tile*> tiles;
@@ -22,11 +20,15 @@ Game::Game() {
 	stinkbugTexture = sf::Texture();
 	plusTexture = sf::Texture();
 	minusTexture = sf::Texture();
+	saveTexture = sf::Texture();
+	loadTexture = sf::Texture();
 	antTexture.loadFromFile("./resources/ant.png");
 	ladybugTexture.loadFromFile("./resources/ladybug.png");
 	stinkbugTexture.loadFromFile("./resources/stinkbug.png");
 	plusTexture.loadFromFile("./resources/plus.png");
 	minusTexture.loadFromFile("./resources/minus.png");
+	saveTexture.loadFromFile("./resources/save.png");
+	loadTexture.loadFromFile("./resources/load.png");
 	clock = sf::Clock();
 	spawnSoundBuf.loadFromFile("./resources/spawnsound.wav");
 	spawnSound = sf::Sound(spawnSoundBuf);
@@ -81,6 +83,12 @@ void Game::checkClick(int x, int y) {
 void Game::drawAll() {
 	window->draw(foodText);
 	window->draw(levelText);
+	window->draw(antBuyText);
+	window->draw(antSellText);
+	window->draw(ladyBuyText);
+	window->draw(ladySellText);
+	window->draw(stinkBuyText);
+	window->draw(stinkSellText);
 	for (unsigned int i = 0; i < tiles.size(); i++) {
 		tiles[i]->draw();
 	}
@@ -112,14 +120,14 @@ void Game::update() {
 	growthTimer -= elapsedTime;
 	if (growthTimer <= sf::Time::Zero && totalVegetation >= 5) {
 		growthTimer = sf::seconds(GROWTH_SECS);
-		vegGrowth();
+		vegGrowth(currentLevel);
 	}
 	if (totalVegetation < 5) {
 		lowVegTimer -= elapsedTime;
 		if (lowVegTimer <= sf::Time::Zero) {
 			lowVegTimer = sf::seconds(LOW_VEG_SECS);
 			growthTimer = sf::seconds(GROWTH_SECS);
-			vegGrowth();
+			vegGrowth(currentLevel);
 		}
 	}
 	for (unsigned int i = 0; i < bugs.size(); i++) {
@@ -135,8 +143,44 @@ void Game::update() {
 		}
 	}
 	if (totalVegetation == 0) {
-		currentLevel++;
-		initLevel();
+		nextLevel();
+	}
+	// Enable/disable buttons as necessary
+	if (food < antCost) {
+		addAnt->disable();
+	}
+	else {
+		addAnt->enable();
+	}
+	if (food < ladyCost) {
+		addLadybug->disable();
+	}
+	else {
+		addLadybug->enable();
+	}
+	if (food < stinkCost) {
+		addStinkbug->disable();
+	}
+	else {
+		addStinkbug->enable();
+	}
+	if (antCount < 1) {
+		subAnt->disable();
+	}
+	else {
+		subAnt->enable();
+	}
+	if (ladybugCount < 1) {
+		subLadybug->disable();
+	}
+	else {
+		subLadybug->enable();
+	}
+	if (stinkbugCount < 1) {
+		subStinkbug->disable();
+	}
+	else {
+		subStinkbug->enable();
 	}
 }
 
@@ -164,8 +208,11 @@ void Game::resize() {
 	foodText.setScale(sf::Vector2f(windowSize.x * 0.08f / foodText.getLocalBounds().width, windowSize.y * 0.08f / foodText.getLocalBounds().width));
 	levelText.setPosition(sf::Vector2f(windowSize.x * 0.9f, windowSize.y * 0.1f));
 	levelText.setScale(sf::Vector2f(windowSize.x * 0.08f / levelText.getLocalBounds().width, windowSize.y * 0.08f / levelText.getLocalBounds().width));
-	antBuyText.setPosition(sf::Vector2f(windowSize.x, 100.f));
-	antBuyText.setScale(sf::Vector2f(windowSize.x * 0.08f / antBuyText.getLocalBounds().width, windowSize.y * 0.08f / antBuyText.getLocalBounds().width));
+	antBuyText.setPosition(sf::Vector2f(windowSize.x * 0.1f, windowSize.y * 0.9f));
+	antBuyText.setScale(sf::Vector2f(windowSize.x * 0.04f / antBuyText.getLocalBounds().width, windowSize.y * 0.04f / antBuyText.getLocalBounds().width));
+	antSellText.setPosition(sf::Vector2f(windowSize.x * 0.1f, windowSize.y * 0.95f));
+	antSellText.setScale(sf::Vector2f(windowSize.x * 0.04f / antSellText.getLocalBounds().width, windowSize.y * 0.04f / antSellText.getLocalBounds().width));
+	ladyBuyText.setScale(sf::Vector2f(windowSize.x * 0.04f / ladyBuyText.getLocalBounds().width, windowSize.y * 0.04f / ladyBuyText.getLocalBounds().width));
 	for (Bug* bug : bugs) {
 		sf::Vector2f lastPos = bug->getPosition();
 		bug->setPosition(sf::Vector2f(lastPos.x * windowSize.x / prevWinSize.x, lastPos.y * windowSize.y / prevWinSize.y));
@@ -196,11 +243,24 @@ void Game::setWindow(sf::RenderWindow* win) {
 	prevWinSize = window->getSize();
 }
 
+void Game::nextLevel() {
+	currentLevel++;
+	if (expansion < 2 && gridWidth < MAX_GRID_WIDTH) {
+		setGridSize(gridWidth + 1, gridHeight);
+		expansion = (gridHeight < MAX_GRID_HEIGHT) ? expansion + 1 : 0;
+	}
+	else if (gridHeight < MAX_GRID_HEIGHT) {
+		setGridSize(gridWidth, gridHeight + 1);
+		expansion = 0;
+	}
+	initLevel();
+}
+
 void Game::initLevel() {
 	createTiles();
-	for (int i = 0; i < currentLevel * 10; i++) {
-		vegGrowth();
-	}
+	resize();
+	int maxVeg = 3 * gridWidth * gridHeight;
+	vegGrowth(maxVeg / 2);
 }
 
 void Game::createTiles() {
@@ -208,6 +268,7 @@ void Game::createTiles() {
 		delete e;
 	}
 	tiles.clear();
+	totalVegetation = 0;
 	for (int i = 0; i < gridWidth; i++) {
 		for (int j = 0; j < gridHeight; j++) {
 			tiles.push_back(new Tile(0, i * tileSize, j * tileSize, tileSize));
@@ -232,6 +293,7 @@ void Game::spawnAnt() {
 		bugs.push_back(new Ant());
 		playSpawnSound();
 		food -= antCost;
+		antCount++;
 	}
 }
 
@@ -240,6 +302,7 @@ void Game::spawnLadybug() {
 		bugs.push_back(new Ladybug());
 		playSpawnSound();
 		food -= ladyCost;
+		ladybugCount++;
 	}
 }
 
@@ -248,6 +311,7 @@ void Game::spawnStinkbug() {
 		bugs.push_back(new Stinkbug());
 		playSpawnSound();
 		food -= stinkCost;
+		stinkbugCount++;
 	}
 }
 
@@ -258,6 +322,7 @@ void Game::killAnt() {
 			if (bugs[i]->type == 0) {
 				bugs.erase(bugs.begin() + i);
 				food += antSell;
+				antCount--;
 				break;
 			}
 		}
@@ -270,6 +335,7 @@ void Game::killLadybug() {
 			if (bugs[i]->type == 1) {
 				bugs.erase(bugs.begin() + i);
 				food += ladySell;
+				ladybugCount--;
 				break;
 			}
 		}
@@ -282,6 +348,7 @@ void Game::killStinkbug() {
 			if (bugs[i]->type == 2) {
 				bugs.erase(bugs.begin() + i);
 				food += stinkSell;
+				stinkbugCount--;
 				break;
 			}
 		}
@@ -291,14 +358,22 @@ void Game::killStinkbug() {
 void Game::spawnButtons() {
 	AllButtonSprite allButtons;
 	buttons.push_back(allButtons.antPic());
-	buttons.push_back(allButtons.plusAnt());
-	buttons.push_back(allButtons.minusAnt());
+	addAnt = allButtons.plusAnt();
+	subAnt = allButtons.minusAnt();
+	addLadybug = allButtons.plusLadybug();
+	subLadybug = allButtons.minusLadybug();
+	addStinkbug = allButtons.plusStinkbug();
+	subStinkbug = allButtons.minusStinkbug();
+	buttons.push_back(addAnt);
+	buttons.push_back(subAnt);
+	buttons.push_back(addLadybug);
+	buttons.push_back(subLadybug);
+	buttons.push_back(addStinkbug);
+	buttons.push_back(subStinkbug);
 	buttons.push_back(allButtons.ladybugPic());
-	buttons.push_back(allButtons.plusLadybug());
-	buttons.push_back(allButtons.minusLadybug());
 	buttons.push_back(allButtons.stinkbugPic());
-	buttons.push_back(allButtons.plusStinkbug());
-	buttons.push_back(allButtons.minusStinkbug());
+	buttons.push_back(allButtons.saveButton());
+	buttons.push_back(allButtons.loadButton());
 }
 
 void Game::spawnLabels() {
@@ -313,8 +388,12 @@ void Game::spawnLabels() {
 	levelText.setScale(sf::Vector2f(winSize.x * 0.08f / levelText.getLocalBounds().width, winSize.y * 0.08f / levelText.getLocalBounds().width));
 	antBuyText = sf::Text(": " + std::to_string(antCost), font);
 	antBuyText.setFillColor(sf::Color::Black);
-	antBuyText.setPosition(sf::Vector2f(winSize.x, 100.f));
-	antBuyText.setScale(sf::Vector2f(winSize.x * 0.08f / antBuyText.getLocalBounds().width, winSize.y * 0.08f / antBuyText.getLocalBounds().width));
+	antBuyText.setPosition(sf::Vector2f(winSize.x * 0.1f, winSize.y * 0.9f));
+	antBuyText.setScale(sf::Vector2f(winSize.x * 0.04f / antBuyText.getLocalBounds().width, winSize.y * 0.04f / antBuyText.getLocalBounds().width));
+	antSellText = sf::Text(": " + std::to_string(antSell), font);
+	antSellText.setFillColor(sf::Color::Black);
+	antSellText.setPosition(sf::Vector2f(winSize.x * 0.1f, winSize.y * 0.95f));
+	antSellText.setScale(sf::Vector2f(winSize.x * 0.04f / antSellText.getLocalBounds().width, winSize.y * 0.04f / antSellText.getLocalBounds().width));
 }
 
 void Game::increaseSFXVolume() {
@@ -359,9 +438,8 @@ void Game::playPrestigeSound() {
 	prestigeSound.play();
 }
 
-void Game::vegGrowth() {
+void Game::vegGrowth(int limit) {
 	int growths = 0;
-	int limit = currentLevel;
 	int curTotal = totalVegetation;
 	int max = 3 * gridWidth * gridHeight;
 	if (limit + curTotal > max) {
@@ -417,4 +495,116 @@ sf::Vector2u Game::getWindowSize() {
 	return window->getSize();
 }
 
+namespace fs = std::filesystem;
+
+void Game::save() {
+	// Get user info
+	std::string getUser = getenv("USERNAME");
+#ifdef _WIN32
+	fs::path filename = "C:\\Users\\" + getUser + "\\AppData\\Local\\BugWorld\\save.txt";
+	fs::path directory = "C:\\Users\\" + getUser + "\\AppData\\Local\\BugWorld";
+#endif
+#ifdef __linux__
+	fs::path filename = "/.BugWorld/save.txt";
+	fs::path directory = "/.BugWorld/";
+#endif
+	std::ofstream out;
+	// Create the save directory if necessary and open the save file to write to
+	try
+	{
+		fs::create_directory(directory);
+	}
+	catch (const std::exception& e)
+	{
+		std::cerr << e.what() << std::endl;
+		std::cerr << "Failed to create directory: " << directory << std::endl;
+		return;
+	}
+	try
+	{
+		out = std::ofstream(filename);
+	}
+	catch (const std::exception& e)
+	{
+		std::cerr << e.what() << std::endl;
+		std::cerr << "Failed to create save file: " << filename << std::endl;
+		return;
+	}
+	// Write the values to the file
+	out << std::to_string(food) << std::endl;
+	out << std::to_string(currentLevel) << std::endl;
+	out << std::to_string(antCount) << std::endl;
+	out << std::to_string(ladybugCount) << std::endl;
+	out << std::to_string(stinkbugCount) << std::endl;
+	out << std::to_string(gridWidth) << std::endl;
+	out << std::to_string(gridHeight) << std::endl;
+
+	out.close();
+}
+
+void Game::load() {
+	// Get user info
+	std::string getUser = getenv("USERNAME");
+#ifdef _WIN32
+	fs::path filename = "C:\\Users\\" + getUser + "\\AppData\\Local\\BugWorld\\save.txt";
+	fs::path directory = "C:\\Users\\" + getUser + "\\AppData\\Local\\BugWorld";
+#endif
+#ifdef __linux__
+	fs::path filename = "/.BugWorld/save.txt";
+	fs::path directory = "/.BugWorld/";
+#endif	
+	if (!fs::exists(directory) || !fs::exists(filename)) {
+		std::cerr << "Attempted to load with no save file" << std::endl;
+		return;
+	}
+	// Read in the values from the file
+	std::ifstream in(filename);
+
+	in >> food;
+	in >> currentLevel;
+	in >> antCount;
+	in >> ladybugCount;
+	in >> stinkbugCount;
+	int width;
+	int height;
+	in >> width;
+	in >> height;
+
+	in.close();
+
+	// Fix everything to match loaded values
+	for (Bug* bug : bugs) {
+		delete bug;
+	}
+	bugs.clear();
+	for (int i = 0; i < antCount; i++) {
+		bugs.push_back(new Ant());
+	}
+	for (int i = 0; i < ladybugCount; i++) {
+		bugs.push_back(new Ladybug());
+	}
+	for (int i = 0; i < stinkbugCount; i++) {
+		bugs.push_back(new Stinkbug());
+	}
+	setGridSize(width, height);
+	initLevel();
+}
+
+void Game::prestige() {
+	food = 0;
+	currentLevel = 1;
+	expansion = 0;
+	totalVegetation = 0;
+	totalBugs = 0;
+	for (Bug* bug : bugs) {
+		delete bug;
+	}
+	bugs.clear();
+	setGridSize(START_GRID_WIDTH, START_GRID_HEIGHT);
+	initLevel();
+	prestigeCount += 1;
+	gold += 1;
+	playPrestigeSound();
+}
+  
 Game* Game::game = NULL;
