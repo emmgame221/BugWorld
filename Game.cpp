@@ -267,7 +267,11 @@ void Game::initLevel() {
 	createTiles();
 	resize();
 	int maxVeg = 3 * gridWidth * gridHeight;
-	vegGrowth(maxVeg / 2);
+	float startingVegPercent = (9 + currentLevel) / 100.f;
+	if (startingVegPercent > 0.75f) {
+		startingVegPercent = 0.75f;
+	}
+	vegGrowth(maxVeg * startingVegPercent);
 }
 
 void Game::createTiles() {
@@ -459,10 +463,6 @@ void Game::playSpawnSound() {
 
 void Game::playPrestigeSound() {
 	prestigeSound.play();
-}
-
-void Game::endMusic() {
-	backgroundMusic.stop();
 }
 
 void Game::vegGrowth(int limit) {
