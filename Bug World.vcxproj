@@ -154,7 +154,6 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="InfoMenu.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="SaveState.cpp" />
     <ClCompile Include="Tile.cpp" />
   </ItemGroup>
   <ItemGroup>
