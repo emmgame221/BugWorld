@@ -661,6 +661,7 @@ void Game::eatSpeedUp() {
 		gold -= (eatUpCost + eatUpCount);
 		eatUpCount += 1;
 		eatModifier += 0.001;
+		// Test eatModifier += 1.0;
 	}
 }
 
@@ -669,6 +670,7 @@ void Game::speedUp() {
 		gold -= (speedUpCost + speedUpCount);
 		speedUpCount += 1;
 		speedModifier += 0.1;
+		// Test speedModifier += 100.0;
 	}
 }
   
