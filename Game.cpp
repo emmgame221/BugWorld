@@ -69,8 +69,12 @@ void Game::checkClick(int x, int y) {
 		int xi = (int)(((float)x) / tileSize);
 		int yi = (int)(((float)y) / tileSize);
 		if (xi < gridWidth && yi < gridHeight) {
-			if (getTileAt(xi, yi)->decLushness()) {
+			Tile* t = getTileAt(xi, yi);
+			if (t->decLushness()) {
 				food++;
+				t->eating = false;
+				t->scent = false;
+				t->scenting = false;
 			}
 		}
 	}
@@ -585,6 +589,11 @@ void Game::save() {
 	out << std::to_string(stinkbugCount) << std::endl;
 	out << std::to_string(gridWidth) << std::endl;
 	out << std::to_string(gridHeight) << std::endl;
+	out << std::to_string(eatModifier) << std::endl;
+	out << std::to_string(speedModifier) << std::endl;
+	out << std::to_string(gold) << std::endl;
+	out << std::to_string(eatUpCount) << std::endl;
+	out << std::to_string(speedUpCount) << std::endl;
 
 	out.close();
 }
@@ -616,6 +625,11 @@ void Game::load() {
 	int height;
 	in >> width;
 	in >> height;
+	in >> eatModifier;
+	in >> speedModifier;
+	in >> gold;
+	in >> eatUpCount;
+	in >> speedUpCount;
 
 	in.close();
 
@@ -661,7 +675,9 @@ void Game::eatSpeedUp() {
 		gold -= (eatUpCost + eatUpCount);
 		eatUpCount += 1;
 		eatModifier += 0.001;
-		// Test eatModifier += 1.0;
+		for (Bug* b : bugs) {
+			b->decreaseEatTime(0.001);
+		}
 	}
 }
 
@@ -670,7 +686,9 @@ void Game::speedUp() {
 		gold -= (speedUpCost + speedUpCount);
 		speedUpCount += 1;
 		speedModifier += 0.1;
-		// Test speedModifier += 100.0;
+		for (Bug* b : bugs) {
+			b->increaseSpeed(0.1);
+		}
 	}
 }
   

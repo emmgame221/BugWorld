@@ -11,7 +11,7 @@ const int WIN_DEF_HEIGHT = 1080;
 int main()
 {
     sf::VideoMode mode = sf::VideoMode::getDesktopMode();
-    mode.height -= 50;
+    mode.height -= 30;
     if (mode.width >= WIN_DEF_WIDTH) {
         mode.width = WIN_DEF_WIDTH;
     }
