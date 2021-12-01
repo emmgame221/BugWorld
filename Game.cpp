@@ -69,8 +69,12 @@ void Game::checkClick(int x, int y) {
 		int xi = (int)(((float)x) / tileSize);
 		int yi = (int)(((float)y) / tileSize);
 		if (xi < gridWidth && yi < gridHeight) {
-			if (getTileAt(xi, yi)->decLushness()) {
+			Tile* t = getTileAt(xi, yi);
+			if (t->decLushness()) {
 				food++;
+				t->eating = false;
+				t->scent = false;
+				t->scenting = false;
 			}
 		}
 	}
