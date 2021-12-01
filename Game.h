@@ -61,6 +61,7 @@ protected:
 	sf::Text ladySellText;
 	sf::Text stinkBuyText;
 	sf::Text stinkSellText;
+	sf::Text goldText;
 
 	std::vector<Tile*> tiles;
 	std::vector<Entity*> buttons;

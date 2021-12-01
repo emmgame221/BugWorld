@@ -148,7 +148,7 @@ Button* AllButtonSprite::prestigeButton() {
 	sf::Sprite sprite(game->prestigeTexture);
 	std::function<void()> func = std::bind(&Game::prestige, game);
 	float xofs = 0.90f;
-	float yofs = 0.20f;
+	float yofs = 0.30f;
 	float xsize = 0.1f;
 	float ysize = 0.1f;
 	Button* b = new Button(sprite, func, xofs, yofs, xsize, ysize);
@@ -161,7 +161,7 @@ Button* AllButtonSprite::eatUpButton() {
 	sf::Sprite sprite(game->eatUpTexture);
 	std::function<void()> func = std::bind(&Game::eatSpeedUp, game);
 	float xofs = 0.90f;
-	float yofs = 0.31f;
+	float yofs = 0.41f;
 	float xsize = 0.1f;
 	float ysize = 0.1f;
 	Button* b = new Button(sprite, func, xofs, yofs, xsize, ysize);
@@ -174,7 +174,7 @@ Button* AllButtonSprite::speedUpButton() {
 	sf::Sprite sprite(game->speedUpTexture);
 	std::function<void()> func = std::bind(&Game::speedUp, game);
 	float xofs = 0.90f;
-	float yofs = 0.42f;
+	float yofs = 0.52f;
 	float xsize = 0.1f;
 	float ysize = 0.1f;
 	Button* b = new Button(sprite, func, xofs, yofs, xsize, ysize);

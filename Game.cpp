@@ -95,6 +95,7 @@ void Game::drawAll() {
 	window->draw(ladySellText);
 	window->draw(stinkBuyText);
 	window->draw(stinkSellText);
+	window->draw(goldText);
 	for (unsigned int i = 0; i < tiles.size(); i++) {
 		tiles[i]->draw();
 	}
@@ -119,6 +120,7 @@ void Game::update() {
 	ladySellText.setString(": " + std::to_string(ladySell));
 	stinkBuyText.setString(": " + std::to_string(stinkCost));
 	stinkSellText.setString(": " + std::to_string(stinkSell));
+	goldText.setString("Gold: " + std::to_string(gold));
 	elapsedTime = clock.restart();
 	if (elapsedTime > sf::milliseconds(50)) {
 		elapsedTime = sf::milliseconds(50);
@@ -226,6 +228,8 @@ void Game::resize() {
 	stinkBuyText.setScale(sf::Vector2f(windowSize.x * 0.04f / stinkSellText.getLocalBounds().width, windowSize.y * .04f / stinkSellText.getLocalBounds().width));
 	stinkSellText.setPosition(sf::Vector2f(windowSize.x * 0.4f, windowSize.y * 0.95f));
 	stinkSellText.setScale(sf::Vector2f(windowSize.x * 0.04f / stinkSellText.getLocalBounds().width, windowSize.y * .04f / stinkSellText.getLocalBounds().width));
+	goldText.setPosition(sf::Vector2f(windowSize.x * 0.9f, windowSize.y * 0.2f));
+	goldText.setScale(sf::Vector2f(windowSize.x * 0.08 / goldText.getLocalBounds().width, windowSize.y * 0.08f / goldText.getLocalBounds().width));
 	for (Bug* bug : bugs) {
 		sf::Vector2f lastPos = bug->getPosition();
 		bug->setPosition(sf::Vector2f(lastPos.x * windowSize.x / prevWinSize.x, lastPos.y * windowSize.y / prevWinSize.y));
@@ -433,6 +437,10 @@ void Game::spawnLabels() {
 	stinkSellText.setFillColor(sf::Color::Black);
 	stinkSellText.setPosition(sf::Vector2f(winSize.x * 0.4f, winSize.y * 0.95f));
 	stinkSellText.setScale(sf::Vector2f(winSize.x * 0.04f / stinkSellText.getLocalBounds().width, winSize.y * .04f / stinkSellText.getLocalBounds().width));
+	goldText = sf::Text("Gold: " + std::to_string(gold), font);
+	goldText.setFillColor(sf::Color::Black);
+	goldText.setPosition(sf::Vector2f(winSize.x * 0.9f, winSize.y * 0.2f));
+	goldText.setScale(sf::Vector2f(winSize.x * 0.08 / goldText.getLocalBounds().width, winSize.y * 0.08f / goldText.getLocalBounds().width));
 }
 
 void Game::increaseSFXVolume() {
