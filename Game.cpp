@@ -33,6 +33,8 @@ Game::Game() {
 	saveTexture.loadFromFile("./resources/save.png");
 	loadTexture.loadFromFile("./resources/load.png");
 	prestigeTexture.loadFromFile("./resources/prestige.png");
+	eatUpTexture.loadFromFile("./resources/eatspeedup.png");
+	speedUpTexture.loadFromFile("./resources/speedup.png");
 	clock = sf::Clock();
 	spawnSoundBuf.loadFromFile("./resources/spawnsound.wav");
 	spawnSound = sf::Sound(spawnSoundBuf);
@@ -380,6 +382,8 @@ void Game::spawnButtons() {
 	addStinkbug = allButtons.plusStinkbug();
 	subStinkbug = allButtons.minusStinkbug();
 	prestigeButton = allButtons.prestigeButton();
+	eatUpButton = allButtons.eatUpButton();
+	speedUpButton = allButtons.speedUpButton();
 	buttons.push_back(addAnt);
 	buttons.push_back(subAnt);
 	buttons.push_back(addLadybug);
@@ -391,6 +395,8 @@ void Game::spawnButtons() {
 	buttons.push_back(allButtons.saveButton());
 	buttons.push_back(allButtons.loadButton());
 	buttons.push_back(allButtons.prestigeButton());
+	buttons.push_back(allButtons.eatUpButton());
+	buttons.push_back(allButtons.speedUpButton());
 }
 
 void Game::spawnLabels() {
@@ -638,6 +644,22 @@ void Game::prestige() {
 	prestigeCount += 1;
 	gold += 1;
 	playPrestigeSound();
+}
+
+void Game::eatSpeedUp() {
+	if (gold >= (eatUpCost + eatUpCount)) {
+		gold -= (eatUpCost + eatUpCount);
+		eatUpCount += 1;
+		eatModifier += 0.001;
+	}
+}
+
+void Game::speedUp() {
+	if (gold >= (speedUpCost + speedUpCount)) {
+		gold -= (speedUpCost + speedUpCount);
+		speedUpCount += 1;
+		speedModifier += 0.1;
+	}
 }
   
 Game* Game::game = NULL;

@@ -73,6 +73,8 @@ protected:
 	Button* addStinkbug;
 	Button* subStinkbug;
 	Button* prestigeButton;
+	Button* eatUpButton;
+	Button* speedUpButton;
 
 public:
 	sf::Texture vegTextures[4];
@@ -98,6 +100,12 @@ public:
 	int totalVegetation = 0;
 	int prestigeCount = 0;
 	int gold = 0;
+	int eatUpCost = 1;
+	int speedUpCost = 1;
+	int eatUpCount = 0;
+	int speedUpCount = 0;
+	float eatModifier = 0;
+	float speedModifier = 0;
 	std::random_device rd;
 	std::mt19937 rng;
 	std::uniform_real_distribution<float> urd01;
@@ -143,5 +151,7 @@ public:
 	sf::Vector2u getWindowSize();
 	void save();
 	void load();
+	void eatSpeedUp();
+	void speedUp();
 	
 };
