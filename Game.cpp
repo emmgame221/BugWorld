@@ -592,6 +592,8 @@ void Game::save() {
 	out << std::to_string(eatModifier) << std::endl;
 	out << std::to_string(speedModifier) << std::endl;
 	out << std::to_string(gold) << std::endl;
+	out << std::to_string(eatUpCount) << std::endl;
+	out << std::to_string(speedUpCount) << std::endl;
 
 	out.close();
 }
@@ -626,6 +628,8 @@ void Game::load() {
 	in >> eatModifier;
 	in >> speedModifier;
 	in >> gold;
+	in >> eatUpCount;
+	in >> speedUpCount;
 
 	in.close();
 
