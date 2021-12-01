@@ -589,6 +589,9 @@ void Game::save() {
 	out << std::to_string(stinkbugCount) << std::endl;
 	out << std::to_string(gridWidth) << std::endl;
 	out << std::to_string(gridHeight) << std::endl;
+	out << std::to_string(eatModifier) << std::endl;
+	out << std::to_string(speedModifier) << std::endl;
+	out << std::to_string(gold) << std::endl;
 
 	out.close();
 }
@@ -620,6 +623,9 @@ void Game::load() {
 	int height;
 	in >> width;
 	in >> height;
+	in >> eatModifier;
+	in >> speedModifier;
+	in >> gold;
 
 	in.close();
 
