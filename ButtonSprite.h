@@ -19,4 +19,7 @@ public:
 	static Button* minusStinkbug();
 	static Button* saveButton();
 	static Button* loadButton();
+	static Button* prestigeButton();
+	static Button* eatUpButton();
+	static Button* speedUpButton();
 };

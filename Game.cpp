@@ -22,6 +22,9 @@ Game::Game() {
 	minusTexture = sf::Texture();
 	saveTexture = sf::Texture();
 	loadTexture = sf::Texture();
+	prestigeTexture = sf::Texture();
+	eatUpTexture = sf::Texture();
+	speedUpTexture = sf::Texture();
 	antTexture.loadFromFile("./resources/ant.png");
 	ladybugTexture.loadFromFile("./resources/ladybug.png");
 	stinkbugTexture.loadFromFile("./resources/stinkbug.png");
@@ -29,6 +32,7 @@ Game::Game() {
 	minusTexture.loadFromFile("./resources/minus.png");
 	saveTexture.loadFromFile("./resources/save.png");
 	loadTexture.loadFromFile("./resources/load.png");
+	prestigeTexture.loadFromFile("./resources/prestige.png");
 	clock = sf::Clock();
 	spawnSoundBuf.loadFromFile("./resources/spawnsound.wav");
 	spawnSound = sf::Sound(spawnSoundBuf);
@@ -375,6 +379,7 @@ void Game::spawnButtons() {
 	subLadybug = allButtons.minusLadybug();
 	addStinkbug = allButtons.plusStinkbug();
 	subStinkbug = allButtons.minusStinkbug();
+	prestigeButton = allButtons.prestigeButton();
 	buttons.push_back(addAnt);
 	buttons.push_back(subAnt);
 	buttons.push_back(addLadybug);
@@ -385,6 +390,7 @@ void Game::spawnButtons() {
 	buttons.push_back(allButtons.stinkbugPic());
 	buttons.push_back(allButtons.saveButton());
 	buttons.push_back(allButtons.loadButton());
+	buttons.push_back(allButtons.prestigeButton());
 }
 
 void Game::spawnLabels() {
