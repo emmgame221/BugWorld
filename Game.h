@@ -72,7 +72,7 @@ protected:
 	Button* subLadybug;
 	Button* addStinkbug;
 	Button* subStinkbug;
-	Button* presigeButton = nullptr;
+	Button* prestigeButton;
 
 public:
 	sf::Texture vegTextures[4];
@@ -83,6 +83,9 @@ public:
 	sf::Texture minusTexture;
 	sf::Texture saveTexture;
 	sf::Texture loadTexture;
+	sf::Texture prestigeTexture;
+	sf::Texture eatUpTexture;
+	sf::Texture speedUpTexture;
 	int antCost = 5;
 	int ladyCost = 8;
 	int stinkCost = 10;
@@ -140,4 +143,5 @@ public:
 	sf::Vector2u getWindowSize();
 	void save();
 	void load();
+	
 };
