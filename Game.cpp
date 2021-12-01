@@ -638,20 +638,22 @@ void Game::load() {
 }
 
 void Game::prestige() {
-	food = 0;
-	currentLevel = 1;
-	expansion = 0;
-	totalVegetation = 0;
-	totalBugs = 0;
-	for (Bug* bug : bugs) {
-		delete bug;
-	}
-	bugs.clear();
-	setGridSize(START_GRID_WIDTH, START_GRID_HEIGHT);
-	initLevel();
-	prestigeCount += 1;
-	gold += 1;
-	playPrestigeSound();
+	if (currentLevel >= 10) {
+		food = 0;
+		currentLevel = 1;
+		expansion = 0;
+		totalVegetation = 0;
+		totalBugs = 0;
+		for (Bug* bug : bugs) {
+			delete bug;
+		}
+		bugs.clear();
+		setGridSize(START_GRID_WIDTH, START_GRID_HEIGHT);
+		initLevel();
+		prestigeCount += 1;
+		gold += 1;
+		playPrestigeSound();
+	}	
 }
 
 void Game::eatSpeedUp() {
