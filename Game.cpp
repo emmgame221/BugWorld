@@ -669,6 +669,9 @@ void Game::eatSpeedUp() {
 		gold -= (eatUpCost + eatUpCount);
 		eatUpCount += 1;
 		eatModifier += 0.001;
+		for (Bug* b : bugs) {
+			b->decreaseEatTime(0.001);
+		}
 	}
 }
 
@@ -677,6 +680,9 @@ void Game::speedUp() {
 		gold -= (speedUpCost + speedUpCount);
 		speedUpCount += 1;
 		speedModifier += 0.1;
+		for (Bug* b : bugs) {
+			b->increaseSpeed(0.1);
+		}
 	}
 }
   

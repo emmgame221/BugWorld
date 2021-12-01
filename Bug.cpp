@@ -82,6 +82,17 @@ void Bug::eat(Tile* tile) {
 	}
 }
 
+void Bug::increaseSpeed(float x) {
+	speed += x;
+}
+
+void Bug::decreaseEatTime(float x) {
+	eatSpeed -= x;
+	if (eatSpeed < 0.f) {
+		eatSpeed = 0.f;
+	}
+}
+
 Ant::Ant() {
 	Game* game = Game::getGame();
 	this->speed = 100.0f + game->speedModifier;
