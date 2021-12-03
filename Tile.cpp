@@ -32,14 +32,6 @@ bool Tile::decLushness() {
 	return true;
 }
 
-void Tile::startEat() {
-	this->eating = true;
-}
-
-bool Tile::checkEat() {
-	return eating;
-}
-
 void Tile::setSize(float size) {
 	float scale = size / sprite.getLocalBounds().width;
 	sprite.setScale(sf::Vector2f(scale, scale));

@@ -43,7 +43,6 @@ class Stinkbug :
 public:
     Stinkbug();
     void update();
-    void stink(sf::Vector2i);
 };
 
 class Pheremone

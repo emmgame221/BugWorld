@@ -19,8 +19,6 @@ void Bug::update() {
 	circle.setPosition(x,y);
 	sf::FloatRect fov = circle.getGlobalBounds();
 
-	
-
 	sf::Vector2f move = sf::Vector2f(range(game->rng), range(game->rng));
 	movement += move;
 	
@@ -33,6 +31,7 @@ void Bug::update() {
 
 	if (game->getTileAt(target.x / game->getTileSize(), target.y / game->getTileSize())->lushness == 0) {
 		state = 0;
+		game->getTileAt(target.x / game->getTileSize(), target.y / game->getTileSize())->eating = false;
 	}
 
 	if (state == 1) {
@@ -52,7 +51,7 @@ void Bug::update() {
 				if (fov.contains(pt) && game->getTileAt(xx, yy)->lushness >= 1 /* && !game->getTileAt(xx, yy)->eating*/) {
 					Tile* tile = game->getTileAt(xx, yy);
 					target = pt;
-					tile->startEat();
+					tile->eating = true;
 					this->state = 1;
 					break;
 				}
@@ -117,7 +116,6 @@ void Ladybug::update() {
 	int x = sprite.getPosition().x;
 	int y = sprite.getPosition().y;
 
-
 	sf::CircleShape circle = sf::CircleShape(eatRad);
 	circle.setOrigin(game->getTileSize(), game->getTileSize());
 	circle.setPosition(x, y);
@@ -135,6 +133,7 @@ void Ladybug::update() {
 
 	if (game->getTileAt(target.x / game->getTileSize(), target.y / game->getTileSize())->lushness == 0) {
 		state = 0;
+		game->getTileAt(target.x / game->getTileSize(), target.y / game->getTileSize())->eating = false;
 	}
 
 	if (state == 1) {
@@ -154,14 +153,14 @@ void Ladybug::update() {
 				if (game->getTileAt(xx, yy)->scent && distance(pt, sf::Vector2f(x, y)) <= game->getTileSize() * 3.5 && !game->getTileAt(xx, yy)->eating) {
 					Tile* tile = game->getTileAt(xx, yy);
 					target = pt;
-					tile->startEat();
+					tile->eating = true;
 					this->state = 1;
 					break;
 				}
 				if (fov.contains(pt) && game->getTileAt(xx, yy)->lushness >= 1  && !game->getTileAt(xx, yy)->eating) {
 					Tile* tile = game->getTileAt(xx, yy);
 					target = pt;
-					tile->startEat();
+					tile->eating = true;
 					this->state = 1;
 					break;
 				}
@@ -170,16 +169,13 @@ void Ladybug::update() {
 				break;
 		}
 	}
-
-
-
 	sprite.setRotation(angle(sprite.getPosition() + movement, sprite.getPosition()) - 90);
 	sprite.move(normalize(movement) * game->getElapsedTime().asSeconds() * speed);
 }
 
 Stinkbug::Stinkbug() {
 	Game* game = Game::getGame();
-	this->speed = 50.0f;
+	this->speed = 200.0f;
 	this->eatRad = game->getTileSize() * 3;
 	this->type = 2;
 	sprite = sf::Sprite(game->stinkbugTexture);
@@ -199,9 +195,7 @@ void Stinkbug::update() {
 	circle.setOrigin(game->getTileSize(), game->getTileSize());
 	circle.setPosition(x, y);
 	sf::FloatRect fov = circle.getGlobalBounds();
-
-
-
+	//radius checking instead
 	sf::Vector2f move = sf::Vector2f(range(game->rng), range(game->rng));
 	movement += move;
 
@@ -250,19 +244,10 @@ void Stinkbug::update() {
 				break;
 		}
 	}
-
-
-
 	sprite.setRotation(angle(sprite.getPosition() + movement, sprite.getPosition()) - 90);
 	sprite.move(normalize(movement) * game->getElapsedTime().asSeconds() * speed);
 }
 
-void Stinkbug::stink(sf::Vector2i vec) {
-	Game* game = Game::getGame();
-	Tile* tile = game->getTileAt(vec.x, vec.y);
-
-	tile->scent = true;
-}
 
 
 Pheremone::Pheremone(sf::Vector2f inPt, int inType) {

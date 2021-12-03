@@ -102,6 +102,7 @@ public:
 	std::uniform_int_distribution<int> heightRange;
 	const int START_GRID_WIDTH = 16;
 	const int START_GRID_HEIGHT = 9;
+	bool menuFlag = true;
 
 	static Game* getGame();
 	sf::Time getElapsedTime();

@@ -321,6 +321,7 @@ void Game::killAnt() {
 		for (int i = bugs.size() - 1; i >= 0; i--) {
 			if (bugs[i]->type == 0) {
 				bugs.erase(bugs.begin() + i);
+				delete bugs[i];
 				food += antSell;
 				antCount--;
 				break;
@@ -334,6 +335,7 @@ void Game::killLadybug() {
 		for (int i = bugs.size() - 1; i >= 0; i--) {
 			if (bugs[i]->type == 1) {
 				bugs.erase(bugs.begin() + i);
+				delete bugs[i];
 				food += ladySell;
 				ladybugCount--;
 				break;
@@ -347,6 +349,7 @@ void Game::killStinkbug() {
 		for (int i = bugs.size() - 1; i >= 0; i--) {
 			if (bugs[i]->type == 2) {
 				bugs.erase(bugs.begin() + i);
+				delete bugs[i];
 				food += stinkSell;
 				stinkbugCount--;
 				break;
