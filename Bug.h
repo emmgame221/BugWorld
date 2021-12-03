@@ -19,6 +19,8 @@ public:
     int type;
     virtual void update();
     void eat(Tile*);
+    void increaseSpeed(float x);
+    void decreaseEatTime(float x);
 };
 
 class Ant :

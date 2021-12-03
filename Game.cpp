@@ -22,6 +22,9 @@ Game::Game() {
 	minusTexture = sf::Texture();
 	saveTexture = sf::Texture();
 	loadTexture = sf::Texture();
+	prestigeTexture = sf::Texture();
+	eatUpTexture = sf::Texture();
+	speedUpTexture = sf::Texture();
 	antTexture.loadFromFile("./resources/ant.png");
 	ladybugTexture.loadFromFile("./resources/ladybug.png");
 	stinkbugTexture.loadFromFile("./resources/stinkbug.png");
@@ -29,6 +32,9 @@ Game::Game() {
 	minusTexture.loadFromFile("./resources/minus.png");
 	saveTexture.loadFromFile("./resources/save.png");
 	loadTexture.loadFromFile("./resources/load.png");
+	prestigeTexture.loadFromFile("./resources/prestige.png");
+	eatUpTexture.loadFromFile("./resources/eatspeedup.png");
+	speedUpTexture.loadFromFile("./resources/speedup.png");
 	clock = sf::Clock();
 	spawnSoundBuf.loadFromFile("./resources/spawnsound.wav");
 	spawnSound = sf::Sound(spawnSoundBuf);
@@ -63,8 +69,12 @@ void Game::checkClick(int x, int y) {
 		int xi = (int)(((float)x) / tileSize);
 		int yi = (int)(((float)y) / tileSize);
 		if (xi < gridWidth && yi < gridHeight) {
-			if (getTileAt(xi, yi)->decLushness()) {
+			Tile* t = getTileAt(xi, yi);
+			if (t->decLushness()) {
 				food++;
+				t->eating = false;
+				t->scent = false;
+				t->scenting = false;
 			}
 		}
 	}
@@ -89,6 +99,7 @@ void Game::drawAll() {
 	window->draw(ladySellText);
 	window->draw(stinkBuyText);
 	window->draw(stinkSellText);
+	window->draw(goldText);
 	for (unsigned int i = 0; i < tiles.size(); i++) {
 		tiles[i]->draw();
 	}
@@ -113,6 +124,7 @@ void Game::update() {
 	ladySellText.setString(": " + std::to_string(ladySell));
 	stinkBuyText.setString(": " + std::to_string(stinkCost));
 	stinkSellText.setString(": " + std::to_string(stinkSell));
+	goldText.setString("Gold: " + std::to_string(gold));
 	elapsedTime = clock.restart();
 	if (elapsedTime > sf::milliseconds(50)) {
 		elapsedTime = sf::milliseconds(50);
@@ -182,6 +194,24 @@ void Game::update() {
 	else {
 		subStinkbug->enable();
 	}
+	if (gold < eatUpCost + eatUpCount) {
+		eatUpButton->disable();
+	}
+	else {
+		eatUpButton->enable();
+	}
+	if (gold < speedUpCost + speedUpCount) {
+		speedUpButton->disable();
+	}
+	else {
+		speedUpButton->enable();
+	}
+	if (currentLevel < 10) {
+		prestigeButton->disable();
+	}
+	else {
+		prestigeButton->enable();
+	}
 }
 
 void Game::resize() {
@@ -212,7 +242,16 @@ void Game::resize() {
 	antBuyText.setScale(sf::Vector2f(windowSize.x * 0.04f / antBuyText.getLocalBounds().width, windowSize.y * 0.04f / antBuyText.getLocalBounds().width));
 	antSellText.setPosition(sf::Vector2f(windowSize.x * 0.1f, windowSize.y * 0.95f));
 	antSellText.setScale(sf::Vector2f(windowSize.x * 0.04f / antSellText.getLocalBounds().width, windowSize.y * 0.04f / antSellText.getLocalBounds().width));
+	ladyBuyText.setPosition(sf::Vector2f(windowSize.x * 0.25f, windowSize.y * 0.9f));
 	ladyBuyText.setScale(sf::Vector2f(windowSize.x * 0.04f / ladyBuyText.getLocalBounds().width, windowSize.y * 0.04f / ladyBuyText.getLocalBounds().width));
+	ladySellText.setPosition(sf::Vector2f(windowSize.x * 0.25f, windowSize.y * 0.95f));
+	ladySellText.setScale(sf::Vector2f(windowSize.x * 0.04f / ladySellText.getLocalBounds().width, windowSize.y * .04f / ladySellText.getLocalBounds().width));
+	stinkBuyText.setPosition(sf::Vector2f(windowSize.x * 0.4f, windowSize.y * 0.9f));
+	stinkBuyText.setScale(sf::Vector2f(windowSize.x * 0.04f / stinkSellText.getLocalBounds().width, windowSize.y * .04f / stinkSellText.getLocalBounds().width));
+	stinkSellText.setPosition(sf::Vector2f(windowSize.x * 0.4f, windowSize.y * 0.95f));
+	stinkSellText.setScale(sf::Vector2f(windowSize.x * 0.04f / stinkSellText.getLocalBounds().width, windowSize.y * .04f / stinkSellText.getLocalBounds().width));
+	goldText.setPosition(sf::Vector2f(windowSize.x * 0.9f, windowSize.y * 0.2f));
+	goldText.setScale(sf::Vector2f(windowSize.x * 0.08 / goldText.getLocalBounds().width, windowSize.y * 0.08f / goldText.getLocalBounds().width));
 	for (Bug* bug : bugs) {
 		sf::Vector2f lastPos = bug->getPosition();
 		bug->setPosition(sf::Vector2f(lastPos.x * windowSize.x / prevWinSize.x, lastPos.y * windowSize.y / prevWinSize.y));
@@ -260,7 +299,11 @@ void Game::initLevel() {
 	createTiles();
 	resize();
 	int maxVeg = 3 * gridWidth * gridHeight;
-	vegGrowth(maxVeg / 2);
+	float startingVegPercent = (9 + currentLevel) / 100.f;
+	if (startingVegPercent > 0.75f) {
+		startingVegPercent = 0.75f;
+	}
+	vegGrowth(maxVeg * startingVegPercent);
 }
 
 void Game::createTiles() {
@@ -367,6 +410,9 @@ void Game::spawnButtons() {
 	subLadybug = allButtons.minusLadybug();
 	addStinkbug = allButtons.plusStinkbug();
 	subStinkbug = allButtons.minusStinkbug();
+	prestigeButton = allButtons.prestigeButton();
+	eatUpButton = allButtons.eatUpButton();
+	speedUpButton = allButtons.speedUpButton();
 	buttons.push_back(addAnt);
 	buttons.push_back(subAnt);
 	buttons.push_back(addLadybug);
@@ -377,6 +423,9 @@ void Game::spawnButtons() {
 	buttons.push_back(allButtons.stinkbugPic());
 	buttons.push_back(allButtons.saveButton());
 	buttons.push_back(allButtons.loadButton());
+	buttons.push_back(prestigeButton);
+	buttons.push_back(eatUpButton);
+	buttons.push_back(speedUpButton);
 }
 
 void Game::spawnLabels() {
@@ -397,6 +446,26 @@ void Game::spawnLabels() {
 	antSellText.setFillColor(sf::Color::Black);
 	antSellText.setPosition(sf::Vector2f(winSize.x * 0.1f, winSize.y * 0.95f));
 	antSellText.setScale(sf::Vector2f(winSize.x * 0.04f / antSellText.getLocalBounds().width, winSize.y * 0.04f / antSellText.getLocalBounds().width));
+	ladyBuyText = sf::Text(": " + std::to_string(ladyCost), font);
+	ladyBuyText.setFillColor(sf::Color::Black);
+	ladyBuyText.setPosition(sf::Vector2f(winSize.x * 0.25f, winSize.y * 0.9f));
+	ladyBuyText.setScale(sf::Vector2f(winSize.x * 0.04f / ladyBuyText.getLocalBounds().width, winSize.y * 0.04f / ladyBuyText.getLocalBounds().width));
+	ladySellText = sf::Text(": " + std::to_string(ladySell), font);
+	ladySellText.setFillColor(sf::Color::Black);
+	ladySellText.setPosition(sf::Vector2f(winSize.x * 0.25f, winSize.y * 0.95f));
+	ladySellText.setScale(sf::Vector2f(winSize.x * 0.04f / ladySellText.getLocalBounds().width, winSize.y * .04f / ladySellText.getLocalBounds().width));
+	stinkBuyText = sf::Text(": " + std::to_string(stinkCost), font);
+	stinkBuyText.setFillColor(sf::Color::Black);
+	stinkBuyText.setPosition(sf::Vector2f(winSize.x * 0.4f, winSize.y * 0.9f));
+	stinkBuyText.setScale(sf::Vector2f(winSize.x * 0.04f / stinkSellText.getLocalBounds().width, winSize.y * .04f / stinkSellText.getLocalBounds().width));
+	stinkSellText = sf::Text(": " + std::to_string(stinkSell), font);
+	stinkSellText.setFillColor(sf::Color::Black);
+	stinkSellText.setPosition(sf::Vector2f(winSize.x * 0.4f, winSize.y * 0.95f));
+	stinkSellText.setScale(sf::Vector2f(winSize.x * 0.04f / stinkSellText.getLocalBounds().width, winSize.y * .04f / stinkSellText.getLocalBounds().width));
+	goldText = sf::Text("Gold: " + std::to_string(gold), font);
+	goldText.setFillColor(sf::Color::Black);
+	goldText.setPosition(sf::Vector2f(winSize.x * 0.9f, winSize.y * 0.2f));
+	goldText.setScale(sf::Vector2f(winSize.x * 0.08 / goldText.getLocalBounds().width, winSize.y * 0.08f / goldText.getLocalBounds().width));
 }
 
 void Game::increaseSFXVolume() {
@@ -541,6 +610,11 @@ void Game::save() {
 	out << std::to_string(stinkbugCount) << std::endl;
 	out << std::to_string(gridWidth) << std::endl;
 	out << std::to_string(gridHeight) << std::endl;
+	out << std::to_string(eatModifier) << std::endl;
+	out << std::to_string(speedModifier) << std::endl;
+	out << std::to_string(gold) << std::endl;
+	out << std::to_string(eatUpCount) << std::endl;
+	out << std::to_string(speedUpCount) << std::endl;
 
 	out.close();
 }
@@ -572,6 +646,11 @@ void Game::load() {
 	int height;
 	in >> width;
 	in >> height;
+	in >> eatModifier;
+	in >> speedModifier;
+	in >> gold;
+	in >> eatUpCount;
+	in >> speedUpCount;
 
 	in.close();
 
@@ -594,6 +673,9 @@ void Game::load() {
 }
 
 void Game::prestige() {
+	if (currentLevel < 10) {
+		return;
+	}
 	food = 0;
 	currentLevel = 1;
 	expansion = 0;
@@ -606,8 +688,30 @@ void Game::prestige() {
 	setGridSize(START_GRID_WIDTH, START_GRID_HEIGHT);
 	initLevel();
 	prestigeCount += 1;
-	gold += 1;
+	gold += currentLevel / 10;
 	playPrestigeSound();
+}
+
+void Game::eatSpeedUp() {
+	if (gold >= (eatUpCost + eatUpCount)) {
+		gold -= (eatUpCost + eatUpCount);
+		eatUpCount += 1;
+		eatModifier += 0.001;
+		for (Bug* b : bugs) {
+			b->decreaseEatTime(0.001);
+		}
+	}
+}
+
+void Game::speedUp() {
+	if (gold >= (speedUpCost + speedUpCount)) {
+		gold -= (speedUpCost + speedUpCount);
+		speedUpCount += 1;
+		speedModifier += 0.1;
+		for (Bug* b : bugs) {
+			b->increaseSpeed(0.1);
+		}
+	}
 }
   
 Game* Game::game = NULL;

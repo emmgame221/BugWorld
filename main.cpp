@@ -11,6 +11,7 @@ const int WIN_DEF_HEIGHT = 1080;
 int main()
 {
     sf::VideoMode mode = sf::VideoMode::getDesktopMode();
+    mode.height -= 30;
     if (mode.width >= WIN_DEF_WIDTH) {
         mode.width = WIN_DEF_WIDTH;
     }
@@ -104,6 +105,8 @@ int main()
         {
             switch (event.type) {
             case sf::Event::Closed:
+                game->save();
+                
                 window.close();
                 break;
             case sf::Event::KeyPressed:

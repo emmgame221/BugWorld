@@ -61,6 +61,7 @@ protected:
 	sf::Text ladySellText;
 	sf::Text stinkBuyText;
 	sf::Text stinkSellText;
+	sf::Text goldText;
 
 	std::vector<Tile*> tiles;
 	std::vector<Entity*> buttons;
@@ -72,7 +73,9 @@ protected:
 	Button* subLadybug;
 	Button* addStinkbug;
 	Button* subStinkbug;
-	Button* presigeButton = nullptr;
+	Button* prestigeButton;
+	Button* eatUpButton;
+	Button* speedUpButton;
 
 public:
 	sf::Texture vegTextures[4];
@@ -83,6 +86,9 @@ public:
 	sf::Texture minusTexture;
 	sf::Texture saveTexture;
 	sf::Texture loadTexture;
+	sf::Texture prestigeTexture;
+	sf::Texture eatUpTexture;
+	sf::Texture speedUpTexture;
 	int antCost = 5;
 	int ladyCost = 8;
 	int stinkCost = 10;
@@ -95,6 +101,12 @@ public:
 	int totalVegetation = 0;
 	int prestigeCount = 0;
 	int gold = 0;
+	int eatUpCost = 1;
+	int speedUpCost = 1;
+	int eatUpCount = 0;
+	int speedUpCount = 0;
+	float eatModifier = 0;
+	float speedModifier = 0;
 	std::random_device rd;
 	std::mt19937 rng;
 	std::uniform_real_distribution<float> urd01;
@@ -141,4 +153,7 @@ public:
 	sf::Vector2u getWindowSize();
 	void save();
 	void load();
+	void eatSpeedUp();
+	void speedUp();
+	
 };

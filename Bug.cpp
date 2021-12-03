@@ -81,10 +81,21 @@ void Bug::eat(Tile* tile) {
 	}
 }
 
+void Bug::increaseSpeed(float x) {
+	speed += x;
+}
+
+void Bug::decreaseEatTime(float x) {
+	eatSpeed -= x;
+	if (eatSpeed < 0.f) {
+		eatSpeed = 0.f;
+	}
+}
+
 Ant::Ant() {
 	Game* game = Game::getGame();
-	this->speed = 100.0f;
-	this->eatSpeed = 5.0f;
+	this->speed = 100.0f + game->speedModifier;
+	this->eatSpeed = 5.0f - game->eatModifier;
 	this->eatTimer = sf::seconds(eatSpeed);
 	this->eatRad = game->getTileSize() * 2;
 	this->type = 0;
@@ -98,8 +109,8 @@ Ant::Ant() {
 
 Ladybug::Ladybug() {
 	Game* game = Game::getGame();
-	this->speed = 500.0f;
-	this->eatSpeed = 1.0f;
+	this->speed = 500.0f + game->speedModifier;
+	this->eatSpeed = 1.0f - game->eatModifier;
 	this->eatTimer = sf::seconds(eatSpeed);
 	this->eatRad = game->getTileSize();
 	this->type = 1;
@@ -175,7 +186,7 @@ void Ladybug::update() {
 
 Stinkbug::Stinkbug() {
 	Game* game = Game::getGame();
-	this->speed = 200.0f;
+	this->speed = 50.0f + game->speedModifier;
 	this->eatRad = game->getTileSize() * 3;
 	this->type = 2;
 	sprite = sf::Sprite(game->stinkbugTexture);

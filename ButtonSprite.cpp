@@ -142,3 +142,42 @@ Button* AllButtonSprite::loadButton() {
 	b->updateTransform();
 	return b;
 }
+
+Button* AllButtonSprite::prestigeButton() {
+	Game* game = Game::getGame();
+	sf::Sprite sprite(game->prestigeTexture);
+	std::function<void()> func = std::bind(&Game::prestige, game);
+	float xofs = 0.90f;
+	float yofs = 0.30f;
+	float xsize = 0.1f;
+	float ysize = 0.1f;
+	Button* b = new Button(sprite, func, xofs, yofs, xsize, ysize);
+	b->updateTransform();
+	return b;
+}
+
+Button* AllButtonSprite::eatUpButton() {
+	Game* game = Game::getGame();
+	sf::Sprite sprite(game->eatUpTexture);
+	std::function<void()> func = std::bind(&Game::eatSpeedUp, game);
+	float xofs = 0.90f;
+	float yofs = 0.41f;
+	float xsize = 0.1f;
+	float ysize = 0.1f;
+	Button* b = new Button(sprite, func, xofs, yofs, xsize, ysize);
+	b->updateTransform();
+	return b;
+}
+
+Button* AllButtonSprite::speedUpButton() {
+	Game* game = Game::getGame();
+	sf::Sprite sprite(game->speedUpTexture);
+	std::function<void()> func = std::bind(&Game::speedUp, game);
+	float xofs = 0.90f;
+	float yofs = 0.52f;
+	float xsize = 0.1f;
+	float ysize = 0.1f;
+	Button* b = new Button(sprite, func, xofs, yofs, xsize, ysize);
+	b->updateTransform();
+	return b;
+}
