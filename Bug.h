@@ -3,6 +3,11 @@
 #include "Tile.h"
 #include <SFML/Graphics.hpp>
 #include <string>
+#include <random>
+#include <iostream>
+
+enum bugNames {ant, ladyBug, stinkBug};
+enum states {searching, targeting};
 
 class Bug :
     public Entity
@@ -11,12 +16,12 @@ protected:
     float speed;
     float eatSpeed;
     sf::Time eatTimer;
-    int state = 0; //0-searching 1-go to target 2-return
+    enum states state = searching;
     sf::Vector2f movement = sf::Vector2f(1.0f, 1.0f);
     sf::Vector2f target;
-    float eatRad;
+    float visionRad;
 public:
-    int type;
+    enum bugNames type;
     virtual void update();
     void eat(Tile*);
     void increaseSpeed(float x);
