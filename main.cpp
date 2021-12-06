@@ -26,11 +26,81 @@ int main()
     game->spawnButtons();
     game->spawnLabels();
     Menu menu;
-    
 
+    sf::Text title;
+
+    sf::Font font;
+    font.loadFromFile("./resources/NewYork.otf");
+    title.setFont(font);
+    title.setCharacterSize(80);
+    title.setString("Bug World");
+    title.setOrigin(sf::Vector2(title.getLocalBounds().width / 2, title.getLocalBounds().height / 2));
+    title.setPosition(window.getSize().x * .5 , 100);
+
+    std::vector<sf::Sprite> buttons;
+    sf::Sprite newGame;
+    sf::Sprite load;
+    sf::Sprite options;
+    sf::Sprite exit;
+
+    std::vector<std::string> butFiles = { "button_new-game.png", "button_load.png", "button_options.png", "button_exit.png"};
+
+
+    std::vector<sf::Texture> butText;
+
+    for (int i = 0; i <= 3; i++) {
+        butText.push_back(sf::Texture());
+        butText[i].loadFromFile("./resources/" + butFiles[i]);
+        buttons.push_back(sf::Sprite(butText[i]));
+    }
+
+    
     while (window.isOpen())
     {                                                        
         sf::Event event;
+
+        while (game->menuFlag) {
+            while (window.pollEvent(event)) {
+                switch (event.type) {
+                case sf::Event::KeyPressed:
+                    
+                case sf::Event::MouseButtonPressed:
+                    if (event.mouseButton.button == sf::Mouse::Left) {
+                        for (int i = 0; i <= 3; i++) {
+                            if (buttons[i].getGlobalBounds().contains(event.mouseButton.x,event.mouseButton.y)) {
+                                switch (i)
+                                {
+                                case 0:
+                                    game->menuFlag = false;
+                                    break;
+                                case 1:
+                                    game->load();
+                                    game->menuFlag = false;
+                                    break;
+                                case 2:
+                                    break;
+                                case 3:
+                                    window.close();
+                                    return 0;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            window.clear(sf::Color(22, 56, 0));
+            window.draw(title);
+
+            for (int i = 0; i <= 3; i++) {
+                buttons[i].setOrigin(sf::Vector2f(buttons[i].getLocalBounds().width/2, buttons[i].getLocalBounds().height/2));
+                buttons[i].setPosition(window.getSize().x / 2, (100 * i) + 250);
+                buttons[i].setTexture(butText[i]);
+                window.draw(buttons[i]);
+            }
+            window.display();
+        }
+
         while (window.pollEvent(event))
         {
             switch (event.type) {
