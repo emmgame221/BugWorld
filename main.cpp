@@ -113,6 +113,12 @@ int main()
                 if (event.key.code == sf::Keyboard::A) {
                     game->spawnAnt();
                 }
+                if (event.key.code == sf::Keyboard::S) {
+                    game->spawnLadybug();
+                }
+                if (event.key.code == sf::Keyboard::D) {
+                    game->spawnStinkbug();
+                }
                 if (event.key.code == sf::Keyboard::Escape) {
                     window.close();
                 }
