@@ -14,5 +14,6 @@ public:
 	char ch;
 	sf::Font font;
 	std::ifstream inputFile;
+	int stringLen;
 	
 };
