@@ -133,9 +133,11 @@ int main()
                 if (event.key.code == sf::Keyboard::Space) {
                     menu.bugMenu();
                 }
+#ifdef _DEBUG
                 if (event.key.code == sf::Keyboard::N) {
                     game->nextLevel();
                 }
+#endif
                 if (event.key.code == sf::Keyboard::P) {
                     game->prestige();
                 }
