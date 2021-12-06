@@ -22,7 +22,7 @@
     infoText.setFillColor(sf::Color::Black);
     infoText.setPosition(sf::Vector2f(5.f, 0.f));
     window.draw(infoText);
-    std::cout << infoString << std::endl;
+    //std::cout << infoString << std::endl;
 
     while (window.isOpen())
     {
