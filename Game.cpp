@@ -194,6 +194,24 @@ void Game::update() {
 	else {
 		subStinkbug->enable();
 	}
+	if (gold < eatUpCost + eatUpCount) {
+		eatUpButton->disable();
+	}
+	else {
+		eatUpButton->enable();
+	}
+	if (gold < speedUpCost + speedUpCount) {
+		speedUpButton->disable();
+	}
+	else {
+		speedUpButton->enable();
+	}
+	if (currentLevel < 10) {
+		prestigeButton->disable();
+	}
+	else {
+		prestigeButton->enable();
+	}
 }
 
 void Game::resize() {
@@ -402,9 +420,9 @@ void Game::spawnButtons() {
 	buttons.push_back(allButtons.stinkbugPic());
 	buttons.push_back(allButtons.saveButton());
 	buttons.push_back(allButtons.loadButton());
-	buttons.push_back(allButtons.prestigeButton());
-	buttons.push_back(allButtons.eatUpButton());
-	buttons.push_back(allButtons.speedUpButton());
+	buttons.push_back(prestigeButton);
+	buttons.push_back(eatUpButton);
+	buttons.push_back(speedUpButton);
 }
 
 void Game::spawnLabels() {
@@ -652,22 +670,23 @@ void Game::load() {
 }
 
 void Game::prestige() {
-	if (currentLevel >= 10) {
-		food = 0;
-		currentLevel = 1;
-		expansion = 0;
-		totalVegetation = 0;
-		totalBugs = 0;
-		for (Bug* bug : bugs) {
-			delete bug;
-		}
-		bugs.clear();
-		setGridSize(START_GRID_WIDTH, START_GRID_HEIGHT);
-		initLevel();
-		prestigeCount += 1;
-		gold += 1;
-		playPrestigeSound();
-	}	
+	if (currentLevel < 10) {
+		return;
+	}
+	food = 0;
+	currentLevel = 1;
+	expansion = 0;
+	totalVegetation = 0;
+	totalBugs = 0;
+	for (Bug* bug : bugs) {
+		delete bug;
+	}
+	bugs.clear();
+	setGridSize(START_GRID_WIDTH, START_GRID_HEIGHT);
+	initLevel();
+	prestigeCount += 1;
+	gold += currentLevel / 10;
+	playPrestigeSound();
 }
 
 void Game::eatSpeedUp() {
