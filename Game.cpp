@@ -685,6 +685,7 @@ void Game::prestige() {
 		return;
 	}
 	food = 0;
+	gold += currentLevel / 10;
 	currentLevel = 1;
 	expansion = 0;
 	totalVegetation = 0;
@@ -696,7 +697,6 @@ void Game::prestige() {
 	setGridSize(START_GRID_WIDTH, START_GRID_HEIGHT);
 	initLevel();
 	prestigeCount += 1;
-	gold += currentLevel / 10;
 	playPrestigeSound();
 }
 

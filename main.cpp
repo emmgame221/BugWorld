@@ -113,6 +113,12 @@ int main()
                 if (event.key.code == sf::Keyboard::A) {
                     game->spawnAnt();
                 }
+                if (event.key.code == sf::Keyboard::S) {
+                    game->spawnLadybug();
+                }
+                if (event.key.code == sf::Keyboard::D) {
+                    game->spawnStinkbug();
+                }
                 if (event.key.code == sf::Keyboard::Escape) {
                     window.close();
                 }
@@ -127,9 +133,11 @@ int main()
                 if (event.key.code == sf::Keyboard::Space) {
                     menu.bugMenu();
                 }
+#ifdef _DEBUG
                 if (event.key.code == sf::Keyboard::N) {
                     game->nextLevel();
                 }
+#endif
                 if (event.key.code == sf::Keyboard::P) {
                     game->prestige();
                 }
