@@ -8,6 +8,7 @@ class Tile :
 public:
     Tile(int lushness, float x, float y, float tileSize);
     int lushness;
+    int stinkId = -1;
     bool eating = false;
     bool scent = false;
     bool scenting = false;

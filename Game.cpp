@@ -25,6 +25,7 @@ Game::Game() {
 	prestigeTexture = sf::Texture();
 	eatUpTexture = sf::Texture();
 	speedUpTexture = sf::Texture();
+	stinkTexture = sf::Texture();
 	antTexture.loadFromFile("./resources/ant.png");
 	ladybugTexture.loadFromFile("./resources/ladybug.png");
 	stinkbugTexture.loadFromFile("./resources/stinkbug.png");
@@ -35,6 +36,7 @@ Game::Game() {
 	prestigeTexture.loadFromFile("./resources/prestige.png");
 	eatUpTexture.loadFromFile("./resources/eatspeedup.png");
 	speedUpTexture.loadFromFile("./resources/speedup.png");
+	stinkTexture.loadFromFile("./resources/stinkCloud.png");
 	clock = sf::Clock();
 	spawnSoundBuf.loadFromFile("./resources/spawnsound.wav");
 	spawnSound = sf::Sound(spawnSoundBuf);
@@ -103,6 +105,9 @@ void Game::drawAll() {
 	for (unsigned int i = 0; i < tiles.size(); i++) {
 		tiles[i]->draw();
 	}
+	for (unsigned int i = 0; i < stinkSprites.size(); i++) {
+		game->draw(*stinkSprites[i]);
+	}
 	for (unsigned int i = 0; i < buttons.size(); i++) {
 		buttons[i]->draw();
 	}
@@ -146,12 +151,18 @@ void Game::update() {
 		bugs[i]->update();
 	}
 	for (unsigned int i = 0; i < tiles.size(); i++) {
-		if (tiles[i]->scent) {
-			tiles[i]->sprite.setColor(sf::Color(255, 0, 0));
+		if (tiles[i]->scent && tiles[i]->stinkId == -1) {
+			stinkSprites.push_back(new sf::Sprite(stinkTexture));
+			stinkSprites.back()->setColor(sf::Color(255, 255, 255, 125));
+			stinkSprites.back()->setPosition(tiles[i]->getPosition());
+			tiles[i]->stinkId = stinkSprites.size() - 1;
 		}
-		if (tiles[i]->lushness == 0 && tiles[i]->scent) {
-			tiles[i]->sprite.setColor(sf::Color(255, 255, 255));
+		if (tiles[i]->lushness == 0 && tiles[i]->stinkId != -1) {
+			sf::Sprite* s = stinkSprites[tiles[i]->stinkId];
+			delete s;
+			stinkSprites.erase(stinkSprites.begin() + tiles[i]->stinkId);
 			tiles[i]->scent = false;
+			tiles[i]->stinkId = -1;
 		}
 	}
 	if (totalVegetation == 0) {

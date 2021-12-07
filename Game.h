@@ -89,6 +89,7 @@ public:
 	sf::Texture prestigeTexture;
 	sf::Texture eatUpTexture;
 	sf::Texture speedUpTexture;
+	sf::Texture stinkTexture;
 	int antCost = 5;
 	int ladyCost = 8;
 	int stinkCost = 10;
@@ -115,6 +116,7 @@ public:
 	const int START_GRID_WIDTH = 16;
 	const int START_GRID_HEIGHT = 9;
 	bool menuFlag = true;
+	std::vector<sf::Sprite*> stinkSprites;
 
 	static Game* getGame();
 	sf::Time getElapsedTime();
