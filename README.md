@@ -31,6 +31,7 @@ Bug World uses the SFML Graphics, Window, System and Audio libraries, so make su
 
 Once you have the project settings set up you should be able to build the program from Visual Studio.
 If your build fails, check in the Configuration Manager that you're build platform matches the version of SFML you are using.
+Also, ensure that the C++ Language Standard is set to ISO C++17 Standard in the project settings
 If it still fails, try following the SFML and Visual Studio tutorial above to see if all of the necessary project properties are set.
 
 Following a successful build, "Bug World.exe" can be found in either the Release or Debug folder depending on your build configuration.
@@ -49,3 +50,9 @@ Assuming you installed SFML to a standard path you should be able to build Bug W
 Now you can run the game by entering ```./bugworld```
 
 If you installed SFML to a nonstandard path you will need to edit the Makefile to use the correct include directory or build manually following the instructions on the SFML website.
+
+## Authors
+Vincent Baldassari, Adrian Martinez, Eric McHugh, and John Szwakob III
+
+## Notes
+This project was created for CS 370 Software Engineering at SUNY Poly Utica with Professor Confer
