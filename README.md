@@ -3,7 +3,7 @@ Bug World is an idle game where the player makes strategic decisions using a var
 
 ## Installation
 ### Windows
-Download the installer from the [releases]() page and run it.
+Download the installer from the [releases](https://github.com/emmgame221/BugWorld/releases/tag/v1.0.0) page and run it.
 Alternatively, you can follow the build instructions for Windows below to build the project from scratch.
 
 ### Linux
