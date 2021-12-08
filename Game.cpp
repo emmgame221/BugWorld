@@ -170,6 +170,10 @@ void Game::update() {
 			tiles[i]->scent = false;
 			tiles[i]->stinkId = -1;
 		}
+		if (tiles[i]->stinkId > -1) {
+			stinkSprites[tiles[i]->stinkId]->setScale(game->getTileSize() / stinkSprites.back()->getLocalBounds().width, game->getTileSize() / stinkSprites.back()->getLocalBounds().width);
+			stinkSprites[tiles[i]->stinkId]->setPosition(tiles[i]->getPosition());
+		}
 	}
 	if (totalVegetation == 0) {
 		nextLevel();
