@@ -27,6 +27,8 @@ int main()
     game->spawnLabels();
     Menu menu;
 
+    float aspectRatio;
+
     sf::Text title;
 
     sf::Font font;
@@ -35,7 +37,7 @@ int main()
     title.setCharacterSize(80);
     title.setString("Bug World");
     title.setOrigin(sf::Vector2(title.getLocalBounds().width / 2, title.getLocalBounds().height / 2));
-    title.setPosition(window.getSize().x * .5 , 100);
+    
 
     std::vector<sf::Sprite> buttons;
     sf::Sprite newGame;
@@ -66,6 +68,33 @@ int main()
                     window.close();
                     return 0;
                     break;
+
+                case sf::Event::Resized:
+                    aspectRatio = (float)event.size.width / (float)event.size.height;
+
+                    if (event.size.width < WIN_MIN_WIDTH && event.size.height < WIN_MIN_HEIGHT) {
+                        window.setSize(sf::Vector2u(WIN_MIN_WIDTH, WIN_MIN_HEIGHT));
+                    }
+                    else if (event.size.width < WIN_MIN_WIDTH) {
+                        window.setSize(sf::Vector2u(WIN_MIN_WIDTH, event.size.height));
+                    }
+                    else if (event.size.height < WIN_MIN_HEIGHT) {
+                        window.setSize(sf::Vector2u(event.size.width, WIN_MIN_HEIGHT));
+                    }
+                    else if (aspectRatio < 1.33f) {
+                        int newWidth = event.size.height * 4 / 3;
+                        window.setSize(sf::Vector2u(newWidth, event.size.height));
+                    }
+                    else if (aspectRatio > 1.79f) {
+                        int newHeight = event.size.width * 9 / 16;
+                        window.setSize(sf::Vector2u(event.size.width, newHeight));
+                    }
+                    else {
+                        window.setView(sf::View(sf::FloatRect(0, 0, event.size.width, event.size.height)));
+                        game->resize();
+                    }
+                    break;
+                
                 case sf::Event::KeyPressed:
                     
                 case sf::Event::MouseButtonPressed:
@@ -92,6 +121,7 @@ int main()
                 }
             }
             window.clear(sf::Color(22, 56, 0));
+            title.setPosition(window.getSize().x * .5, 100);
             window.draw(title);
 
             for (int i = 0; i <= 2; i++) {
@@ -150,7 +180,7 @@ int main()
                 }
                 break;
             case sf::Event::Resized:
-                float aspectRatio = (float)event.size.width / (float)event.size.height;
+                aspectRatio = (float)event.size.width / (float)event.size.height;
 
                 if (event.size.width < WIN_MIN_WIDTH && event.size.height < WIN_MIN_HEIGHT) {
                     window.setSize(sf::Vector2u(WIN_MIN_WIDTH, WIN_MIN_HEIGHT));
