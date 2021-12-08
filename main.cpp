@@ -43,12 +43,12 @@ int main()
     sf::Sprite options;
     sf::Sprite exit;
 
-    std::vector<std::string> butFiles = { "button_new-game.png", "button_load.png", "button_options.png", "button_exit.png"};
+    std::vector<std::string> butFiles = { "button_new-game.png", "button_load.png", "button_exit.png"};
 
 
     std::vector<sf::Texture> butText;
 
-    for (int i = 0; i <= 3; i++) {
+    for (int i = 0; i <= 2; i++) {
         butText.push_back(sf::Texture());
         butText[i].loadFromFile("./resources/" + butFiles[i]);
         buttons.push_back(sf::Sprite(butText[i]));
@@ -62,11 +62,15 @@ int main()
         while (game->menuFlag) {
             while (window.pollEvent(event)) {
                 switch (event.type) {
+                case sf::Event::Closed:
+                    window.close();
+                    return 0;
+                    break;
                 case sf::Event::KeyPressed:
                     
                 case sf::Event::MouseButtonPressed:
                     if (event.mouseButton.button == sf::Mouse::Left) {
-                        for (int i = 0; i <= 3; i++) {
+                        for (int i = 0; i <= 2; i++) {
                             if (buttons[i].getGlobalBounds().contains(event.mouseButton.x,event.mouseButton.y)) {
                                 switch (i)
                                 {
@@ -78,8 +82,6 @@ int main()
                                     game->menuFlag = false;
                                     break;
                                 case 2:
-                                    break;
-                                case 3:
                                     window.close();
                                     return 0;
                                     break;
@@ -92,7 +94,7 @@ int main()
             window.clear(sf::Color(22, 56, 0));
             window.draw(title);
 
-            for (int i = 0; i <= 3; i++) {
+            for (int i = 0; i <= 2; i++) {
                 buttons[i].setOrigin(sf::Vector2f(buttons[i].getLocalBounds().width/2, buttons[i].getLocalBounds().height/2));
                 buttons[i].setPosition(window.getSize().x / 2, (100 * i) + 250);
                 buttons[i].setTexture(butText[i]);

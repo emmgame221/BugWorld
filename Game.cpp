@@ -154,6 +154,7 @@ void Game::update() {
 		if (tiles[i]->scent && tiles[i]->stinkId == -1) {
 			stinkSprites.push_back(new sf::Sprite(stinkTexture));
 			stinkSprites.back()->setColor(sf::Color(255, 255, 255, 125));
+			stinkSprites.back()->setScale(game->getTileSize() / stinkSprites.back()->getLocalBounds().width, game->getTileSize() / stinkSprites.back()->getLocalBounds().width);
 			stinkSprites.back()->setPosition(tiles[i]->getPosition());
 			tiles[i]->stinkId = stinkSprites.size() - 1;
 		}
@@ -161,6 +162,11 @@ void Game::update() {
 			sf::Sprite* s = stinkSprites[tiles[i]->stinkId];
 			delete s;
 			stinkSprites.erase(stinkSprites.begin() + tiles[i]->stinkId);
+			for (int j = 0; j < tiles.size(); j++) {
+				if (tiles[j]->stinkId >= tiles[i]->stinkId && j != i) {
+					tiles[j]->stinkId--;
+				}
+			}
 			tiles[i]->scent = false;
 			tiles[i]->stinkId = -1;
 		}

@@ -139,11 +139,24 @@ void Ladybug::update() {
 	movement += move;
 
 	if ((x > (game->getTileW() * game->getTileSize())) || (x < 0)) {
+		if (x < 0)
+			sprite.move(sf::Vector2f(0, -x));
+		else
+			sprite.move(sf::Vector2f(0, (game->getTileW() * game->getTileSize()) - x));
+
 		movement.x *= -1;
 	}
 	if ((y > (game->getTileH() * game->getTileSize())) || (y < 0)) {
+		if (y < 0)
+			sprite.move(sf::Vector2f(0, -y));
+		else
+			sprite.move(sf::Vector2f(0, (game->getTileH() * game->getTileSize()) - y));
+
 		movement.y *= -1;
 	}
+
+	x = sprite.getPosition().x;
+	y = sprite.getPosition().y;
 
 	if (game->getTileAt(target.x / game->getTileSize(), target.y / game->getTileSize())->lushness == 0) {
 		state = searching;
@@ -184,12 +197,12 @@ void Ladybug::update() {
 		}
 	}
 	sprite.setRotation(angle(sprite.getPosition() + movement, sprite.getPosition()) - 90);
-	sprite.move(normalize(movement) * game->getElapsedTime().asSeconds() * speed);
+	sprite.move(normalize(movement * game->getTileSize()) * game->getElapsedTime().asSeconds() * speed );
 }
 
 Stinkbug::Stinkbug() {
 	Game* game = Game::getGame();
-	this->speed = 50.0f + game->speedModifier;
+	this->speed = 150.0f + game->speedModifier;
 	this->visionRad = game->getTileSize() * 3;
 	this->type = stinkBug;
 	sprite = sf::Sprite(game->stinkbugTexture);
@@ -213,17 +226,25 @@ void Stinkbug::update() {
 	movement += move;
 
 	if ((x > (game->getTileW() * game->getTileSize())) || (x < 0)) {
-		movement.x += 10;
+		if (x < 0)
+			sprite.move(sf::Vector2f(0, -x));
+		else
+			sprite.move(sf::Vector2f(0, (game->getTileW() * game->getTileSize()) - x));
+
 		movement.x *= -1;
 	}
 	if ((y > (game->getTileH() * game->getTileSize())) || (y < 0)) {
-		if(y < 0)
+		if (y < 0)
 			sprite.move(sf::Vector2f(0, -y));
 		else
-			sprite.move(sf::Vector2f(0, (game->getTileH() * game->getTileSize())-y));
+			sprite.move(sf::Vector2f(0, (game->getTileH() * game->getTileSize()) - y));
 
 		movement.y *= -1;
 	}
+
+	x = sprite.getPosition().x;
+	y = sprite.getPosition().y;
+
 
 	if ((game->getTileAt(target.x / game->getTileSize(), target.y / game->getTileSize())->scent || 
 		game->getTileAt(target.x / game->getTileSize(), target.y / game->getTileSize())->lushness ==0) && state == 1) {
@@ -258,7 +279,7 @@ void Stinkbug::update() {
 		}
 	}
 	sprite.setRotation(angle(sprite.getPosition() + movement, sprite.getPosition()) - 90);
-	sprite.move(normalize(movement) * game->getElapsedTime().asSeconds() * speed);
+	sprite.move(normalize(movement * game->getTileSize()) * game->getElapsedTime().asSeconds() * speed);
 }
 
 
